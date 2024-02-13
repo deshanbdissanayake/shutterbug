@@ -1,5 +1,5 @@
 const colors = {
-    bgLight : '#fff7fa', //background lightest pink
+    bgLight : '#fff0f5', //background lightest pink
     bgDark : '#373737',
 
     textLight : '#fff7fa',

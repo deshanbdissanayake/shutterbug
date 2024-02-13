@@ -1,10 +1,10 @@
 import { StyleSheet, Text, View, ScrollView, KeyboardAvoidingView, Platform, Pressable, Image } from 'react-native';
 import React, { useState } from 'react';
 import colors from '../assets/colors/colors';
-import Button from '../components/common/Button';
-import Input from '../components/common/Input';
+import Button from '../components/general/Button';
+import Input from '../components/general/Input';
 import { Feather, FontAwesome5 } from '@expo/vector-icons';
-import FormErrorMsg from '../components/common/FormErrorMsg';
+import FormErrorMsg from '../components/general/FormErrorMsg';
 
 const SigninScreen = () => {
     const [userName, setUserName] = useState('');
@@ -113,7 +113,7 @@ const SigninScreen = () => {
                         paddingStt = {false}
                     />
                     <View style={styles.regTextWrapper}>
-                        <Text style={styles.normalTextStyle}>Don't have and Account ? </Text>
+                        <Text style={styles.normalTextStyle}>Don't have an Account ? </Text>
                         <Pressable onPress={handleRegClick}><Text>Register</Text></Pressable>
                     </View>
                 </View>
@@ -127,6 +127,8 @@ export default SigninScreen;
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+        paddingTop: 10,
+        paddingHorizontal: 15,
     },
     scrollViewContent: {
         flexGrow: 1,
