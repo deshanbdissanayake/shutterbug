@@ -19,7 +19,10 @@ const colors = {
     black : '#000000',
     gray : '#d6d6d6', 
     disabled: '#e0e0e0',
-    border : '#E0115F',
+
+    border : '#E0115F', //pink
+    borderGrayLight : '#bbb',
+    borderGrayDark : '#2b2b2b',
 
     success : '#406b42',
     danger : '#d43b24',

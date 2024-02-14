@@ -1,8 +1,9 @@
 import React, { useEffect } from 'react';
 import { View, Keyboard, StyleSheet, SafeAreaView, StatusBar, } from 'react-native';
-import colors from './assets/colors/colors';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { useFonts } from 'expo-font';
 
+import colors from './assets/colors/colors';
 import AppNav from './navigation/AppNav';
 import SplashScreen from './screens/SplashScreen';
 
@@ -33,10 +34,12 @@ const App = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <StatusBar backgroundColor={colors.primary} barStyle="light-content" />
-      <View style={styles.container}>
-        <AppNav/>
-      </View>
+      <GestureHandlerRootView style={styles.container}>
+        <StatusBar backgroundColor={colors.primary} barStyle="light-content" />
+        <View style={styles.container}>
+          <AppNav/>
+        </View>
+      </GestureHandlerRootView>
     </SafeAreaView>
   );
 }

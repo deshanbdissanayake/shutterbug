@@ -14,7 +14,7 @@ const SearchSec = () => {
   return (
     <View style={styles.container}>
       <TouchableOpacity onPress={searchBtnClick} style={styles.searchWrapper}>
-        <View style={styles.searchIconStyles}><Ionicons name='search' size={24} color={colors.textLight} /></View>
+        <View style={styles.searchIconStyles}><Ionicons name='search' size={20} color={colors.textLight} /></View>
         <Text style={styles.searchTextStyles}>Search services near you</Text>
       </TouchableOpacity>
     </View>
@@ -31,12 +31,14 @@ const styles = StyleSheet.create({
   },
   searchWrapper: {
     width: '100%',
-    borderRadius: 10,
     alignItems: 'center',
     flexDirection: 'row',
     paddingHorizontal: 10,
     paddingVertical: 8,
-    backgroundColor: colors.bgLight,
+    backgroundColor: colors.white,
+    borderWidth: 1,
+    borderRadius: 10,
+    borderColor: colors.borderGrayLight,
   },
   searchIconStyles: {
     backgroundColor: colors.primary,

@@ -4,12 +4,12 @@ import { Entypo } from '@expo/vector-icons/build/Icons'
 import MiniButton from '../../../components/general/MiniButton'
 import colors from '../../../assets/colors/colors'
 
-const HeaderSec = ({name, location, handleMoreClick}) => {
+const HeaderSec = ({title, desc, handleMoreClick}) => {
   return (
     <View style={styles.container}>
       <View>
-        <Text style={styles.welcomeTextStyles}>Hello Nathan !</Text>
-        <Text style={styles.locationTextStyles}>Your Location</Text>
+        <Text style={styles.welcomeTextStyles}>{title}</Text>
+        <Text style={styles.locationTextStyles}>{desc}</Text>
       </View>
       <View>
         <MiniButton

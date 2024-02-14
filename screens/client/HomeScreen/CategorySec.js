@@ -1,40 +1,101 @@
-import { StyleSheet, Text, View } from 'react-native'
-import React, { useState } from 'react'
+import { FlatList, ScrollView, StyleSheet, Text, View } from 'react-native'
+import React, { useEffect, useState, useRef } from 'react'
 import { Pressable } from 'react-native'
 import colors from '../../../assets/colors/colors';
+import { getAllEvents, getAllCategories } from '../../../assets/data/client/category';
+import CategoryItem from '../../../components/app/client/CategoryItem';
 
 const CategorySec = () => {
   const [selectedType, setSelectedType] = useState('photography');
+  const [selectedEvent, setSelectedEvent] = useState(0);
+
+  const [loading, setLoading] = useState(true);
+  const [eventList, setEventList] = useState([]);
+  const [categoryList, setCategoryList] = useState([]);
 
   const seeAllClick = () => {}
 
-  return (
-    <View style={styles.container}>
-      <View style={styles.typeSelectWrapper}>
+  const handleCategoryClick = (clickedCatId) => {
+    console.log(clickedCatId)
+  }
 
+  const categoryListOriginal = useRef(getAllCategories);
+
+  useEffect(() => {
+    setEventList(getAllEvents);
+    setCategoryList(categoryListOriginal.current);
+  }, []);
+
+  useEffect(() => {
+    const filteredList = categoryListOriginal.current.filter(cat => (
+      cat.type === selectedType && (selectedEvent === 0 || cat.events.includes(selectedEvent))
+    ));
+    setCategoryList(filteredList);
+  }, [selectedType, selectedEvent]);
+
+
+  return (
+    <View style={styles.container} >
+
+      {/* type select */}
+      <View style={styles.typeSelectWrapper}>
         <Pressable 
           onPress={() => setSelectedType('photography')} 
-          style={[styles.typeSelectStyles, selectedType === 'photography' ? styles.selectedItemStyles : null]}
+          style={[styles.typeSelectStyles, selectedType === 'photography' ? {backgroundColor: colors.bgLight} : null]}
         >
-          <Text style={[styles.typeSelectTextStyles, selectedType === 'photography' ? styles.selectedItemTextStyles : null]}>Photography</Text>
+          <Text style={[styles.typeSelectTextStyles, selectedType === 'photography' ? {color: colors.textDark} : null]}>Photography</Text>
         </Pressable>
 
         <Pressable 
           onPress={() => setSelectedType('videography')} 
-          style={[styles.typeSelectStyles, selectedType === 'videography' ? styles.selectedItemStyles : null]}
+          style={[styles.typeSelectStyles, selectedType === 'videography' ? {backgroundColor: colors.bgLight} : null]}
         >
-          <Text style={[styles.typeSelectTextStyles, selectedType === 'videography' ? styles.selectedItemTextStyles : null]}>Videography</Text>
+          <Text style={[styles.typeSelectTextStyles, selectedType === 'videography' ? {color: colors.textDark} : null]}>Videography</Text>
         </Pressable>
-
       </View>
+
       <View style={styles.titleWrapper}>
         <Text style={styles.titleTextStyles}>Popular Services</Text>
         <Pressable onPress={seeAllClick}><Text style={styles.seeAllTextStyles}>See all</Text></Pressable>
       </View>
-      <View>
-        <View>{/* events */}</View>
-        <View>{/* categories */}</View>
+
+      {/* events and categories */}
+      <View style={styles.eventCatWrapper}>
+        <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+          <Pressable
+            style={[ styles.eventItemStyles, selectedEvent === 0 ? {backgroundColor: colors.primary} : null]}
+            onPress={() => setSelectedEvent(0)}
+          >
+            <Text style={[ styles.eventItemTextStyles, selectedEvent === 0 ? {color: colors.textLight} : null]}>
+              All
+            </Text>
+          </Pressable>
+
+          {eventList.map((ev) => (
+            <Pressable 
+              key={ev.id}
+              style={[
+                styles.eventItemStyles,
+                selectedEvent === ev.id ? {backgroundColor: colors.primary} : null,
+              ]}
+              onPress={() => setSelectedEvent(ev.id)}
+            >
+              <Text style={[ styles.eventItemTextStyles, selectedEvent === ev.id ? {color: colors.textLight} : null ]}>
+                {ev.name}
+              </Text>
+            </Pressable>
+          ))}
+        </ScrollView>
+
+        <View style={styles.categoryItemsWrapper}>
+          {categoryList.map((cat) => (
+            <View key={cat.id}  style={styles.categoryItemStyles}>
+              <CategoryItem cat={cat} handleCategoryClick={handleCategoryClick} />
+            </View>
+          ))}
+        </View>
       </View>
+
     </View>
   );
 }
@@ -64,14 +125,8 @@ const styles = StyleSheet.create({
   typeSelectTextStyles: {
     color: colors.textLight,
   }, 
-  selectedItemStyles: {
-    backgroundColor: colors.bgLight,
-  },
-  selectedItemTextStyles: {
-    color: colors.textDark,
-  },  
   titleWrapper: {
-    marginTop: 10,
+    marginTop: 15,
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'flex-end'
@@ -84,5 +139,28 @@ const styles = StyleSheet.create({
   seeAllTextStyles: {
     color: colors.textGraySecondary,
   },
-
+  eventCatWrapper: {
+    marginTop: 20,
+  },
+  eventItemStyles: {
+    backgroundColor: colors.bgLight,
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 20,
+    marginRight: 10,
+  },
+  eventItemTextStyles: {
+    color: colors.primary,
+  },
+  categoryItemsWrapper: {
+    marginTop: 20,
+    flexWrap: 'wrap',
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+  },
+  categoryItemStyles: {
+    width: '30%',
+    marginBottom: 15,
+    marginHorizontal: '1.66%',
+  },
 })
