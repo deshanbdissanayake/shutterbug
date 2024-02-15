@@ -17,15 +17,19 @@ const ServiceItem = ({ service }) => {
                 />
             </View>
             <View style={styles.detailsWrapper}>
-                <Text style={styles.titleTextStyles}>{service.s_name}</Text>
-                <Text style={styles.nameTextStyles}>{service.provider_name}</Text>
+                <Text style={styles.nameTextStyles} numberOfLines={1}>{service.provider_name}</Text>
+                <Text style={styles.titleTextStyles} numberOfLines={2}>{service.s_name}</Text>
                 <View style={styles.bottomTextWrapper}>
-                    <Text style={styles.priceTextStyles}>
-                        ${mainPackage ? mainPackage.pkg_price : '-'}
-                    </Text>
+                    <View style={styles.priceTextWrapper}>
+                        <Text style={styles.priceTextStyles}>From </Text>
+                        <Text style={styles.priceStyles}>
+                            ${mainPackage ? mainPackage.pkg_price : '-'}
+                        </Text>
+                    </View>
                     <View style={styles.ratingWrapper}>
-                        <AntDesign name="star" size={24} color={colors.gold} style={styles.textShadowStyles} /> 
+                        <AntDesign name="star" size={20} color={colors.gold} style={styles.textShadowStyles} /> 
                         <Text style={styles.ratingTextStyles}>{service.s_rating}</Text>
+                        <Text style={styles.reviewTextStyles}> | {service.number_of_reviews}</Text>
                     </View>
                 </View>
             </View>
@@ -43,7 +47,7 @@ const styles = StyleSheet.create({
         marginBottom: 10,
         borderRadius: 10,
         paddingVertical: 10,
-        paddingHorizontal: 20,
+        paddingHorizontal: 15,
         flexDirection: 'row',
     },
     textShadowStyles: {
@@ -53,32 +57,47 @@ const styles = StyleSheet.create({
     imageWrapper: {
         flex: 2,
         justifyContent: 'center',
+        paddingRight: 15,
     },
     detailsWrapper: {
         flex: 3,
+        justifyContent: 'space-between'
     },
     imageStyles: {
-        width: 100,
-        height: 100,
+        width: '100%',
+        height: '100%',
         resizeMode: 'cover',
         borderRadius: 10,
     },
-    titleTextStyles: {
-
-    },
     nameTextStyles: {
-
+        fontSize: 12,
+        color: colors.textGraySecondary,
+    },
+    titleTextStyles: {
+        fontSize: 18,
+        color: colors.textDark,
     },
     bottomTextWrapper: {
-
+        flexDirection: 'row',
+        backgroundColor: 'red',
+        justifyContent: 'space-between',
+    },
+    priceTextWrapper: {
+        flexDirection: 'row',
     },
     priceTextStyles: {
 
     },
-    ratingWrapper: {
+    priceStyles: {
 
+    },
+    ratingWrapper: {
+        flexDirection: 'row',
     },
     ratingTextStyles: {
         color: colors.textGraySecondary,
+    },
+    reviewTextStyles: {
+        
     },
 })
