@@ -6,6 +6,7 @@ import { Ionicons, Octicons, FontAwesome5, MaterialCommunityIcons } from '@expo/
 import HomeScreen from '../screens/client/HomeScreen';
 import ChatListScreen from '../screens/common/ChatListScreen';
 import colors from '../assets/colors/colors';
+import SearchScreen from '../screens/client/SearchScreen';
 
 function MyTabBar({ state, descriptors, navigation }) {
   return (
@@ -73,9 +74,9 @@ export default function App() {
   return (
     <NavigationContainer>
         <Tab.Navigator tabBar={(props) => <MyTabBar {...props}  />} >
+            <Tab.Screen name="Search" component={SearchScreen} options={{ headerShown: false }}  />
             <Tab.Screen name="Home" component={HomeScreen} options={{ headerShown: false }}  />
             <Tab.Screen name="Chats" component={ChatListScreen} options={{ headerShown: false }}  />
-            <Tab.Screen name="Search" component={ChatListScreen} options={{ headerShown: false }}  />
             <Tab.Screen name="Orders" component={ChatListScreen} options={{ headerShown: false }}  />
             <Tab.Screen name="Account" component={ChatListScreen} options={{ headerShown: false }}  />
         </Tab.Navigator>

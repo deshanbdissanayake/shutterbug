@@ -1,11 +1,11 @@
 //dummy data - replace later with actual data later - use common.js to fetch data from APIs
-const getAllEvents = [
+const getEvents = [
     { id: 1, name: 'Wedding' },
     { id: 2, name: 'Outdoor' },
     { id: 3, name: 'Birthday' }
 ];
 
-const getAllCategories = [
+const getCategories = [
     { 
         id: 1, 
         name: 'Wedding', 
@@ -57,5 +57,5 @@ const getAllCategories = [
     },
 ];
 
-export { getAllEvents, getAllCategories };
+export { getEvents, getCategories };
 

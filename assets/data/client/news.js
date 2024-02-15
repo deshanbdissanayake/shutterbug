@@ -1,4 +1,4 @@
-const getAllNews = [
+const getNews = [
     {
         id: 1,
         title: "30%",
@@ -22,4 +22,4 @@ const getAllNews = [
     },
 ]
 
-export { getAllNews }
+export { getNews }

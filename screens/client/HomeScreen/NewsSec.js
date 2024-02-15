@@ -3,8 +3,8 @@ import React from 'react'
 import Carousel from 'react-native-reanimated-carousel';
 
 import colors from '../../../assets/colors/colors'
-import { getAllNews } from '../../../assets/data/client/news';
-import NewsSliderSingle from '../../../components/app/client/NewsSliderSingle'
+import { getNews } from '../../../assets/data/client/news';
+import NewsSliderSingle from '../../../components/app/NewsSliderSingle'
 
 const NewsSec = () => {
   const width = Dimensions.get('window').width;
@@ -19,7 +19,7 @@ const NewsSec = () => {
         loop
         width={width}
         autoPlay={true}
-        data={getAllNews}
+        data={getNews}
         scrollAnimationDuration={4000}
         renderItem={({ item }) => (
           <NewsSliderSingle newsItem={item} handleViewMoreClick={handleViewMoreClick} />

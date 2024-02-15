@@ -1,9 +1,9 @@
-import { FlatList, ScrollView, StyleSheet, Text, View } from 'react-native'
+import { ScrollView, StyleSheet, Text, View } from 'react-native'
 import React, { useEffect, useState, useRef } from 'react'
 import { Pressable } from 'react-native'
 import colors from '../../../assets/colors/colors';
-import { getAllEvents, getAllCategories } from '../../../assets/data/client/category';
-import CategoryItem from '../../../components/app/client/CategoryItem';
+import { getEvent, getCategories } from '../../../assets/data/client/category';
+import CategoryItem from '../../../components/app/CategoryItem';
 
 const CategorySec = () => {
   const [selectedType, setSelectedType] = useState('photography');
@@ -19,10 +19,10 @@ const CategorySec = () => {
     console.log(clickedCatId)
   }
 
-  const categoryListOriginal = useRef(getAllCategories);
+  const categoryListOriginal = useRef(getCategories);
 
   useEffect(() => {
-    setEventList(getAllEvents);
+    setEventList(getEvent);
     setCategoryList(categoryListOriginal.current);
   }, []);
 

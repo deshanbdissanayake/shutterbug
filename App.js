@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { View, Keyboard, StyleSheet, SafeAreaView, StatusBar, } from 'react-native';
+import { View, Keyboard, StyleSheet, SafeAreaView, StatusBar } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { useFonts } from 'expo-font';
 

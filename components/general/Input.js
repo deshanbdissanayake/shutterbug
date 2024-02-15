@@ -2,7 +2,7 @@ import { StyleSheet, Text, TextInput, View } from "react-native";
 import React, { useRef } from "react";
 import colors from "../../assets/colors/colors";
 
-const Input = ({keyboardType, value, onChangeText, placeholder, secureTextEntry, icon, editable, multiline, textArea, maxLength, disabled}) => {
+const Input = ({keyboardType, value, onChangeText, placeholder, secureTextEntry, icon, editable, multiline, textArea, maxLength, disabled, borderColor = colors.border}) => {
     const inputRef = useRef(null);useRef
 
     const handleInputWrapperClick = () => {
@@ -17,7 +17,8 @@ const Input = ({keyboardType, value, onChangeText, placeholder, secureTextEntry,
         style={[
             styles.inputWrapper, 
             textArea ? { height: 150, alignItems: 'flex-start' } : {alignItems:'center'},
-            disabled && { backgroundColor: colors.disabled} 
+            disabled && { backgroundColor: colors.disabled} ,
+            {borderColor: borderColor}
         ]}
         onTouchStart={handleInputWrapperClick}
     >
@@ -46,7 +47,6 @@ export default Input;
 const styles = StyleSheet.create({
     inputWrapper: {
         borderWidth: 1,
-        borderColor: colors.border,
         borderRadius: 10,
         paddingVertical: 10,
         paddingHorizontal: 10,
