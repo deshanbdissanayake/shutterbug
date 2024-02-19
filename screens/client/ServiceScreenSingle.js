@@ -44,7 +44,7 @@ export default ServiceScreenSingle
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingTop: 10,
+    paddingBottom: 15,
     paddingHorizontal: 15,
     backgroundColor: colors.white,
   }
