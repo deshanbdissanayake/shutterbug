@@ -1,15 +1,15 @@
-import { Image, StyleSheet, Text, View } from 'react-native'
+import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import React from 'react'
 import { AntDesign } from '@expo/vector-icons'
 import colors from '../../assets/colors/colors'
 
-const ServiceItem = ({ service }) => {
+const ServiceItem = ({ service, handleServiceItemClick }) => {
     const mainImage = service.s_images.find((imgData) => imgData.is_main === 1);
     const mainPackage = service.packages.find((pkgData) => pkgData.is_main === 1);
     const imageSource = mainImage ? { uri: mainImage.img } : null;
 
     return (
-        <View style={styles.container}>
+        <TouchableOpacity onPress={() => handleServiceItemClick(service.s_id)} style={styles.container}>
             <View style={styles.imageWrapper}>
                 <Image 
                     source={imageSource} 
@@ -17,23 +17,25 @@ const ServiceItem = ({ service }) => {
                 />
             </View>
             <View style={styles.detailsWrapper}>
-                <Text style={styles.nameTextStyles} numberOfLines={1}>{service.provider_name}</Text>
-                <Text style={styles.titleTextStyles} numberOfLines={2}>{service.s_name}</Text>
+                <View>
+                    <Text style={styles.titleTextStyles} numberOfLines={2}>{service.s_name}</Text>
+                    <Text style={styles.nameTextStyles} numberOfLines={1}>{service.provider_name}</Text>
+                    <View style={styles.ratingWrapper}>
+                        <AntDesign name="star" size={12} color={colors.gold} style={styles.textShadowStyles} /> 
+                        <Text style={styles.ratingTextStyles}>{service.s_rating} | {service.number_of_reviews}</Text>
+                    </View>
+                </View>
                 <View style={styles.bottomTextWrapper}>
                     <View style={styles.priceTextWrapper}>
-                        <Text style={styles.priceTextStyles}>From </Text>
+                        <Text style={styles.priceTextStyles}></Text>
                         <Text style={styles.priceStyles}>
                             ${mainPackage ? mainPackage.pkg_price : '-'}
                         </Text>
                     </View>
-                    <View style={styles.ratingWrapper}>
-                        <AntDesign name="star" size={20} color={colors.gold} style={styles.textShadowStyles} /> 
-                        <Text style={styles.ratingTextStyles}>{service.s_rating}</Text>
-                        <Text style={styles.reviewTextStyles}> | {service.number_of_reviews}</Text>
-                    </View>
+                    <Text style={styles.categoryTextStyle}>{service.s_type}</Text>
                 </View>
             </View>
-        </View>
+        </TouchableOpacity>
     );
 };
 
@@ -43,16 +45,16 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         height: 130,
-        backgroundColor: colors.bgLight,
-        marginBottom: 10,
-        borderRadius: 10,
         paddingVertical: 10,
         paddingHorizontal: 15,
         flexDirection: 'row',
+        borderBottomWidth: 1,
+        borderBottomColor: colors.borderGrayExtraLight,
     },
     textShadowStyles: {
         textShadowRadius: 1,
         textShadowColor: colors.textGray,
+        marginRight: 5,
     },
     imageWrapper: {
         flex: 2,
@@ -74,13 +76,13 @@ const styles = StyleSheet.create({
         color: colors.textGraySecondary,
     },
     titleTextStyles: {
-        fontSize: 18,
+        fontSize: 16,
         color: colors.textDark,
     },
     bottomTextWrapper: {
         flexDirection: 'row',
-        backgroundColor: 'red',
         justifyContent: 'space-between',
+        alignItems: 'center',
     },
     priceTextWrapper: {
         flexDirection: 'row',
@@ -89,15 +91,24 @@ const styles = StyleSheet.create({
 
     },
     priceStyles: {
-
+        fontSize: 16,
+        color: colors.primary,
+        fontWeight: '400',
     },
     ratingWrapper: {
         flexDirection: 'row',
+        marginTop: 5,
     },
     ratingTextStyles: {
         color: colors.textGraySecondary,
+        fontSize: 10,
     },
-    reviewTextStyles: {
-        
+    categoryTextStyle: {
+        backgroundColor: colors.bgLight,
+        paddingVertical: 5,
+        paddingHorizontal: 10,
+        fontSize: 12,
+        color: colors.textGraySecondary,
+        borderRadius: 5,
     },
 })

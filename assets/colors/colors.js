@@ -5,7 +5,7 @@ const colors = {
     textLight : '#fff7fa',
     textGray : '#aaaaaa',
     textGraySecondary : '#7e7e7e',
-    textDark : '#2b2b2b',
+    textDark : '#474747',
 
     primary : '#E0115F', //pink
     primaryDark : '#910c3e', //dark pink
@@ -23,6 +23,7 @@ const colors = {
     border : '#E0115F', //pink
     borderGrayLight : '#bbb',
     borderGrayDark : '#2b2b2b',
+    borderGrayExtraLight : '#ddd',
 
     success : '#406b42',
     danger : '#d43b24',

@@ -2,7 +2,7 @@ import { StyleSheet, Text, TextInput, View } from "react-native";
 import React, { useRef } from "react";
 import colors from "../../assets/colors/colors";
 
-const Input = ({keyboardType, value, onChangeText, placeholder, secureTextEntry, icon, editable, multiline, textArea, maxLength, disabled, borderColor = colors.border}) => {
+const Input = ({keyboardType, value, onChangeText, placeholder, secureTextEntry, icon, editable, multiline, textArea, maxLength, disabled, borderColor = colors.border, capitalize='sentences'}) => {
     const inputRef = useRef(null);useRef
 
     const handleInputWrapperClick = () => {
@@ -37,6 +37,7 @@ const Input = ({keyboardType, value, onChangeText, placeholder, secureTextEntry,
             multiline={multiline}
             maxLength={maxLength}
             ref={inputRef}
+            autoCapitalize={capitalize}
         />
     </View>
   );

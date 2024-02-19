@@ -2,38 +2,41 @@ import { ScrollView, StyleSheet, Text, View } from 'react-native'
 import React, { useEffect, useState, useRef } from 'react'
 import { Pressable } from 'react-native'
 import colors from '../../../assets/colors/colors';
-import { getEvent, getCategories } from '../../../assets/data/client/category';
+import { getEvents, getCategories } from '../../../assets/data/client/category';
 import CategoryItem from '../../../components/app/CategoryItem';
 
 const CategorySec = () => {
   const [selectedType, setSelectedType] = useState('photography');
   const [selectedEvent, setSelectedEvent] = useState(0);
-
   const [loading, setLoading] = useState(true);
   const [eventList, setEventList] = useState([]);
   const [categoryList, setCategoryList] = useState([]);
-
+  
   const seeAllClick = () => {}
-
+  
   const handleCategoryClick = (clickedCatId) => {
-    console.log(clickedCatId)
+      console.log(clickedCatId)
   }
-
-  const categoryListOriginal = useRef(getCategories);
-
+  
+  const categoryListOriginal = useRef([]);
+  
   useEffect(() => {
-    setEventList(getEvent);
-    setCategoryList(categoryListOriginal.current);
+      async function fetchData() {
+          const categories = getCategories; //make this await function
+          categoryListOriginal.current = categories;
+          const events = getEvents; //make this await function
+          setEventList(events);
+      }
+      fetchData();
   }, []);
-
+  
   useEffect(() => {
-    const filteredList = categoryListOriginal.current.filter(cat => (
-      cat.type === selectedType && (selectedEvent === 0 || cat.events.includes(selectedEvent))
-    ));
-    setCategoryList(filteredList);
+      const filteredList = categoryListOriginal.current.filter(cat => (
+          cat.type === selectedType && (selectedEvent === 0 || cat.events.includes(selectedEvent))
+      ));
+      setCategoryList(filteredList);
   }, [selectedType, selectedEvent]);
-
-
+  
   return (
     <View style={styles.container} >
 
@@ -71,7 +74,7 @@ const CategorySec = () => {
             </Text>
           </Pressable>
 
-          {eventList.map((ev) => (
+          {eventList.length > 0 && eventList.map((ev) => (
             <Pressable 
               key={ev.id}
               style={[
@@ -85,14 +88,15 @@ const CategorySec = () => {
               </Text>
             </Pressable>
           ))}
+
         </ScrollView>
 
         <View style={styles.categoryItemsWrapper}>
-          {categoryList.map((cat) => (
-            <View key={cat.id}  style={styles.categoryItemStyles}>
-              <CategoryItem cat={cat} handleCategoryClick={handleCategoryClick} />
-            </View>
-          ))}
+        {categoryList.length > 0 && categoryList.map((cat) => (
+          <View key={cat.id} style={styles.categoryItemStyles}>
+            <CategoryItem cat={cat} handleCategoryClick={handleCategoryClick} />
+          </View>
+        ))}
         </View>
       </View>
 

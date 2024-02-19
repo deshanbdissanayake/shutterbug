@@ -1,15 +1,17 @@
 import { StyleSheet, View, Dimensions } from 'react-native'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Carousel from 'react-native-reanimated-carousel';
+import ServiceImage from '../../../components/app/ServiceImage';
 
-import { getNews } from '../../../assets/data/client/news';
-import NewsSliderSingle from '../../../components/app/NewsSliderSingle'
-
-const NewsSec = () => {
+const imagesSec = ({ imageArr }) => {
   const width = Dimensions.get('window').width;
 
-  const handleViewMoreClick = (clickedNewsId) => {
-    console.log(clickedNewsId)
+  const singleImageView = (imageId) => {
+    console.log(imageId)
+  }
+
+  const backBtnClick = () => {
+    console.log('back clicked')
   }
 
   return (
@@ -18,23 +20,24 @@ const NewsSec = () => {
         loop
         width={width}
         autoPlay={true}
-        data={getNews}
+        data={imageArr}
         scrollAnimationDuration={4000}
-        renderItem={({ item }) => (
-          <NewsSliderSingle newsItem={item} handleViewMoreClick={handleViewMoreClick} />
+        renderItem={({ item, index }) => (
+          <ServiceImage imageData={item} count={index} />
         )}
       />
     </View>
   )
 }
 
-export default NewsSec
+export default imagesSec
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    marginVertical: 10,
     justifyContent: 'center',
     alignItems: 'center',
+    backgroundColor: 'red',
+    height: 100,
   }
 })
