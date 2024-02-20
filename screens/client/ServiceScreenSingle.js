@@ -1,4 +1,4 @@
-import { StyleSheet, View, ScrollView } from 'react-native'
+import { StyleSheet, View, ScrollView, Image, Text, TouchableOpacity } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import colors from '../../assets/colors/colors'
 
@@ -21,6 +21,10 @@ const ServiceScreenSingle = ({ s_id = 1 }) => {
     fetchData();
   }, []);
 
+  const handleChatPress = () => {
+    console.log('handle chat press')
+  }
+
   return (
     <ScrollView contentContainerStyle={styles.container} showsVerticalScrollIndicator={false}>
       {serviceData && 
@@ -41,12 +45,14 @@ const ServiceScreenSingle = ({ s_id = 1 }) => {
             cat_name: serviceData.cat_name,
           }} />
           <PackagesSec packages={serviceData.packages} />
-          <FeedbacksSec />
+          <FeedbacksSec feedbacks={serviceData.feedbacks} />
+
+          <TouchableOpacity onPress={handleChatPress} style={styles.chatTextWrapper}>
+              <Image source={{ uri: serviceData.provider_pro_pic }} style={styles.chatImageStyles} />
+              <Text style={styles.chatTextStyles }>Chat</Text>
+          </TouchableOpacity>
         </View>
       }
-      <View>
-        {/* Chat button */}
-      </View>
     </ScrollView>
   );
 };
@@ -55,9 +61,38 @@ export default ServiceScreenSingle
 
 const styles = StyleSheet.create({
   container: {
+    flexGrow: 1,
     backgroundColor: colors.white,
   },
   sectionWrapper: {
     paddingHorizontal: 15,
-  }
+  },
+  chatTextWrapper: {
+    position: 'absolute',
+    bottom: 15,
+    right: 15,
+    zIndex: 5,
+    borderWidth: 1,
+    borderColor: colors.border,
+    borderRadius: 25,
+    paddingVertical: 5,
+    paddingLeft: 5,
+    paddingRight: 10,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: colors.white,
+  },
+  chatImageStyles: {
+    width: 40,
+    height: 40,
+    resizeMode: 'cover',
+    borderRadius: 50,
+    marginRight: 10,
+  },
+  chatTextStyles: {
+    fontSize: 24,
+    fontWeight: '600',
+    color: colors.textDark,
+  },
 })

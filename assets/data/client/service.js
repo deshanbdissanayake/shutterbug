@@ -180,6 +180,35 @@ const getServiceById = {
             e_id: 3,
             e_name: 'Drone',
         },
+    ],
+    feedbacks: [
+        {
+            f_id: 1,
+            user_img: 'https://shutterbug.introps.com/documents/user/test-1.jpg',
+            name: 'Melani Fernando',
+            city: 'Kandy',
+            rating: 5.0,
+            review: 'In eget pellentesque sapien, quis gravida risus. Vivamus vel magna diam. Nullam porta felis sit amet eleifend vehicula. Proin congue est maximus quam imperdiet suscipit. ',
+            time: '3 minutes ago',
+        },
+        {
+            f_id: 2,
+            user_img: 'https://shutterbug.introps.com/documents/user/test-1.jpg',
+            name: 'Sam Wick',
+            city: 'Melbourne',
+            rating: 4.8,
+            review: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean venenatis tortor ex, varius rutrum elit euismod sit amet. Phasellus iaculis maximus leo, non lobortis diam pellentesque ut. Aenean non dolor rhoncus ex aliquet sollicitudin. Nunc luctus at lacus in mattis. Fusce hendrerit eu est accumsan cursus. ',
+            time: '7 hours ago',
+        },
+        {
+            f_id: 3,
+            user_img: 'https://shutterbug.introps.com/documents/user/test-1.jpg',
+            name: 'John Yooghyuk',
+            city: 'Korea',
+            rating: 3.9,
+            review: 'Integer vehicula pellentesque ultricies. Nam condimentum auctor interdum. Nunc ac maximus mauris. Sed volutpat mi nec tortor porta, in consequat justo consequat. ',
+            time: '5 days ago',
+        },
     ]
 }
 

@@ -22,7 +22,7 @@ const providerSec = ({ provider }) => {
       <View style={styles.btnWrapper}>
         <MiniButton 
           func = {handleNavigateToProfile}
-          content = {<AntDesign name="caretdown" size={16} color={colors.textDark} />}
+          content = {<AntDesign name="caretright" size={16} color={colors.textDark} />}
         />
       </View>
     </View>

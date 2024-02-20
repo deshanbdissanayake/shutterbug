@@ -3,12 +3,15 @@ import React, { useState } from 'react'
 import colors from '../../assets/colors/colors'
 import { FontAwesome } from '@expo/vector-icons'
 
-const PackageSingle = ({ pkg, selectedPkg = false, handlePackageSelect }) => {
+const PackageSingle = ({ pkg, selectedPkg, handlePackageSelect }) => {
     return (
         <Pressable onPress={() => handlePackageSelect(pkg.pkg_id)}>
-            <View style={[styles.container, styles.selectedPkgStyles]}>
+            <View style={[styles.container, selectedPkg === pkg.pkg_id ? styles.selectedPkgStyles : null]}>
                 <View style={styles.topWrapper}>
                     <Text style={styles.titleTextStyles} numberOfLines={1}>{pkg.pkg_name}</Text>
+                    {selectedPkg === pkg.pkg_id ? (
+                        <Text style={styles.selectedPkgTextStyles}>Selected</Text>
+                    ) : null}
                 </View>
                 <View style={styles.bottomWrapper}>
                     <View style={styles.highlightWrapper}>
@@ -88,5 +91,12 @@ const styles = StyleSheet.create({
     selectedPkgStyles: {
         borderWidth: 2,
         borderColor: colors.primary
+    },
+    selectedPkgTextStyles: {
+        backgroundColor: colors.primary,
+        color: colors.textLight,
+        paddingVertical: 5,
+        paddingHorizontal: 10,
+        borderRadius: 7,
     },
 })

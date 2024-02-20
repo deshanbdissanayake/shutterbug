@@ -8,8 +8,9 @@ const serviceInfoSec = ({ info }) => {
   return (
     <View style={styles.container}>
       <Text style={styles.titleTextStyles}>{info.title}</Text>
+      <Text style={styles.catTextStyles}>{info.type} | {info.cat_name}</Text>
       <Pressable onPress={() => setShowAll(!showAll)}>
-        <Text style={styles.descTextStyles} numberOfLines={showAll ? undefined : 2}>{info.description}</Text>
+        <Text style={styles.descTextStyles} numberOfLines={showAll ? undefined : 3}>{info.description}</Text>
       </Pressable>
       <View style={styles.eventsWrapper}>
         {info.events.length > 0 && info.events.map((val)=>(
@@ -32,6 +33,11 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: '400',
     color: colors.textDark,
+  },
+  catTextStyles: {
+    fontSize: 12,
+    color: colors.textGraySecondary,
+    textTransform: 'capitalize',
   },
   descTextStyles: {
     marginTop: 10,
