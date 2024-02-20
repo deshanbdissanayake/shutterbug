@@ -1,14 +1,32 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 
-const feedbacksSec = () => {
+const FeedbacksSec = () => {
   return (
     <View>
+      <Text>feedbacksSec</Text>
+      <Text>feedbacksSec</Text>
+      <Text>feedbacksSec</Text>
+      <Text>feedbacksSec</Text>
+      <Text>feedbacksSec</Text>
+      <Text>feedbacksSec</Text>
+      <Text>feedbacksSec</Text>
+      <Text>feedbacksSec</Text>
+      <Text>feedbacksSec</Text>
+      <Text>feedbacksSec</Text>
+      <Text>feedbacksSec</Text>
+      <Text>feedbacksSec</Text>
+      <Text>feedbacksSec</Text>
+      <Text>feedbacksSec</Text>
+      <Text>feedbacksSec</Text>
+      <Text>feedbacksSec</Text>
+      <Text>feedbacksSec</Text>
+      <Text>feedbacksSec</Text>
       <Text>feedbacksSec</Text>
     </View>
   )
 }
 
-export default feedbacksSec
+export default FeedbacksSec
 
 const styles = StyleSheet.create({})

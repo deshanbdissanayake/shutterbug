@@ -1,10 +1,13 @@
-import { Image, StyleSheet, View } from 'react-native'
+import { Image, Pressable, StyleSheet, View } from 'react-native'
 import React from 'react'
 
-const ServiceImage = ({ imageData, count}) => {
+
+const ServiceImage = ({ imageData, onImageClick }) => {
   return (
     <View style={styles.container} >
+      <Pressable onPress={() => onImageClick(imageData.si_id)}>
         <Image source={{ uri: imageData.img }} style={styles.serviceImageStyles} />
+      </Pressable>
     </View>
   )
 }

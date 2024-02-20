@@ -108,6 +108,7 @@ const getServices = [
 const getServiceById = {
     s_id: 1,
     provider_id: 1,
+    provider_username: 'Desh',
     provider_name: 'Deshan Dissanayake',
     provider_pro_pic: 'https://shutterbug.introps.com/documents/user/test-1.jpg',
     s_rating: 4.8,
@@ -115,7 +116,7 @@ const getServiceById = {
     cat_id: 1,
     cat_name: 'Drone',
     s_name: 'Portrait Photography',
-    s_desc: 'Best provider with highest ratings.',
+    s_desc: "In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document or a typeface without relying on meaningful content. Lorem ipsum may be used as a placeholder before the final copy is available. In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document or a typeface without relying on meaningful content. Lorem ipsum may be used as a placeholder before the final copy is available.",
     s_type: 'photography',
     packages: [
         {
@@ -138,6 +139,16 @@ const getServiceById = {
             highlight_2: 'portrait and drone',
             highlight_3: 'album with 50 photos',
         },
+        {
+            pkg_id: 3,
+            pkg_name: 'Plus',
+            pkg_price: '5000',
+            pkg_desc: 'this is plus package description',
+            is_main: 0,
+            highlight_1: '10 hrs',
+            highlight_2: 'portrait and drone and everything',
+            highlight_3: 'album with 100 photos',
+        },
     ],
     s_images: [
         {
@@ -154,6 +165,20 @@ const getServiceById = {
             si_id: 3,
             img: 'https://shutterbug.introps.com/documents/service/test-3.jpg',
             is_main: 0,
+        },
+    ],
+    events: [
+        {
+            e_id: 1,
+            e_name: 'Birthday',
+        },
+        {
+            e_id: 2,
+            e_name: 'Wedding',
+        },
+        {
+            e_id: 3,
+            e_name: 'Drone',
         },
     ]
 }

@@ -1,12 +1,12 @@
-import { StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, View, ScrollView } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import colors from '../../assets/colors/colors'
 
-import ImagesSec from './ServiceScreenSingle/imagesSec';
-import ProviderSec from './ServiceScreenSingle/providerSec';
-import ServiceInfoSec from './ServiceScreenSingle/serviceInfoSec';
-import PackagesSec from './ServiceScreenSingle/packagesSec';
-import FeedbacksSec from './ServiceScreenSingle/feedbacksSec';
+import ImagesSec from './ServiceScreenSingle/ImagesSec';
+import ProviderSec from './ServiceScreenSingle/ProviderSec';
+import ServiceInfoSec from './ServiceScreenSingle/ServiceInfoSec';
+import PackagesSec from './ServiceScreenSingle/PackagesSec';
+import FeedbacksSec from './ServiceScreenSingle/FeedbacksSec';
 import { getServiceById } from '../../assets/data/client/service';
 
 const ServiceScreenSingle = ({ s_id = 1 }) => {
@@ -22,20 +22,32 @@ const ServiceScreenSingle = ({ s_id = 1 }) => {
   }, []);
 
   return (
-    <View style={styles.container}>
+    <ScrollView contentContainerStyle={styles.container} showsVerticalScrollIndicator={false}>
       {serviceData && 
         <View>
           <ImagesSec imageArr={serviceData.s_images} />
-          <ProviderSec />
-          <ServiceInfoSec />
-          <PackagesSec />
+          <ProviderSec provider={{ 
+            id : serviceData.provider_id, 
+            username: serviceData.provider_username, 
+            fullname: serviceData.provider_name, 
+            pro_pic: serviceData.provider_pro_pic
+          }} />
+          <ServiceInfoSec info={{
+            title: serviceData.s_name,
+            type: serviceData.s_type,
+            description: serviceData.s_desc,
+            events : serviceData.events,
+            cat_id: serviceData.cat_id,
+            cat_name: serviceData.cat_name,
+          }} />
+          <PackagesSec packages={serviceData.packages} />
           <FeedbacksSec />
         </View>
       }
       <View>
         {/* Chat button */}
       </View>
-    </View>
+    </ScrollView>
   );
 };
 
@@ -43,9 +55,9 @@ export default ServiceScreenSingle
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    paddingBottom: 15,
-    paddingHorizontal: 15,
     backgroundColor: colors.white,
+  },
+  sectionWrapper: {
+    paddingHorizontal: 15,
   }
 })
