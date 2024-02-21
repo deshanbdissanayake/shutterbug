@@ -36,5 +36,6 @@ const colors = {
     infoLight : '#e8f1ff',
     gold: '#FFD700',
     lightGreen: '#06c212',
+    lightBlue: '#87abc7',
   }
 export default colors;

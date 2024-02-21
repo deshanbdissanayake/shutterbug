@@ -1,6 +1,6 @@
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import React from 'react'
-import { FontAwesome } from '@expo/vector-icons'
+import { FontAwesome, Ionicons } from '@expo/vector-icons'
 import colors from '../../assets/colors/colors'
 
 const ChatItem = ({ chatData, handleChatClick }) => {
@@ -9,9 +9,6 @@ const ChatItem = ({ chatData, handleChatClick }) => {
             <View style={styles.container}>
                 <View style={styles.imageWrapper}>
                     <Image style={styles.imageStyles} source={{ uri: chatData.chat_user_img }} />
-                    <View style={styles.seenStatusStyles}>
-                        <FontAwesome name="circle" size={20} color={chatData.chat_seen_status == 'yes' ? colors.borderGrayLight : colors.lightGreen } />
-                    </View>
                 </View>
                 <View style={styles.chatWrapper}>
                     <View style={styles.nameWrapper}>
@@ -20,6 +17,13 @@ const ChatItem = ({ chatData, handleChatClick }) => {
                     </View>
                     <View style={styles.msgTextWrapper}>
                         <Text style={styles.msgTextStyles} numberOfLines={2}>{ chatData.chat_last_msg }</Text>
+                        {
+                            chatData.chat_seen_status == 'yes' ? (
+                                <Ionicons name="checkmark-done-sharp" size={16} color={colors.lightBlue} style={styles.checkTextStyles} />
+                            ) : (
+                                <FontAwesome name="circle" size={16} color={colors.lightGreen} style={styles.checkTextStyles} />
+                            )
+                        }
                     </View>
                 </View>
             </View>
@@ -66,14 +70,17 @@ const styles = StyleSheet.create({
     },
     msgTextWrapper: {
         marginTop: 2,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'flex-end',
     },
     msgTextStyles: {
         fontSize: 12,
         color: colors.textGraySecondary,
+        flex: 11
     },
-    seenStatusStyles: {
-        position: 'absolute',
-        top: 0,
-        right: 15,
+    checkTextStyles: {
+        flex: 1,
+        textAlign: 'right',
     },
 })
