@@ -35,5 +35,6 @@ const colors = {
     warningLight : '#fffae8',
     infoLight : '#e8f1ff',
     gold: '#FFD700',
+    lightGreen: '#06c212',
   }
 export default colors;
