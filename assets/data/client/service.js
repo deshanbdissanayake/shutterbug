@@ -203,7 +203,7 @@ const getServiceById = {
         {
             f_id: 3,
             user_img: 'https://shutterbug.introps.com/documents/user/test-1.jpg',
-            name: 'John Yooghyuk',
+            name: 'Yoo Jonghyuk',
             city: 'Korea',
             rating: 3.9,
             review: 'Integer vehicula pellentesque ultricies. Nam condimentum auctor interdum. Nunc ac maximus mauris. Sed volutpat mi nec tortor porta, in consequat justo consequat. ',

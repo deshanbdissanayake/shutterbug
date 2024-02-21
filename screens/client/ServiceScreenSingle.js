@@ -51,6 +51,7 @@ const ServiceScreenSingle = ({ s_id = 1 }) => {
               <Image source={{ uri: serviceData.provider_pro_pic }} style={styles.chatImageStyles} />
               <Text style={styles.chatTextStyles }>Chat</Text>
           </TouchableOpacity>
+
         </View>
       }
     </ScrollView>
@@ -68,16 +69,15 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
   },
   chatTextWrapper: {
-    position: 'absolute',
-    bottom: 15,
-    right: 15,
     zIndex: 5,
     borderWidth: 1,
     borderColor: colors.border,
-    borderRadius: 25,
+    borderRadius: 10,
     paddingVertical: 5,
     paddingLeft: 5,
     paddingRight: 10,
+    marginHorizontal: 20,
+    marginBottom: 30,
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
