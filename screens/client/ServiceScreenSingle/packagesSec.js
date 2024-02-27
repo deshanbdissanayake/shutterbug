@@ -2,6 +2,7 @@ import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-nati
 import React, { useEffect, useState } from 'react'
 import colors from '../../../assets/colors/colors'
 import PackageSingle from '../../../components/app/PackageSingle'
+import Subtitle from '../../../components/app/Subtitle';
 
 const PackagesSec = ({ packages = [] }) => {
   const [selectedPkg, setSelectedPkg] = useState(1);
@@ -20,9 +21,7 @@ const PackagesSec = ({ packages = [] }) => {
   return (
     <View style={styles.container}>
       <View style={styles.secWrapper}>
-        <View style={styles.textWrapper}>
-          <Text style={styles.secTitleTextStyles}>Available Packages</Text>
-        </View>
+        <Subtitle text={'Available Package'} />
         <ScrollView horizontal showsHorizontalScrollIndicator={false}>
           {packages.length > 0 && packages.map((val) => (
             <PackageSingle
@@ -42,8 +41,8 @@ export default PackagesSec
 
 const styles = StyleSheet.create({
   container: {
-    paddingHorizontal: 20,
     marginTop: 10,
+    marginBottom: 15,
   },
   secWrapper: {
     paddingTop: 15,
@@ -52,13 +51,5 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderTopColor: colors.borderGrayExtraLight,
     borderBottomColor: colors.borderGrayExtraLight,
-  },
-  textWrapper: {
-    marginBottom: 10,
-  },
-  secTitleTextStyles: {
-    fontSize: 16,
-    fontWeight: '400',
-    color: colors.textDark,
   },
 })

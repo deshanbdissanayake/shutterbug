@@ -6,19 +6,19 @@ import ImagesSec from './ServiceScreenSingle/ImagesSec';
 import ProviderSec from './ServiceScreenSingle/ProviderSec';
 import ServiceInfoSec from './ServiceScreenSingle/ServiceInfoSec';
 import PackagesSec from './ServiceScreenSingle/PackagesSec';
-import FeedbacksSec from './ServiceScreenSingle/FeedbacksSec';
-import { getServiceById } from '../../assets/data/client/service';
+import FeedbacksSec from '../common/FeedbackSec';
+import { getServiceById } from '../../assets/data/service';
 
 const ServiceScreenSingle = ({ s_id = 1 }) => {
   const [serviceData, setServiceData] = useState(null);
 
   useEffect(() => {
-    async function fetchData() {
+    const getData = async () => {
       //const data = await getServiceById(s_id);
-      const data = getServiceById;
+      const data = await getServiceById();
       setServiceData(data);
     }
-    fetchData();
+    getData();
   }, []);
 
   const handleChatPress = () => {
@@ -64,8 +64,6 @@ const styles = StyleSheet.create({
   container: {
     flexGrow: 1,
     backgroundColor: colors.white,
-  },
-  sectionWrapper: {
     paddingHorizontal: 15,
   },
   chatTextWrapper: {
@@ -76,7 +74,6 @@ const styles = StyleSheet.create({
     paddingVertical: 5,
     paddingLeft: 5,
     paddingRight: 10,
-    marginHorizontal: 20,
     marginBottom: 30,
     flexDirection: 'row',
     justifyContent: 'center',

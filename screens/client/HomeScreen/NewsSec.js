@@ -2,7 +2,7 @@ import { StyleSheet, View, Dimensions } from 'react-native'
 import React from 'react'
 import Carousel from 'react-native-reanimated-carousel';
 
-import { getNews } from '../../../assets/data/client/news';
+import { getNews } from '../../../assets/data/news';
 import NewsSliderSingle from '../../../components/app/NewsSliderSingle'
 
 const NewsSec = () => {

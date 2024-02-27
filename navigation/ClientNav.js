@@ -8,6 +8,7 @@ import ChatListScreen from '../screens/common/ChatListScreen';
 import colors from '../assets/colors/colors';
 import SearchScreen from '../screens/client/SearchScreen';
 import ServiceScreenSingle from '../screens/client/ServiceScreenSingle';
+import ProfileScreen from '../screens/common/ProfileScreen';
 
 function MyTabBar({ state, descriptors, navigation }) {
   return (
@@ -79,7 +80,7 @@ export default function App() {
             <Tab.Screen name="Home" component={HomeScreen} options={{ headerShown: false }}  />
             <Tab.Screen name="Search" component={SearchScreen} options={{ headerShown: false }}  />
             <Tab.Screen name="Chats" component={ChatListScreen} options={{ headerShown: false }}  />
-            <Tab.Screen name="Account" component={ChatListScreen} options={{ headerShown: false }}  />
+            <Tab.Screen name="Account" component={ProfileScreen} options={{ headerShown: false }}  />
         </Tab.Navigator>
     </NavigationContainer>
   );

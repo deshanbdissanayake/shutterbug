@@ -5,7 +5,7 @@ import Input from '../../components/general/Input'
 import { AntDesign, Ionicons } from '@expo/vector-icons'
 import MiniButton from '../../components/general/MiniButton'
 import ServiceItem from '../../components/app/ServiceItem'
-import { getServices } from '../../assets/data/client/service'
+import { getServices } from '../../assets/data/service'
 
 const SearchScreen = ({ searchItem = '' }) => {
     const [searchText, setSearchText] = useState(searchItem);
@@ -13,12 +13,12 @@ const SearchScreen = ({ searchItem = '' }) => {
     const [serviceList, setServiceList] = useState([]);
     
     useEffect(() => {
-        async function fetchData() {
-            const services =  getServices; //make this await function
+        const getData = async () => {
+            const services =  await getServices(); //make this await function
             setServiceListOriginal(services);
             searchFunc(searchItem);
         }
-        fetchData();
+        getData();
     }, []);
     
     const backBtnClick = () => {
@@ -69,7 +69,19 @@ const SearchScreen = ({ searchItem = '' }) => {
                 <View style={styles.searchResultsWrapper}>
                     <FlatList
                         data={serviceList}
-                        renderItem={({ item }) => <ServiceItem service={item} handleServiceItemClick={handleServiceItemClick} />}
+                        renderItem={({ item }) => (
+                            <ServiceItem 
+                                handleServiceItemClick={handleServiceItemClick} 
+                                s_id={item.s_id}
+                                s_rating={item.s_rating}
+                                number_of_reviews={item.number_of_reviews}
+                                provider_name={item.provider_name}
+                                s_name={item.s_name}
+                                s_type={item.s_type}
+                                main_pkg_price={item.main_pkg_price}
+                                main_s_img={item.main_s_img}
+                            />
+                        )}
                         keyExtractor={(item) => item.s_id.toString()}
                     />
                 </View>

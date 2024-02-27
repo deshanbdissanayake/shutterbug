@@ -1,6 +1,6 @@
 import { FlatList, StyleSheet, Text, View } from 'react-native'
 import React from 'react'
-import { chatListByUserId } from '../../assets/data/common/chat'
+import { chatListByUserId } from '../../assets/data/chat'
 import ChatItem from '../../components/app/ChatItem'
 import colors from '../../assets/colors/colors'
 
