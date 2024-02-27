@@ -25,7 +25,7 @@ const getNews = async () => {
     return data;
 }
 
-const getNewsById = async () => {
+const getNewsBy_Id = async () => {
     let data = {
         id: 1,
         title: "30%",
