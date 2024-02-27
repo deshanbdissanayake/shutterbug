@@ -1,6 +1,7 @@
 import { StyleSheet, View, ScrollView, Image, Text, TouchableOpacity } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import colors from '../../assets/colors/colors'
+import { useNavigation } from '@react-navigation/native'
 
 import ImagesSec from './ServiceScreenSingle/ImagesSec';
 import ProviderSec from './ServiceScreenSingle/ProviderSec';
@@ -10,6 +11,7 @@ import FeedbacksSec from '../common/FeedbackSec';
 import { getServiceById } from '../../assets/data/service';
 
 const ServiceScreenSingle = ({ s_id }) => {
+  const navigation = useNavigation();
   const [serviceData, setServiceData] = useState(null);
 
   useEffect(() => {
@@ -20,8 +22,8 @@ const ServiceScreenSingle = ({ s_id }) => {
     getData();
   }, []);
 
-  const handleChatPress = () => {
-    console.log('handle chat press')
+  const handleChatPress = (p_id) => {
+    navigation.navigate('Provider Chat', { p_id })
   }
 
   return (
@@ -35,22 +37,29 @@ const ServiceScreenSingle = ({ s_id }) => {
             fullname: serviceData.provider_name, 
             pro_pic: serviceData.provider_pro_pic
           }} />
-          <ServiceInfoSec info={{
-            title: serviceData.s_name,
-            type: serviceData.s_type,
-            description: serviceData.s_desc,
-            events : serviceData.events,
-            cat_id: serviceData.cat_id,
-            cat_name: serviceData.cat_name,
-          }} />
-          <PackagesSec packages={serviceData.packages} />
-          <FeedbacksSec feedbacks={serviceData.feedbacks} />
+          <View style={styles.paddingStyles}>
+            <ServiceInfoSec info={{
+              title: serviceData.s_name,
+              type: serviceData.s_type,
+              description: serviceData.s_desc,
+              events : serviceData.events,
+              cat_id: serviceData.cat_id,
+              cat_name: serviceData.cat_name,
+            }} />
+          </View>
+          <View style={styles.paddingStyles}>
+            <PackagesSec packages={serviceData.packages} />
 
-          <TouchableOpacity onPress={handleChatPress} style={styles.chatTextWrapper}>
-              <Image source={{ uri: serviceData.provider_pro_pic }} style={styles.chatImageStyles} />
-              <Text style={styles.chatTextStyles }>Chat</Text>
-          </TouchableOpacity>
-
+          </View>
+          <View style={styles.paddingStyles}>
+            <FeedbacksSec feedbacks={serviceData.feedbacks} />
+          </View>
+          <View style={styles.paddingStyles}>
+            <TouchableOpacity onPress={() => handleChatPress(serviceData.provider_id)} style={styles.chatTextWrapper}>
+                <Image source={{ uri: serviceData.provider_pro_pic }} style={styles.chatImageStyles} />
+                <Text style={styles.chatTextStyles }>Chat</Text>
+            </TouchableOpacity>
+          </View>
         </View>
       }
     </ScrollView>
@@ -63,7 +72,6 @@ const styles = StyleSheet.create({
   container: {
     flexGrow: 1,
     backgroundColor: colors.white,
-    paddingHorizontal: 15,
   },
   chatTextWrapper: {
     zIndex: 5,
@@ -90,5 +98,8 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: '600',
     color: colors.textDark,
+  },
+  paddingStyles: {
+    paddingHorizontal: 15,
   },
 })

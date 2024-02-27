@@ -13,8 +13,7 @@ const SearchScreen = () => {
     const navigation = useNavigation();
     const route = useRoute();
 
-    const { cat_name } = route.params;
-    let searchItem = cat_name === undefined ? '' : cat_name;
+    let searchItem = route.params === undefined ? '' : route.params.cat_name;
     
     const [searchText, setSearchText] = useState(searchItem);
     const [serviceListOriginal, setServiceListOriginal] = useState([]);
@@ -26,8 +25,11 @@ const SearchScreen = () => {
             setServiceListOriginal(services);
         }
         getData();
-        searchFunc(searchText);
     }, []);
+    
+    useEffect(()=>{
+        searchFunc(searchText);
+    },[serviceListOriginal])
     
     const backBtnClick = () => {
         navigation.goBack();
@@ -95,7 +97,7 @@ const SearchScreen = () => {
                                 keyExtractor={(item) => item.s_id.toString()}
                             />
                         ) : (
-                            <NoData text={'No Services for '+ searchItem} />
+                            <NoData text={searchText === '' ? 'No Services' : 'No Services for '+ searchItem} />
                         )
                     }
                 </View>

@@ -19,6 +19,7 @@ const styles = StyleSheet.create({
         marginTop: 10,
         flexDirection: 'row',
         justifyContent: 'center',
+        alignItems: 'center',
     },
     btnTextStyles: {
         color: colors.textDark,

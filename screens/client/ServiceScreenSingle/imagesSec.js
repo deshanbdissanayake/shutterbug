@@ -63,14 +63,15 @@ const styles = StyleSheet.create({
   },
   backBtnStyles: {
     position: 'absolute',
-    top: 10,
+    top: 20,
     left: 0,
     zIndex: 2,
-    width: '100%'
+    width: '100%',
+    paddingHorizontal: 15,
   },
   background: {
     width: '100%',
-    height: 70,
+    height: 80,
     position: 'absolute',
     left: 0,
     right: 0,
