@@ -1,15 +1,16 @@
 import { StyleSheet, Text, View } from 'react-native'
-import React, { useState } from 'react'
-import Input from '../../../components/general/Input'
-import { Feather, Ionicons } from '@expo/vector-icons/build/Icons';
-import { Pressable } from 'react-native';
+import React from 'react'
+import { Ionicons } from '@expo/vector-icons/build/Icons';
 import colors from '../../../assets/colors/colors';
-import Button from '../../../components/general/Button';
 import { TouchableOpacity } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
 const SearchSec = () => {
+  const navigation = useNavigation();
 
-  const searchBtnClick = () => {}
+  const searchBtnClick = () => {
+    navigation.navigate('Search');
+  }
 
   return (
     <View style={styles.container}>

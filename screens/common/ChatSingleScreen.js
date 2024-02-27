@@ -1,14 +1,15 @@
-import { StyleSheet, Text, View } from 'react-native'
-import React from 'react'
+import React from 'react';
+import { Text, View } from 'react-native';
 
-const ChatSingleScreen = () => {
+const ProviderProfileScreen = ({ route }) => {
+  console.log('route', route)
+
+  // Now you can use p_id in your component
   return (
     <View>
-      <Text>ChatSingleScreen</Text>
+      <Text>Provider ID:</Text>
     </View>
-  )
-}
+  );
+};
 
-export default ChatSingleScreen
-
-const styles = StyleSheet.create({})
+export default ProviderProfileScreen;

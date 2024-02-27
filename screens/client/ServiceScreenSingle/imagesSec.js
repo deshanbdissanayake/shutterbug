@@ -6,13 +6,16 @@ import MiniButton from '../../../components/general/MiniButton';
 import { AntDesign } from '@expo/vector-icons';
 import colors from '../../../assets/colors/colors';
 import { LinearGradient } from 'expo-linear-gradient';
+import { useNavigation } from '@react-navigation/native'
 
 const ImagesSec = ({ imageArr }) => {
+  const navigation = useNavigation();
+
   const width = Dimensions.get('window').width;
   const [currentIndex, setCurrentIndex] = useState(1);
 
   const backBtnClick = () => {
-    console.log('back clicked')
+    navigation.goBack();
   }
 
   const onImageClick = (img_id) => {

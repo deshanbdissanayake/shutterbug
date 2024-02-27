@@ -4,7 +4,7 @@ import colors from '../../assets/colors/colors'
 
 const CategoryItem = ({cat, handleCategoryClick}) => {
   return (
-    <TouchableOpacity onPress={() => handleCategoryClick(cat.id)}>
+    <TouchableOpacity onPress={() => handleCategoryClick(cat.name)}>
         <View style={styles.container}>
             <Image source={{ uri: cat.image }} style={styles.imageStyles} />
             <Text style={styles.catTextStyles} numberOfLines={1}>{cat.name}</Text>

@@ -4,8 +4,10 @@ import Carousel from 'react-native-reanimated-carousel';
 
 import { getNews } from '../../../assets/data/news';
 import NewsSliderSingle from '../../../components/app/NewsSliderSingle'
+import { useNavigation } from '@react-navigation/native'
 
 const NewsSec = () => {
+  const navigation = useNavigation();
   const [news, setNews] = useState(null);
   const width = Dimensions.get('window').width;
 
@@ -22,8 +24,8 @@ const NewsSec = () => {
     getData()
   },[])
 
-  const handleViewMoreClick = (clickedNewsId) => {
-    console.log(clickedNewsId)
+  const handleViewMoreClick = (news_id) => {
+    navigation.navigate('News Single', { news_id });
   }
 
   return (

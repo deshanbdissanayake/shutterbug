@@ -3,11 +3,15 @@ import { StyleSheet, Image, View, Text } from 'react-native';
 import Button from '../components/general/Button';
 import colors from '../assets/colors/colors';
 
-const WelcomeScreen = () => {
+const WelcomeScreen = ({ navigation }) => {
 
-    const loadLoginScreen = () => {}
+    const loadLoginScreen = () => {
+        navigation.navigate('Sign In');
+    }
 
-    const loadRegisterScreen = () => {}
+    const loadRegisterScreen = () => {
+        navigation.navigate('Sign Up');
+    }
 
     return (
         <View style={styles.container}>
@@ -20,7 +24,6 @@ const WelcomeScreen = () => {
                     bdr = {colors.primary}
                 />
                 <Button
-                    bgColor = {colors.bgLight}
                     content = {<Text style={{color: colors.primary}}>Sign In</Text>}
                     func = {loadLoginScreen}
                     bdr = {colors.primary}
@@ -39,6 +42,7 @@ const styles = StyleSheet.create({
         paddingHorizontal: 15,
         alignItems: 'center',
         justifyContent: 'center',
+        backgroundColor: colors.white,
     },
     gifImageStyles: {
         flex: 2,

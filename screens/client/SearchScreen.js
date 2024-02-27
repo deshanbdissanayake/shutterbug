@@ -6,27 +6,35 @@ import { AntDesign, Ionicons } from '@expo/vector-icons'
 import MiniButton from '../../components/general/MiniButton'
 import ServiceItem from '../../components/app/ServiceItem'
 import { getServices } from '../../assets/data/service'
+import { useNavigation, useRoute } from '@react-navigation/native'
+import NoData from '../../components/app/NoData'
 
-const SearchScreen = ({ searchItem = '' }) => {
+const SearchScreen = () => {
+    const navigation = useNavigation();
+    const route = useRoute();
+
+    const { cat_name } = route.params;
+    let searchItem = cat_name === undefined ? '' : cat_name;
+    
     const [searchText, setSearchText] = useState(searchItem);
     const [serviceListOriginal, setServiceListOriginal] = useState([]);
     const [serviceList, setServiceList] = useState([]);
     
     useEffect(() => {
         const getData = async () => {
-            const services =  await getServices(); //make this await function
+            const services =  await getServices();
             setServiceListOriginal(services);
-            searchFunc(searchItem);
         }
         getData();
+        searchFunc(searchText);
     }, []);
     
     const backBtnClick = () => {
-        // Handle back button click here
+        navigation.goBack();
     };
     
     const handleServiceItemClick = (s_id) => {
-        console.log(s_id);
+        navigation.navigate('Service Single', { s_id })
     };
     
     const searchFunc = (val) => {
@@ -67,23 +75,29 @@ const SearchScreen = ({ searchItem = '' }) => {
                     </View>
                 </View>
                 <View style={styles.searchResultsWrapper}>
-                    <FlatList
-                        data={serviceList}
-                        renderItem={({ item }) => (
-                            <ServiceItem 
-                                handleServiceItemClick={handleServiceItemClick} 
-                                s_id={item.s_id}
-                                s_rating={item.s_rating}
-                                number_of_reviews={item.number_of_reviews}
-                                provider_name={item.provider_name}
-                                s_name={item.s_name}
-                                s_type={item.s_type}
-                                main_pkg_price={item.main_pkg_price}
-                                main_s_img={item.main_s_img}
+                    {
+                        (serviceList && serviceList.length > 0) ? (
+                            <FlatList
+                                data={serviceList}
+                                renderItem={({ item }) => (
+                                    <ServiceItem 
+                                        handleServiceItemClick={handleServiceItemClick} 
+                                        s_id={item.s_id}
+                                        s_rating={item.s_rating}
+                                        number_of_reviews={item.number_of_reviews}
+                                        provider_name={item.provider_name}
+                                        s_name={item.s_name}
+                                        s_type={item.s_type}
+                                        main_pkg_price={item.main_pkg_price}
+                                        main_s_img={item.main_s_img}
+                                    />
+                                )}
+                                keyExtractor={(item) => item.s_id.toString()}
                             />
-                        )}
-                        keyExtractor={(item) => item.s_id.toString()}
-                    />
+                        ) : (
+                            <NoData text={'No Services for '+ searchItem} />
+                        )
+                    }
                 </View>
             </View>
         </KeyboardAvoidingView>
@@ -95,7 +109,7 @@ export default SearchScreen
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        paddingTop: 10,
+        paddingTop: 5,
         paddingHorizontal: 10,
         backgroundColor: colors.white,
     },

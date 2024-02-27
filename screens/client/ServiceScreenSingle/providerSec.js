@@ -3,11 +3,13 @@ import React from 'react'
 import colors from '../../../assets/colors/colors'
 import MiniButton from '../../../components/general/MiniButton'
 import { AntDesign } from '@expo/vector-icons'
+import { useNavigation } from '@react-navigation/native'
 
 const providerSec = ({ provider }) => {
+  const navigation = useNavigation();
 
-  const handleNavigateToProfile = () => {
-
+  const handleNavigateToProfile = (p_id) => {
+    navigation.navigate('Provider Profile', { p_id });
   }
 
   return (
@@ -21,7 +23,7 @@ const providerSec = ({ provider }) => {
       </View>
       <View style={styles.btnWrapper}>
         <MiniButton 
-          func = {handleNavigateToProfile}
+          func = {() => handleNavigateToProfile(provider.p_id)}
           content = {<AntDesign name="caretright" size={16} color={colors.textDark} />}
         />
       </View>

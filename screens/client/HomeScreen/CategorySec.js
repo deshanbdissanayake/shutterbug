@@ -4,18 +4,22 @@ import { Pressable } from 'react-native'
 import colors from '../../../assets/colors/colors';
 import { getEvents, getCategories } from '../../../assets/data/category';
 import CategoryItem from '../../../components/app/CategoryItem';
+import { useNavigation } from '@react-navigation/native'
 
 const CategorySec = () => {
+  const navigation = useNavigation();
   const [selectedType, setSelectedType] = useState('photography');
   const [selectedEvent, setSelectedEvent] = useState(0);
   const [loading, setLoading] = useState(true);
   const [eventList, setEventList] = useState([]);
   const [categoryList, setCategoryList] = useState([]);
   
-  const seeAllClick = () => {}
+  const seeAllClick = () => {
+    
+  }
   
-  const handleCategoryClick = (clickedCatId) => {
-      console.log(clickedCatId)
+  const handleCategoryClick = (cat_name) => {
+      navigation.navigate('Search', { cat_name })
   }
   
   const categoryListOriginal = useRef([]);
@@ -74,7 +78,7 @@ const CategorySec = () => {
             </Text>
           </Pressable>
 
-          {eventList.length > 0 && eventList.map((ev) => (
+          {(eventList && eventList.length > 0) && eventList.map((ev) => (
             <Pressable 
               key={ev.id}
               style={[
@@ -92,7 +96,7 @@ const CategorySec = () => {
         </ScrollView>
 
         <View style={styles.categoryItemsWrapper}>
-        {categoryList.length > 0 && categoryList.map((cat) => (
+        {(categoryList && categoryList.length > 0) && categoryList.map((cat) => (
           <View key={cat.id} style={styles.categoryItemStyles}>
             <CategoryItem cat={cat} handleCategoryClick={handleCategoryClick} />
           </View>

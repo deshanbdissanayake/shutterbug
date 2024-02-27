@@ -3,10 +3,19 @@ import React from 'react'
 import MiniButton from '../../../components/general/MiniButton'
 import { AntDesign } from '@expo/vector-icons'
 import colors from '../../../assets/colors/colors'
+import { useNavigation } from '@react-navigation/native'
 
-const ProfileSec = ({ id, pro_pic, fullname, username, p_ratings, number_of_reviews }) => {
-  const handleBackClick = () => {}
-  const handleChatClick = () => {}
+const ProfileSec = ({ p_id, pro_pic, fullname, username, p_ratings, number_of_reviews }) => {
+
+  const navigation = useNavigation();
+
+  const handleBackClick = () => {
+    navigation.goBack()
+  }
+
+  const handleChatClick = (p_id) => {
+    navigation.navigate('Provider Chat', { p_id })
+  }
 
   return (
     <View style={styles.container}>
@@ -23,7 +32,7 @@ const ProfileSec = ({ id, pro_pic, fullname, username, p_ratings, number_of_revi
           </View>
         </View>
         <View style={styles.rightWrapper}>
-            <TouchableOpacity style={styles.contactWrapper} onPress={handleChatClick}>
+            <TouchableOpacity style={styles.contactWrapper} onPress={() => handleChatClick(p_id)}>
               <Text style={styles.contactStyles}>Contact</Text>
             </TouchableOpacity>
         </View>

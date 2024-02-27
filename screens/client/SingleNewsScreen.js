@@ -3,15 +3,18 @@ import { StyleSheet, Text, View, ScrollView, Image } from 'react-native'
 import { AntDesign } from '@expo/vector-icons'
 import MiniButton from '../../components/general/MiniButton'
 import colors from '../../assets/colors/colors';
-import { getNewsById } from '../../assets/data/client/news';
+import { getNewsById } from '../../assets/data/news';
 import SplashScreen from '../SplashScreen';
+import { useNavigation, useRoute } from '@react-navigation/native'
 
-export default function SingleNewsScreen() {
-
+const SingleNewsScreen = () => {
+    const navigation = useNavigation();
+    const route = useRoute();
+    
     const [newsItem, setNewsItem] = useState({});
     const [loading, setLoading] = useState(true);
 
-    const newsID  = 1; //just a dummy data
+    const newsID  = route.params.news_id;
 
     // Getting news data by ID
     const fetchNewsData = async () => {
@@ -30,7 +33,7 @@ export default function SingleNewsScreen() {
 
     //for back button click function
     const backBtnClick = () => {
-       console.log("clicked back news");
+        navigation.goBack();
     };
 
     if(loading){ // when fetching data
@@ -68,6 +71,8 @@ export default function SingleNewsScreen() {
     }
 
 }
+
+export default SingleNewsScreen
 
 const styles = StyleSheet.create({
     container: {

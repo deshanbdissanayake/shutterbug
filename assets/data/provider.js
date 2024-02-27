@@ -1,6 +1,6 @@
 const getProviderById = async (id) => {
     let data = {
-        id: 1,
+        p_id: 1,
         pro_pic: 'https://shutterbug.introps.com/documents/user/test-1.jpg',
         fullname: 'Deshan Dissanayake',
         username: 'Desh',

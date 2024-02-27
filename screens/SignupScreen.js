@@ -1,14 +1,14 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 
-const ProviderNav = () => {
+const SignupScreen = () => {
   return (
     <View>
-      <Text>ProviderNav</Text>
+      <Text>SignupScreen</Text>
     </View>
   )
 }
 
-export default ProviderNav
+export default SignupScreen
 
 const styles = StyleSheet.create({})

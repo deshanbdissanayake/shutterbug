@@ -7,7 +7,9 @@ import SearchSec from './HomeScreen/SearchSec';
 import colors from '../../assets/colors/colors';
 
 const HomeScreen = () => {
-    const handleMoreClick = () => {};
+    const handleMoreClick = () => {
+        console.log('3 dots clicked')
+    };
 
     return (
         <View style={styles.container}>

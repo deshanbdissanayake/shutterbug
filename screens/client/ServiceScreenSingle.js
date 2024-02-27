@@ -9,13 +9,12 @@ import PackagesSec from './ServiceScreenSingle/PackagesSec';
 import FeedbacksSec from '../common/FeedbackSec';
 import { getServiceById } from '../../assets/data/service';
 
-const ServiceScreenSingle = ({ s_id = 1 }) => {
+const ServiceScreenSingle = ({ s_id }) => {
   const [serviceData, setServiceData] = useState(null);
 
   useEffect(() => {
     const getData = async () => {
-      //const data = await getServiceById(s_id);
-      const data = await getServiceById();
+      const data = await getServiceById(s_id);
       setServiceData(data);
     }
     getData();
@@ -31,7 +30,7 @@ const ServiceScreenSingle = ({ s_id = 1 }) => {
         <View>
           <ImagesSec imageArr={serviceData.s_images} />
           <ProviderSec provider={{ 
-            id : serviceData.provider_id, 
+            p_id : serviceData.provider_id, 
             username: serviceData.provider_username, 
             fullname: serviceData.provider_name, 
             pro_pic: serviceData.provider_pro_pic

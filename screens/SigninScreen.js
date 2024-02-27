@@ -6,13 +6,14 @@ import Input from '../components/general/Input';
 import { Feather, FontAwesome5 } from '@expo/vector-icons';
 import FormErrorMsg from '../components/general/FormErrorMsg';
 
-const SigninScreen = () => {
+const SigninScreen = ({ navigation }) => {
     const [userName, setUserName] = useState('');
     const [password, setPassword] = useState('');
     const [errorMsg, setErrorMsg] = useState('');
     const [secureTextEntry, setSecureTextEntry] = useState(true);
 
     const handleLoginClick = async () => {
+        /*
         if (!userName) {
             setErrorMsg('Please enter your username.');
             return;
@@ -29,8 +30,9 @@ const SigninScreen = () => {
         }
 
         // Add any further validation for the password if needed
-    
         setErrorMsg('');
+        */
+       navigation.navigate('Client')
     };
 
     const handleForgotPwClick = () => {
@@ -42,7 +44,7 @@ const SigninScreen = () => {
     }
 
     const handleRegClick = () => {
-        //add function to redirect to register screen
+        navigation.navigate('Sign Up');
     }
 
     return (
@@ -129,6 +131,7 @@ const styles = StyleSheet.create({
         flex: 1,
         paddingTop: 10,
         paddingHorizontal: 15,
+        backgroundColor: colors.white,
     },
     scrollViewContent: {
         flexGrow: 1,

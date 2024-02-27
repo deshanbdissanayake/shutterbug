@@ -8,13 +8,13 @@ import { getProviderById } from '../../assets/data/provider'
 import PortfolioSec from './ProfileScreen/PortfolioSec'
 import colors from '../../assets/colors/colors'
 
-const ProfileScreen = () => {
+const ProfileScreen = ({ p_id }) => {
     const [profileData, setProfileData] = useState(null);
 
     useEffect(() => {
         const getData = async () => {
             try {
-                let data = await getProviderById();
+                let data = await getProviderById(p_id);
                 setProfileData(data);
             } catch (error) {
                 console.log('error getting profile data: ', error)
@@ -29,7 +29,7 @@ const ProfileScreen = () => {
             {profileData && (
                 <>
                     <ProfileSec 
-                        id={profileData.id}
+                        p_id={profileData.id}
                         pro_pic={profileData.pro_pic}
                         fullname={profileData.fullname}
                         username={profileData.username}

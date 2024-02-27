@@ -1,14 +1,13 @@
 import * as React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Ionicons, Octicons, FontAwesome5, MaterialCommunityIcons } from '@expo/vector-icons';
-import HomeScreen from '../screens/client/HomeScreen';
 import ChatListScreen from '../screens/common/ChatListScreen';
 import colors from '../assets/colors/colors';
 import SearchScreen from '../screens/client/SearchScreen';
 import ServiceScreenSingle from '../screens/client/ServiceScreenSingle';
 import ProfileScreen from '../screens/common/ProfileScreen';
+import ClientNavHome from './ClientNavHome';
 
 function MyTabBar({ state, descriptors, navigation }) {
   return (
@@ -37,15 +36,15 @@ function MyTabBar({ state, descriptors, navigation }) {
 
         let icon;
 
-        if (route.name === 'Home') {
+        if (route.name === 'Client Home') {
             icon = <Octicons name="home" size={24} />;
-        } else if (route.name === 'Chats') {
+        } else if (route.name === 'Client Chats') {
             icon = <Ionicons name="chatbubble-ellipses-outline" size={24} />;
-        } else if (route.name === 'Search') {
+        } else if (route.name === 'Client Search') {
             icon = <Octicons name="search" size={24} />;
-        } else if (route.name === 'Orders') {
+        } else if (route.name === 'Client Orders') {
             icon = <MaterialCommunityIcons name="file-table-box-multiple-outline" size={24}/>;
-        } else if (route.name === 'Account') {
+        } else if (route.name === 'Client Account') {
             icon = <FontAwesome5 name="user" size={24} />;
         }
         
@@ -74,15 +73,13 @@ const Tab = createBottomTabNavigator();
 
 export default function App() {
   return (
-    <NavigationContainer>
-        <Tab.Navigator tabBar={(props) => <MyTabBar {...props}  />} >
-            <Tab.Screen name="Orders" component={ServiceScreenSingle} options={{ headerShown: false }}  />
-            <Tab.Screen name="Home" component={HomeScreen} options={{ headerShown: false }}  />
-            <Tab.Screen name="Search" component={SearchScreen} options={{ headerShown: false }}  />
-            <Tab.Screen name="Chats" component={ChatListScreen} options={{ headerShown: false }}  />
-            <Tab.Screen name="Account" component={ProfileScreen} options={{ headerShown: false }}  />
-        </Tab.Navigator>
-    </NavigationContainer>
+    <Tab.Navigator tabBar={(props) => <MyTabBar {...props}  />} >
+        <Tab.Screen name="Client Home" component={ClientNavHome} options={{ headerShown: false }}  />
+        <Tab.Screen name="Client Orders" component={ServiceScreenSingle} options={{ headerShown: false }}  />
+        <Tab.Screen name="Client Search" component={SearchScreen} options={{ headerShown: false }}  />
+        <Tab.Screen name="Client Chats" component={ChatListScreen} options={{ headerShown: false }}  />
+        <Tab.Screen name="Client Account" component={ProfileScreen} options={{ headerShown: false }}  />
+    </Tab.Navigator>
   );
 }
 
