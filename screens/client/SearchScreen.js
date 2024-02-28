@@ -97,7 +97,7 @@ const SearchScreen = () => {
                                 keyExtractor={(item) => item.s_id.toString()}
                             />
                         ) : (
-                            <NoData text={searchText === '' ? 'No Services' : 'No Services for '+ searchItem} />
+                            <NoData text={searchText === '' ? 'Enter Search Text' : 'No Services for '+ searchItem} />
                         )
                     }
                 </View>

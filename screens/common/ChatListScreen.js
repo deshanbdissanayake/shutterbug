@@ -1,27 +1,45 @@
 import { FlatList, StyleSheet, Text, View } from 'react-native'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { chatListByUserId } from '../../assets/data/chat'
 import ChatItem from '../../components/app/ChatItem'
+import Header from '../../components/app/Header'
+import NoData from '../../components/app/NoData'
 import colors from '../../assets/colors/colors'
+import { useNavigation } from '@react-navigation/native'
 
 const ChatListScreen = () => {
+  const navigation = useNavigation();
+  const [chatList, setChatList] = useState(null);
+
+  useEffect(() => {
+    const getData = async () => {
+      try {
+        let data = await chatListByUserId();
+        setChatList(data);
+      } catch (error) {
+        console.log('error at getting chats', error)
+        setChatList(null)
+      }
+    }
+    getData();
+  }, [])
 
   const handleChatClick = (chat_id) => {
-    console.log('chat_id', chat_id)
+    navigation.navigate('Single Chat', { chat_id })
   }
 
   return (
     <View style={styles.container}>
-      <View>
-        <Text style={styles.headerTextStyles}>Inbox</Text>
-      </View>
-      <View style={styles.chatListWrapper}>
-        <FlatList
-          data={chatListByUserId}
-          renderItem={({item}) => <ChatItem chatData={item} handleChatClick={handleChatClick} />}
-          keyExtractor={(item) => item.chat_id.toString()}
-        />
-      </View>
+        <Header text={'Inbox'}/>
+        {(chatList && chatList.length > 0) ? (
+          <FlatList
+            data={chatList}
+            renderItem={({item}) => <ChatItem chatData={item} handleChatClick={handleChatClick} />}
+            keyExtractor={(item) => item.chat_id.toString()}
+          />
+        ) : (
+          <NoData text='No Chats' />
+        )}
     </View>
   )
 }
@@ -33,13 +51,6 @@ const styles = StyleSheet.create({
     flexGrow: 1,
     paddingVertical: 20,
     paddingHorizontal: 20,
-  },
-  headerTextStyles: {
-    fontSize: 24,
-    fontWeight: '500',
-    color: colors.textDark,
-  },
-  chatListWrapper: {
-    marginTop: 20,
+    backgroundColor: colors.white,
   },
 })

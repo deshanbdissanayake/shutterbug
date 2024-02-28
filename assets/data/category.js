@@ -55,6 +55,27 @@ const getCategories = [
         type: 'photography',
         events: [1] 
     },
+    { 
+        id: 8, 
+        name: 'Cat 1', 
+        image: 'https://shutterbug.introps.com/documents/category/test-1.png', 
+        type: 'photography',
+        events: [1, 2] 
+    },
+    { 
+        id: 9, 
+        name: 'Cat 2',
+        image: 'https://shutterbug.introps.com/documents/category/test-7.png', 
+        type: 'photography',
+        events: [1] 
+    },
+    { 
+        id: 10, 
+        name: 'Cat 3',
+        image: 'https://shutterbug.introps.com/documents/category/test-7.png', 
+        type: 'photography',
+        events: [1] 
+    },
 ];
 
 export { getEvents, getCategories };

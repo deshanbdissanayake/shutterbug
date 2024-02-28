@@ -2,12 +2,12 @@ import * as React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Ionicons, Octicons, FontAwesome5, MaterialCommunityIcons } from '@expo/vector-icons';
-import ChatListScreen from '../screens/common/ChatListScreen';
 import colors from '../assets/colors/colors';
-import SearchScreen from '../screens/client/SearchScreen';
-import ServiceScreenSingle from '../screens/client/ServiceScreenSingle';
 import ProfileScreen from '../screens/common/ProfileScreen';
 import ClientNavHome from './ClientNavHome';
+import ClientNavSearch from './ClientNavSearch';
+import ClientNavChat from './ClientNavChat';
+import ClientNavJob from './ClientNavJob';
 
 function MyTabBar({ state, descriptors, navigation }) {
   return (
@@ -75,9 +75,9 @@ export default function App() {
   return (
     <Tab.Navigator tabBar={(props) => <MyTabBar {...props}  />} >
         <Tab.Screen name="Client Home" component={ClientNavHome} options={{ headerShown: false }}  />
-        <Tab.Screen name="Client Orders" component={ServiceScreenSingle} options={{ headerShown: false }}  />
-        <Tab.Screen name="Client Search" component={SearchScreen} options={{ headerShown: false }}  />
-        <Tab.Screen name="Client Chats" component={ChatListScreen} options={{ headerShown: false }}  />
+        <Tab.Screen name="Client Search" component={ClientNavSearch} options={{ headerShown: false }}  />
+        <Tab.Screen name="Client Chats" component={ClientNavChat} options={{ headerShown: false }}  />
+        <Tab.Screen name="Client Orders" component={ClientNavJob} options={{ headerShown: false }}  />
         <Tab.Screen name="Client Account" component={ProfileScreen} options={{ headerShown: false }}  />
     </Tab.Navigator>
   );
