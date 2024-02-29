@@ -1,4 +1,4 @@
-import { ScrollView, StyleSheet, Text, View } from 'react-native'
+import { Image, ScrollView, StyleSheet, Text, View } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import colors from '../../assets/colors/colors'
 import MiniButton from '../../components/general/MiniButton'
@@ -46,15 +46,24 @@ const JobSingleScreen = () => {
           func={backBtnClick}
           content={<AntDesign name="arrowleft" size={24} color={colors.textDark} />}
         />
-        <Text style={styles.jobTokenTextStyles}>Job ID: # {}</Text>
-        <Text style={styles.priceTextStyles}>$ {}</Text>
+        <Text style={styles.jobTokenTextStyles}>Job ID: # {jobData.job_token}</Text>
+        <Text style={styles.priceTextStyles}>$ {jobData.jof_price}</Text>
       </View>
       <View style={styles.serviceWrapper}>
-        <View style={styles.serviceImageWrapper}></View>
-        <View style={styles.serviceImageWrapper}></View>
+        <View style={styles.serviceImageWrapper}>
+          <Image style={styles.serviceImageStyles} source={{ uri: jobData.service_img }} />
+        </View>
+        <View style={styles.serviceTextWrapper}>
+          <View style={styles.catWrapper}>
+            <Text style={styles.cateTypeTextStyles} >{jobData.service_cat_type}</Text>
+            <Text style={styles.catTextStyles} >{jobData.service_cat}</Text>
+          </View>
+          <Text style={styles.serviceTextStyles} >{jobData.service_name}</Text>
+          <Text style={styles.pkgTextStyles} >{jobData.pkg_name}</Text>
+        </View>
       </View>
       <View style={styles.infoWrapper}>
-        <InfoSec title={'Job Description'} description={''} />
+        <InfoSec title={'Job Description'} description={jobData.jof_desc} />
       </View>
       <View style={styles.providerWrapper}>
         <ProviderSec

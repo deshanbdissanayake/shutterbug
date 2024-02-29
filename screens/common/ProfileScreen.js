@@ -2,7 +2,7 @@ import { ScrollView, StyleSheet, Text, View } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import ProfileSec from '../../components/other/ProfileSec'
 import InfoSec from '../../components/other/InfoSec'
-import ServiceSec from '../../components/other/ServiceSec'
+import ServicesListSec from '../../components/other/ServicesListSec'
 import PortfolioSec from '../../components/other/PortfolioSec'
 import FeedbackSec from '../../components/other/FeedbackSec'
 import { getProviderById } from '../../assets/data/provider'
@@ -40,7 +40,7 @@ const ProfileScreen = ({ p_id }) => {
                         title={'About Me'}
                         description={profileData.description}
                     />
-                    <ServiceSec
+                    <ServicesListSec
                         services={profileData.services}
                     />
                     <PortfolioSec

@@ -6,7 +6,7 @@ import NoData from '../app/NoData'
 import ShowAll from '../app/ShowAll'
 import { useNavigation } from '@react-navigation/native'
 
-const ServiceSec = ({ services }) => {
+const ServicesListSec = ({ services }) => {
     const navigation = useNavigation();
 
     const [showAll, setShowAll] = useState(false);
@@ -48,7 +48,7 @@ const ServiceSec = ({ services }) => {
     )
 }
 
-export default ServiceSec
+export default ServicesListSec
 
 const styles = StyleSheet.create({
     container: {
