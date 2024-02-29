@@ -4,18 +4,24 @@ import SearchScreen from '../screens/client/SearchScreen';
 import ServiceScreenSingle from '../screens/client/ServiceScreenSingle';
 import ProfileScreen from '../screens/common/ProfileScreen';
 import ChatSingleScreen from '../screens/common/ChatSingleScreen';
-import SingleNewsScreen from '../screens/client/SingleNewsScreen';
 
 const Stack = createStackNavigator();
 
-const ClientNavSearch = () => {
+const ClientNavSearch = ({ navigation }) => {
+
+  React.useLayoutEffect(() => {
+    const unsubscribe = navigation.addListener('focus', () => {
+      navigation.navigate("Search");
+    });
+    return unsubscribe;
+  }, [navigation]);
+
   return (
-    <Stack.Navigator >
+    <Stack.Navigator>
         <Stack.Screen name="Search" component={SearchScreen} options={{ headerShown: false }} />
         <Stack.Screen name="Service Single" component={ServiceScreenSingle} options={{ headerShown: false }} />
         <Stack.Screen name="Provider Profile" component={ProfileScreen} options={{ headerShown: false }} />
-        <Stack.Screen name="Provider Chat" component={ChatSingleScreen} options={{ headerShown: false }} />
-        <Stack.Screen name="News Single" component={SingleNewsScreen} options={{ headerShown: false }} />
+        <Stack.Screen name="Single Chat" component={ChatSingleScreen} options={{ headerShown: false }} />
     </Stack.Navigator>
   );
 };

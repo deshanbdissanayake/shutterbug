@@ -1,11 +1,14 @@
 import React, { useEffect } from 'react';
-import { View, Keyboard, StyleSheet, SafeAreaView, StatusBar } from 'react-native';
+import { Keyboard, StyleSheet, SafeAreaView, StatusBar } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { useFonts } from 'expo-font';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
 
 import colors from './assets/colors/colors';
-import AppNav from './navigation/AppNav';
 import SplashScreen from './screens/SplashScreen';
+import WelcomeNav from './navigation/WelcomeNav';
+import ClientNav from './navigation/ClientNav';
 
 const App = () => {
   // unfocus from text inputs when keyboard hides
@@ -32,13 +35,17 @@ const App = () => {
     return <SplashScreen/>
   }
 
+  const Stack = createStackNavigator();
+
   return (
     <SafeAreaView style={styles.container}>
       <GestureHandlerRootView style={styles.container}>
-        <StatusBar backgroundColor={colors.primary} barStyle="light-content" />
-        <View style={styles.container}>
-          <AppNav/>
-        </View>
+          <StatusBar backgroundColor={colors.primary} barStyle="light-content" />
+          <NavigationContainer>
+            <Stack.Navigator>
+              <Stack.Screen name="Client Main" component={ClientNav} options={{headerShown: false}} />
+            </Stack.Navigator>
+          </NavigationContainer>
       </GestureHandlerRootView>
     </SafeAreaView>
   );

@@ -1,9 +1,9 @@
 import { ScrollView, StyleSheet, Text, View } from 'react-native'
 import React, { useEffect, useState, useRef } from 'react'
 import { Pressable } from 'react-native'
-import colors from '../../../assets/colors/colors';
-import { getEvents, getCategories } from '../../../assets/data/category';
-import CategoryItem from '../../../components/app/CategoryItem';
+import colors from '../../assets/colors/colors';
+import { getEvents, getCategories } from '../../assets/data/category';
+import CategoryItem from '../app/CategoryItem';
 import { useNavigation } from '@react-navigation/native'
 
 const CategorySec = () => {

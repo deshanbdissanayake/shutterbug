@@ -2,6 +2,7 @@ import * as React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Ionicons, Octicons, FontAwesome5, MaterialCommunityIcons } from '@expo/vector-icons';
+import { useRoute } from '@react-navigation/native';
 import colors from '../assets/colors/colors';
 import ProfileScreen from '../screens/common/ProfileScreen';
 import ClientNavHome from './ClientNavHome';
@@ -25,6 +26,7 @@ function MyTabBar({ state, descriptors, navigation }) {
           if (!isFocused && !event.defaultPrevented) {
             navigation.navigate(route.name);
           }
+        
         };
 
         const onLongPress = () => {
@@ -71,15 +73,18 @@ function MyTabBar({ state, descriptors, navigation }) {
 
 const Tab = createBottomTabNavigator();
 
-export default function App() {
+export default function ClientNav() {
+  const route = useRoute();
+  const shouldShowTabBar = route.params ? !route.params.hideTabBar : true;
+
   return (
-    <Tab.Navigator tabBar={(props) => <MyTabBar {...props}  />} >
-        <Tab.Screen name="Client Home" component={ClientNavHome} options={{ headerShown: false }}  />
-        <Tab.Screen name="Client Search" component={ClientNavSearch} options={{ headerShown: false }}  />
-        <Tab.Screen name="Client Chats" component={ClientNavChat} options={{ headerShown: false }}  />
-        <Tab.Screen name="Client Orders" component={ClientNavJob} options={{ headerShown: false }}  />
-        <Tab.Screen name="Client Account" component={ProfileScreen} options={{ headerShown: false }}  />
-    </Tab.Navigator>
+      <Tab.Navigator tabBar={shouldShowTabBar ? props => <MyTabBar {...props} /> : () => null}>
+        <Tab.Screen name="Client Home" component={ClientNavHome} options={{ headerShown: false }} />
+        <Tab.Screen name="Client Search" component={ClientNavSearch} options={{ headerShown: false }} />
+        <Tab.Screen name="Client Chats" component={ClientNavChat} options={{ headerShown: false }} />
+        <Tab.Screen name="Client Orders" component={ClientNavJob} options={{ headerShown: false }} />
+        <Tab.Screen name="Client Account" component={ProfileScreen} options={{ headerShown: false }} />
+      </Tab.Navigator>
   );
 }
 

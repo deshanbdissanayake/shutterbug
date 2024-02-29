@@ -1,8 +1,8 @@
 import { Image, StyleSheet, TouchableOpacity, View } from 'react-native'
 import React, { useState } from 'react'
-import Subtitle from '../../../components/app/Subtitle'
-import NoData from '../../../components/app/NoData'
-import ShowAll from '../../../components/app/ShowAll'
+import Subtitle from '../app/Subtitle'
+import NoData from '../app/NoData'
+import ShowAll from '../app/ShowAll'
 
 const PortfolioSec = ({ portfolio }) => {
   const [showAll, setShowAll] = useState(false);

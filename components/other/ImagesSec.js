@@ -1,10 +1,10 @@
 import { StyleSheet, View, Dimensions, Text } from 'react-native'
 import React, { useState } from 'react'
 import Carousel from 'react-native-reanimated-carousel';
-import ServiceImage from '../../../components/app/ServiceImage';
-import MiniButton from '../../../components/general/MiniButton';
+import ServiceImage from '../app/ServiceImage';
+import MiniButton from '../general/MiniButton';
 import { AntDesign } from '@expo/vector-icons';
-import colors from '../../../assets/colors/colors';
+import colors from '../../assets/colors/colors';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useNavigation } from '@react-navigation/native'
 

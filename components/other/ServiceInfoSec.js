@@ -1,8 +1,8 @@
 import { Pressable, StyleSheet, Text, View } from 'react-native'
 import React, { useState } from 'react'
-import colors from '../../../assets/colors/colors'
+import colors from '../../assets/colors/colors'
 
-const serviceInfoSec = ({ info }) => {
+const ServiceInfoSec = ({ info }) => {
   const [showAll, setShowAll] = useState(false);
 
   return (
@@ -21,7 +21,7 @@ const serviceInfoSec = ({ info }) => {
   )
 }
 
-export default serviceInfoSec
+export default ServiceInfoSec
 
 const styles = StyleSheet.create({
   container: {

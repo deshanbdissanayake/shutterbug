@@ -1,8 +1,8 @@
 import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import React, { useEffect, useState } from 'react'
-import colors from '../../../assets/colors/colors'
-import PackageSingle from '../../../components/app/PackageSingle'
-import Subtitle from '../../../components/app/Subtitle';
+import colors from '../../assets/colors/colors'
+import PackageSingle from '../app/PackageSingle'
+import Subtitle from '../app/Subtitle';
 
 const PackagesSec = ({ packages = [] }) => {
   const [selectedPkg, setSelectedPkg] = useState(1);

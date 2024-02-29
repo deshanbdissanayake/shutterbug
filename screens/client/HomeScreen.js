@@ -1,9 +1,9 @@
 import React from 'react';
 import { ScrollView, StyleSheet, View } from 'react-native';
-import CategorySec from './HomeScreen/CategorySec';
-import HeaderSec from './HomeScreen/HeaderSec';
-import NewsSec from './HomeScreen/NewsSec';
-import SearchSec from './HomeScreen/SearchSec';
+import CategorySec from '../../components/other/CategorySec';
+import HeaderSec from '../../components/other/HeaderSec';
+import NewsSec from '../../components/other/NewsSec';
+import SearchSec from '../../components/other/SearchSec';
 import colors from '../../assets/colors/colors';
 
 const HomeScreen = () => {

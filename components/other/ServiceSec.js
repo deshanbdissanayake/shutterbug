@@ -1,9 +1,9 @@
 import { StyleSheet, View, unstable_batchedUpdates } from 'react-native'
 import React, { useState } from 'react'
-import Subtitle from '../../../components/app/Subtitle'
-import ServiceItem from '../../../components/app/ServiceItem'
-import NoData from '../../../components/app/NoData'
-import ShowAll from '../../../components/app/ShowAll'
+import Subtitle from '../app/Subtitle'
+import ServiceItem from '../app/ServiceItem'
+import NoData from '../app/NoData'
+import ShowAll from '../app/ShowAll'
 import { useNavigation } from '@react-navigation/native'
 
 const ServiceSec = ({ services }) => {

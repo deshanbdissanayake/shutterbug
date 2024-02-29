@@ -1,7 +1,7 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 import { Ionicons } from '@expo/vector-icons/build/Icons';
-import colors from '../../../assets/colors/colors';
+import colors from '../../assets/colors/colors';
 import { TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 

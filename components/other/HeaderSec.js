@@ -1,8 +1,8 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 import { Entypo } from '@expo/vector-icons/build/Icons'
-import MiniButton from '../../../components/general/MiniButton'
-import colors from '../../../assets/colors/colors'
+import MiniButton from '../general/MiniButton'
+import colors from '../../assets/colors/colors'
 
 const HeaderSec = ({title, desc, handleMoreClick}) => {
   return (

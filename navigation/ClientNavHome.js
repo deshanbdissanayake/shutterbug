@@ -9,14 +9,22 @@ import SingleNewsScreen from '../screens/client/SingleNewsScreen';
 
 const Stack = createStackNavigator();
 
-const ClientNavHome = () => {
+const ClientNavHome = ({ navigation }) => {
+
+  React.useLayoutEffect(() => {
+    const unsubscribe = navigation.addListener('focus', () => {
+      navigation.navigate("Home");
+    });
+    return unsubscribe;
+  }, [navigation]);
+
   return (
-    <Stack.Navigator >
+    <Stack.Navigator>
         <Stack.Screen name="Home" component={HomeScreen} options={{ headerShown: false }} />
         <Stack.Screen name="Search" component={SearchScreen} options={{ headerShown: false }} />
         <Stack.Screen name="Service Single" component={ServiceScreenSingle} options={{ headerShown: false }} />
         <Stack.Screen name="Provider Profile" component={ProfileScreen} options={{ headerShown: false }} />
-        <Stack.Screen name="Provider Chat" component={ChatSingleScreen} options={{ headerShown: false }} />
+        <Stack.Screen name="Single Chat" component={ChatSingleScreen} options={{ headerShown: false }} />
         <Stack.Screen name="News Single" component={SingleNewsScreen} options={{ headerShown: false }} />
     </Stack.Navigator>
   );

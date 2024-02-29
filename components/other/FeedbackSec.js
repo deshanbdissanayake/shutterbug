@@ -1,10 +1,10 @@
 import { StyleSheet, Text, View, ScrollView, TouchableOpacity } from 'react-native'
 import React, { useState } from 'react'
 import colors from '../../assets/colors/colors'
-import FeedbackSingle from '../../components/app/FeedbackSingle'
-import Subtitle from '../../components/app/Subtitle'
-import NoData from '../../components/app/NoData'
-import ShowAll from '../../components/app/ShowAll'
+import FeedbackSingle from '../app/FeedbackSingle'
+import Subtitle from '../app/Subtitle'
+import NoData from '../app/NoData'
+import ShowAll from '../app/ShowAll'
 
 const FeedbacksSec = ({ feedbacks }) => {
   const maxItemsToShow = 2; // Change this value as desired

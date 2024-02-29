@@ -1,8 +1,8 @@
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import React from 'react'
-import MiniButton from '../../../components/general/MiniButton'
+import MiniButton from '../general/MiniButton'
 import { AntDesign } from '@expo/vector-icons'
-import colors from '../../../assets/colors/colors'
+import colors from '../../assets/colors/colors'
 import { useNavigation } from '@react-navigation/native'
 
 const ProfileSec = ({ p_id, pro_pic, fullname, username, p_ratings, number_of_reviews }) => {
@@ -14,7 +14,7 @@ const ProfileSec = ({ p_id, pro_pic, fullname, username, p_ratings, number_of_re
   }
 
   const handleChatClick = (p_id) => {
-    navigation.navigate('Provider Chat', { p_id })
+    navigation.navigate('Single Chat', { p_id })
   }
 
   return (

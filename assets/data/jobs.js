@@ -73,7 +73,7 @@ const getJobsByUserId = async () => {
     return data
 }
 
-const getJobByJobToken = async () => {
+const getJobByJobId = async () => {
     let data = {
         job_id: 1,
         job_token: 'Dafsdewdf13sd',
@@ -99,4 +99,4 @@ const getJobByJobToken = async () => {
     return data
 }
 
-export { getJobsByUserId, getJobByJobToken }
+export { getJobsByUserId, getJobByJobId }

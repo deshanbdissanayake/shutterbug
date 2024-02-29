@@ -2,8 +2,8 @@ import { StyleSheet, View, Dimensions } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import Carousel from 'react-native-reanimated-carousel';
 
-import { getNews } from '../../../assets/data/news';
-import NewsSliderSingle from '../../../components/app/NewsSliderSingle'
+import { getNews } from '../../assets/data/news';
+import NewsSliderSingle from '../app/NewsSliderSingle'
 import { useNavigation } from '@react-navigation/native'
 
 const NewsSec = () => {

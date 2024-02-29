@@ -1,11 +1,11 @@
 import { Image, StyleSheet, Text, View } from 'react-native'
 import React from 'react'
-import colors from '../../../assets/colors/colors'
-import MiniButton from '../../../components/general/MiniButton'
+import colors from '../../assets/colors/colors'
+import MiniButton from '../general/MiniButton'
 import { AntDesign } from '@expo/vector-icons'
 import { useNavigation } from '@react-navigation/native'
 
-const providerSec = ({ provider }) => {
+const ProviderSec = ({ p_id, p_img, fname, uname }) => {
   const navigation = useNavigation();
 
   const handleNavigateToProfile = (p_id) => {
@@ -15,15 +15,15 @@ const providerSec = ({ provider }) => {
   return (
     <View style={styles.container}>
       <View style={styles.providerWrapper}>
-        <Image source={{ uri: provider.pro_pic }} style={styles.proPicStyles} />
+        <Image source={{ uri: p_img }} style={styles.proPicStyles} />
         <View>
-          <Text style={styles.fullNameTextStyles}>{provider.fullname}</Text> 
-          <Text style={styles.userNameTextStyles}>{provider.username}</Text> 
+          <Text style={styles.fullNameTextStyles}>{fname}</Text> 
+          <Text style={styles.userNameTextStyles}>{uname}</Text> 
         </View>
       </View>
       <View style={styles.btnWrapper}>
         <MiniButton 
-          func = {() => handleNavigateToProfile(provider.p_id)}
+          func = {() => handleNavigateToProfile(p_id)}
           content = {<AntDesign name="caretright" size={16} color={colors.textDark} />}
         />
       </View>
@@ -31,7 +31,7 @@ const providerSec = ({ provider }) => {
   )
 }
 
-export default providerSec
+export default ProviderSec
 
 const styles = StyleSheet.create({
   container: {

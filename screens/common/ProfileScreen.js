@@ -1,11 +1,11 @@
 import { ScrollView, StyleSheet, Text, View } from 'react-native'
 import React, { useEffect, useState } from 'react'
-import ProfileSec from './ProfileScreen/ProfileSec'
-import InfoSec from './ProfileScreen/InfoSec'
-import ServiceSec from './ProfileScreen/ServiceSec'
-import FeedbackSec from './FeedbackSec'
+import ProfileSec from '../../components/other/ProfileSec'
+import InfoSec from '../../components/other/InfoSec'
+import ServiceSec from '../../components/other/ServiceSec'
+import PortfolioSec from '../../components/other/PortfolioSec'
+import FeedbackSec from '../../components/other/FeedbackSec'
 import { getProviderById } from '../../assets/data/provider'
-import PortfolioSec from './ProfileScreen/PortfolioSec'
 import colors from '../../assets/colors/colors'
 
 const ProfileScreen = ({ p_id }) => {
@@ -37,6 +37,7 @@ const ProfileScreen = ({ p_id }) => {
                         number_of_reviews={profileData.number_of_reviews}
                     />
                     <InfoSec
+                        title={'About Me'}
                         description={profileData.description}
                     />
                     <ServiceSec

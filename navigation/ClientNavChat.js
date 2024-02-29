@@ -5,9 +5,17 @@ import ChatSingleScreen from '../screens/common/ChatSingleScreen';
 
 const Stack = createStackNavigator();
 
-const ClientNavChat = () => {
+const ClientNavChat = ({ navigation }) => {
+
+  React.useLayoutEffect(() => {
+    const unsubscribe = navigation.addListener('focus', () => {
+      navigation.navigate("Chat List");
+    });
+    return unsubscribe;
+  }, [navigation]);
+
   return (
-    <Stack.Navigator >
+    <Stack.Navigator>
         <Stack.Screen name="Chat List" component={ChatListScreen} options={{ headerShown: false }} />
         <Stack.Screen name="Single Chat" component={ChatSingleScreen} options={{ headerShown: false }} />
     </Stack.Navigator>

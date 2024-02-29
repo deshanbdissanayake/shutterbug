@@ -1,13 +1,13 @@
 import { Pressable, StyleSheet, Text, View } from 'react-native'
 import React, { useState } from 'react'
-import Subtitle from '../../../components/app/Subtitle'
-import colors from '../../../assets/colors/colors';
+import Subtitle from '../app/Subtitle'
+import colors from '../../assets/colors/colors';
 
-const InfoSec = ({ description }) => {
+const InfoSec = ({ title, description }) => {
   const [showAll, setShowAll] = useState(false);
   return (
     <View style={styles.container}>
-        <Subtitle text={'About Me'} />
+        <Subtitle text={title} />
         <Pressable onPress={() => setShowAll(!showAll)}>
           <Text style={styles.descStyles} numberOfLines={!showAll ? 3 : null}>{description}</Text>
         </Pressable>
