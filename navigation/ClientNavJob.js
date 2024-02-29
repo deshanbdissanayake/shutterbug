@@ -5,6 +5,8 @@ import JobSingleScreen from '../screens/client/JobSingleScreen';
 import ProfileScreen from '../screens/common/ProfileScreen';
 import ChatSingleScreen from '../screens/common/ChatSingleScreen';
 import ServiceScreenSingle from '../screens/client/ServiceScreenSingle';
+import JobCaseFormScreen from '../screens/client/JobCaseFormScreen';
+import JobReviewFormScreen from '../screens/client/JobReviewFormScreen';
 
 const Stack = createStackNavigator();
 
@@ -24,6 +26,8 @@ const ClientNavJob = ({ navigation }) => {
         <Stack.Screen name="Single Chat" component={ChatSingleScreen} options={{ headerShown: false }} />
         <Stack.Screen name="Provider Profile" component={ProfileScreen} options={{ headerShown: false }} />
         <Stack.Screen name="Service Single" component={ServiceScreenSingle} options={{ headerShown: false }} />
+        <Stack.Screen name="Job Case" component={JobCaseFormScreen} options={{ headerShown: false }} />
+        <Stack.Screen name="Job Review" component={JobReviewFormScreen} options={{ headerShown: false }} />
     </Stack.Navigator>
   );
 };

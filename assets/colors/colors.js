@@ -37,5 +37,7 @@ const colors = {
     gold: '#FFD700',
     lightGreen: '#06c212',
     lightBlue: '#87abc7',
+
+    transparentDark: 'rgba(0, 0, 0, 0.5)',
   }
 export default colors;

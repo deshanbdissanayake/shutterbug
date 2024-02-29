@@ -3,8 +3,8 @@ import React, { useState } from 'react'
 import Subtitle from '../app/Subtitle'
 import colors from '../../assets/colors/colors';
 
-const InfoSec = ({ title, description }) => {
-  const [showAll, setShowAll] = useState(false);
+const InfoSec = ({ title, description, showAllStt = false }) => {
+  const [showAll, setShowAll] = useState(showAllStt);
   return (
     <View style={styles.container}>
         <Subtitle text={title} />

@@ -91,7 +91,7 @@ const getJobByJobId = async () => {
         pkg_id: 2,
         pkg_name: 'Plus',
         service_id: 2,
-        service_name: 'Mekath cora aa',
+        service_name: 'Mekath cora aa Mekath cora aa Mekath cora aa',
         service_cat: 'Outdoor',
         service_cat_type: 'videography',
         service_img: 'https://shutterbug.introps.com/documents/service/test-2.jpg',

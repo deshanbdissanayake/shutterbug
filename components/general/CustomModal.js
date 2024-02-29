@@ -61,6 +61,8 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     width: 300,
     zIndex: 2,
+    alignSelf: 'center',
+    top: '40%',
   },
   alertWrapper: {
     padding: 20,
@@ -86,19 +88,19 @@ const styles = StyleSheet.create({
   cancelBtnStyles : {
     flex: 1,
     borderBottomLeftRadius: 10,
-    backgroundColor: colors.border,
+    backgroundColor: colors.borderGrayExtraLight,
     justifyContent: 'center',
     alignItems: 'center',
   },
   cancelTextStyles: {
     fontSize: 12,
-    color: colors.textLight,
+    color: colors.textDark,
     padding: 10,
   },
   okBtnStyles : {
     flex: 1,
     borderBottomRightRadius: 10,
-    backgroundColor: colors.primaryDark,
+    backgroundColor: colors.primary,
     justifyContent: 'center',
     alignItems: 'center',
   },
