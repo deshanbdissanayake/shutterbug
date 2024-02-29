@@ -43,6 +43,7 @@ const App = () => {
           <StatusBar backgroundColor={colors.primary} barStyle="light-content" />
           <NavigationContainer>
             <Stack.Navigator>
+              <Stack.Screen name="Welcome Nav" component={WelcomeNav} options={{headerShown: false}} />
               <Stack.Screen name="Client Main" component={ClientNav} options={{headerShown: false}} />
             </Stack.Navigator>
           </NavigationContainer>

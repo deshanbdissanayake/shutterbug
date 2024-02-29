@@ -1,12 +1,11 @@
-import { Image, Modal, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { Image, ScrollView, StyleSheet, Text, TouchableOpacity, View, StatusBar, Alert } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import colors from '../../assets/colors/colors'
 import MiniButton from '../../components/general/MiniButton'
 import { useNavigation } from '@react-navigation/native'
 import { AntDesign } from '@expo/vector-icons'
-import { getJobByJobId } from '../../assets/data/jobs'
+import { getJobByJobId, jobMarkAsComplete, jobOpenCase } from '../../assets/data/jobs'
 import ProviderSec from '../../components/other/ProviderSec'
-import ChatBtnSec from '../../components/other/ChatBtnSec'
 import InfoSec from '../../components/other/InfoSec'
 import SplashScreen from '../SplashScreen'
 import Subtitle from '../../components/app/Subtitle'
@@ -14,7 +13,7 @@ import Button from '../../components/general/Button'
 import CustomModal from '../../components/general/CustomModal'
 
 const JobSingleScreen = () => {
-  const navigation = useNavigation(null);
+  const navigation = useNavigation();
 
   const [jobData, setJobData] = useState();
   const [loading, setLoading] = useState(true);
@@ -29,15 +28,38 @@ const JobSingleScreen = () => {
     navigation.navigate('Single Chat', chat_id);
   }
 
-  const handleCaseClick = (job_id) => {
-    console.log('hi')
+  const handleCompleteClick = async (job_id) => {
+    setShowCaseModal(false);
+    try {
+      let data = await jobMarkAsComplete();
+      if(data.stt == 'ok'){
+        navigation.navigate("Job Review", { job_id })
+      }else{
+        Alert.alert('Something went wrong!', 'Please try again');
+      }
+    } catch (error) {
+      console.error('job mark as complete error', error)
+      Alert.alert('Something went wrong!', 'Please try again');
+    } 
   }
 
-  const handleCompleteClick = (job_id) => {
-    setShowCompleteModal(false);
+  const handleCaseClick = async (job_id) => {
+    setShowCaseModal(false);
+    try {
+      let data = await jobOpenCase();
+      if(data.stt == 'ok'){
+        navigation.navigate("Job Case", { job_id })
+      }else{
+        Alert.alert('Something went wrong!', 'Please try again');
+      }
+    } catch (error) {
+      console.error('open job case error', error)
+      Alert.alert('Something went wrong!', 'Please try again');
+    }
   }
 
   useEffect(() => {
+    //when this screen focus run this again without using memo
     const getData = async () => {
       try {
         let data = await getJobByJobId();
@@ -45,7 +67,6 @@ const JobSingleScreen = () => {
         setLoading(false);
       } catch (error) {
         console.log('error getting job item data', data)
-        setJobData(null);
       }
     }
     getData();
@@ -107,30 +128,35 @@ const JobSingleScreen = () => {
           />
           <Button
             content={<Text style={{color: colors.textDark}}>Open a Case</Text>}
-            func={() => handleCaseClick()}
+            func={() => setShowCaseModal(true)}
             bdr={colors.borderGrayDark}
           />
         </View>
       </ScrollView>
         {showCompleteModal && (
           <View style={styles.modalsWrapper}>
+            <StatusBar backgroundColor={colors.textGraySecondary} barStyle="light-content" />
             <CustomModal 
-              title={'Are you sure?'}
-              content={'Mark this Job as Completed.'}
-              okButtonText={'Mark as Completed'}
+              title={'Mark this Job as Completed'}
+              content={'Are you sure?'}
               pressOk={() => handleCompleteClick(jobData.job_id)}
+              okButtonText={'Mark as Completed'}
               pressCancel={() => setShowCompleteModal(false)}
               cancelButtonText={'Cancel'}
             />
           </View>
         )}
+
         {showCaseModal && (
           <View style={styles.modalsWrapper}>
+            <StatusBar backgroundColor={colors.textGraySecondary} barStyle="light-content" />
             <CustomModal 
-              title={'Are you sure?'}
-              content={'Open a case for this Job.'}
-              cancelButtonText={'Cancel'}
+              title={'Open a case for this Job'}
+              content={'Are you sure?'}
+              pressOk={() => handleCaseClick(jobData.job_id)}
               okButtonText={'Open a Case'}
+              pressCancel={() => setShowCaseModal(false)}
+              cancelButtonText={'Cancel'}
             />
           </View>
         )}

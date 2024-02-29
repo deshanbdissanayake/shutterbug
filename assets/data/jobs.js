@@ -99,4 +99,14 @@ const getJobByJobId = async () => {
     return data
 }
 
-export { getJobsByUserId, getJobByJobId }
+const jobMarkAsComplete = async () => {
+    let data = {stt: 'ok', msg: 'Marked as Complete', data: '1'}
+    return data;
+}
+
+const jobOpenCase = async () => {
+    let data = {stt: 'ok', msg: 'Opened a case', data: '1'}
+    return data;
+}
+
+export { getJobsByUserId, getJobByJobId, jobMarkAsComplete, jobOpenCase }

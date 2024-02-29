@@ -12,6 +12,7 @@ const JobListScreen = () => {
     const [jobList, setjobList] = useState(null);
 
     useEffect(() => {
+        //when this screen focus run this again without using memo
         const getData = async () => {
             try {
                 let data = await getJobsByUserId();

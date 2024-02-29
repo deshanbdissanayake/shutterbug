@@ -32,7 +32,7 @@ const SigninScreen = ({ navigation }) => {
         // Add any further validation for the password if needed
         setErrorMsg('');
         */
-       navigation.navigate('Client')
+       navigation.navigate('Client Main')
     };
 
     const handleForgotPwClick = () => {

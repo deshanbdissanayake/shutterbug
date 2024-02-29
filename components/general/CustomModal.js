@@ -1,4 +1,4 @@
-import { ActivityIndicator, StyleSheet, Text, TouchableOpacity, View, Modal  } from 'react-native';
+import { ActivityIndicator, StyleSheet, Text, TouchableOpacity, View, Modal } from 'react-native';
 import React from 'react';
 import colors from '../../assets/colors/colors';
 
@@ -42,7 +42,7 @@ const CustomModal = ({
             </>
         ) : (
             <View style={styles.loadingWrapper}>
-            <ActivityIndicator size={'large'} color={colors.primaryDark} />
+              <ActivityIndicator size={'large'} color={colors.primaryDark} />
             </View>
         )}
         
