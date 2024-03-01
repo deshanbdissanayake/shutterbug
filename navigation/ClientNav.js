@@ -9,6 +9,7 @@ import ClientNavHome from './ClientNavHome';
 import ClientNavSearch from './ClientNavSearch';
 import ClientNavChat from './ClientNavChat';
 import ClientNavJob from './ClientNavJob';
+import CustomOfferViewScreen from '../screens/client/CustomOfferViewScreen';
 
 function MyTabBar({ state, descriptors, navigation }) {
   return (
@@ -83,7 +84,7 @@ export default function ClientNav() {
         <Tab.Screen name="Client Search" component={ClientNavSearch} options={{ headerShown: false }} />
         <Tab.Screen name="Client Chats" component={ClientNavChat} options={{ headerShown: false }} />
         <Tab.Screen name="Client Orders" component={ClientNavJob} options={{ headerShown: false }} />
-        <Tab.Screen name="Client Account" component={ProfileScreen} options={{ headerShown: false }} />
+        <Tab.Screen name="Client Account" component={CustomOfferViewScreen} options={{ headerShown: false }} />
       </Tab.Navigator>
   );
 }
