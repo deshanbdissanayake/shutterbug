@@ -15,7 +15,6 @@ const CustomModal = ({
   return (
     <Modal
         visible={true}
-        animationType="fade"
         transparent={true}
     >
         <View style={styles.container}>

@@ -2,7 +2,7 @@ import { StyleSheet, Text, View, TouchableOpacity, ActivityIndicator } from 'rea
 import React from 'react'
 import colors from '../../assets/colors/colors'
 
-const Button = ({bgColor, content, func, bdr='', loading = false, paddingStt = true}) => {
+const Button = ({bgColor, content, func, bdr = null, loading = false, paddingStt = true}) => {
   return (
     <>
       {loading ? (
@@ -15,7 +15,7 @@ const Button = ({bgColor, content, func, bdr='', loading = false, paddingStt = t
       <TouchableOpacity
         style={[
           styles.buttonWrapper,
-          { backgroundColor: bgColor, borderWidth: bdr === '' ? 0 : 1, borderColor: bdr === '' ? 'transparent' : bdr }
+          { backgroundColor: bgColor, borderWidth: bdr === null ? 0 : 1, borderColor: bdr === null ? 'transparent' : bdr }
         ]}
         onPress={func}
       >

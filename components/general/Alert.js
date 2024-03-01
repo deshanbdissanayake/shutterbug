@@ -31,7 +31,6 @@ const Alert = ({ type, msg, visible, onClose }) => {
     return (
         <Modal
             visible={visible}
-            animationType="fade"
             transparent={true}
             onRequestClose={onClose}
         >
@@ -42,7 +41,7 @@ const Alert = ({ type, msg, visible, onClose }) => {
                         <Text style={styles.msgTextStyles}>{msg}</Text>
                     </View>
                     <TouchableOpacity onPress={onClose} style={styles.closeButtonWrapper}>
-                        <AntDesign name="close" size={24} color={colors.textDark} />
+                        <AntDesign name="close" size={18} color={colors.textDark} />
                     </TouchableOpacity>
                 </View>
             </View>
