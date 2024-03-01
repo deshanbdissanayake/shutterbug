@@ -1,8 +1,22 @@
-import { StyleSheet, Text, View, TouchableOpacity, ActivityIndicator } from 'react-native'
+import { StyleSheet, Text, View, TouchableOpacity, ActivityIndicator, Alert } from 'react-native'
 import React from 'react'
 import colors from '../../assets/colors/colors'
 
-const Button = ({bgColor, content, func, bdr='', loading = false, paddingStt = true}) => {
+const Button = ({bgColor, content, func, bdr='', loading = false, paddingStt = true, btnDisabled = false, errorMessage = "Error"}) => {
+
+  //to show an alert to the user why button is disabled
+  const showAlert = (msg) => {
+    Alert.alert(
+      "",
+      msg,
+      [
+        {
+          text: "OK",
+        }
+      ]
+    )
+  }
+
   return (
     <>
       {loading ? (
@@ -12,17 +26,35 @@ const Button = ({bgColor, content, func, bdr='', loading = false, paddingStt = t
           </View>
         </View>
       ): (
-      <TouchableOpacity
-        style={[
-          styles.buttonWrapper,
-          { backgroundColor: bgColor, borderWidth: bdr === '' ? 0 : 1, borderColor: bdr === '' ? 'transparent' : bdr }
-        ]}
-        onPress={func}
-      >
-        <View style={paddingStt ? styles.buttonText : null}>
-          {content}
-        </View>
-      </TouchableOpacity>
+        (btnDisabled) ? (
+          <>
+            <TouchableOpacity
+              style={[
+                styles.buttonWrapper,
+                { backgroundColor: bgColor, borderWidth: bdr === '' ? 0 : 1, borderColor: bdr === '' ? 'transparent' : bdr }
+              ]}
+              onPress={func}
+            >
+              <View style={paddingStt ? styles.buttonText : null}>
+                {content}
+              </View>
+            </TouchableOpacity>
+          </>
+        ) : (
+          <>
+            <TouchableOpacity
+              style={[
+                styles.buttonWrapper,
+                { backgroundColor: bgColor, opacity: 0.6, borderWidth: bdr === '' ? 0 : 1, borderColor: bdr === '' ? 'transparent' : bdr }
+              ]}
+              onPress={() => showAlert(errorMessage)}
+            >
+              <View style={paddingStt ? styles.buttonText : null}>
+                {content}
+              </View>
+            </TouchableOpacity>
+          </>
+        )
       )}
     </>
   )
