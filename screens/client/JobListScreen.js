@@ -1,29 +1,30 @@
 import { FlatList, StyleSheet, View } from 'react-native'
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useState } from 'react'
 import { getJobsByUserId } from '../../assets/data/jobs'
 import JobItem from '../../components/app/JobItem'
 import Header from '../../components/app/Header'
 import NoData from '../../components/app/NoData'
 import colors from '../../assets/colors/colors'
-import { useNavigation } from '@react-navigation/native'
+import { useNavigation, useFocusEffect } from '@react-navigation/native'
 
 const JobListScreen = () => {
     const navigation = useNavigation();
     const [jobList, setjobList] = useState(null);
 
-    useEffect(() => {
-        //when this screen focus run this again without using memo
-        const getData = async () => {
-            try {
-                let data = await getJobsByUserId();
-                setjobList(data);
-            } catch (error) {
-                console.log('error at getting chats', error)
-                setjobList(null)
-            }
-        }
-        getData();
-    }, [])
+    useFocusEffect(
+        useCallback(() => {
+            const getData = async () => {
+                try {
+                    let data = await getJobsByUserId();
+                    setjobList(data);
+                } catch (error) {
+                    console.log('error at getting chats', error)
+                    setjobList(null)
+                }
+            };
+            getData();
+        }, [])
+    );
 
     const handleJobClick = (job_id) => {
         navigation.navigate('Single Job', {job_id})

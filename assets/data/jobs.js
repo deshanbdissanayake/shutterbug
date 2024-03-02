@@ -10,6 +10,7 @@ const getJobsByUserId = async () => {
             jof_edate: '2024-03-29',
             time_remaining: '15 Days Left',
             status: 'active', //active, done, closed
+            case: '1', // 1 or 0
             job_date: '2024-02-14',
             provider_id: 1,
             provider_fullname: 'Deshan Dissanayake',
@@ -33,6 +34,7 @@ const getJobsByUserId = async () => {
             jof_edate: '2024-02-15',
             time_remaining: 'Pending Payment',
             status: 'done', //active, done, closed
+            case: '1', // 1 or 0
             job_date: '2024-02-14',
             provider_id: 1,
             provider_fullname: 'Nadun Tharaka',
@@ -56,6 +58,7 @@ const getJobsByUserId = async () => {
             jof_edate: '2024-02-15',
             time_remaining: 'Closed',
             status: 'closed', //active, done, closed
+            case: '1', // 1 or 0
             job_date: '2024-02-15',
             provider_id: 1,
             provider_fullname: 'Sampath Wick',
@@ -83,6 +86,7 @@ const getJobByJobId = async () => {
         jof_sdate: '2024-02-14',
         jof_edate: '2024-03-29',
         status: 'done', //active, done, closed
+        case: '', // 1 or 0
         job_date: '2024-02-14',
         provider_id: 1,
         provider_fullname: 'Nadun Tharaka',
@@ -109,4 +113,9 @@ const jobOpenCase = async () => {
     return data;
 }
 
-export { getJobsByUserId, getJobByJobId, jobMarkAsComplete, jobOpenCase }
+const saveRatings = async () => {
+    let data = {stt: 'ok', msg: 'Thank you for your feedback!', data: '1'}
+    return data;
+}
+
+export { getJobsByUserId, getJobByJobId, jobMarkAsComplete, jobOpenCase, saveRatings }

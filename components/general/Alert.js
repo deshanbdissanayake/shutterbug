@@ -31,7 +31,6 @@ const Alert = ({ type, title = "", msg, visible, onClose }) => {
     return (
         <Modal
             visible={visible}
-            animationType="fade"
             transparent={true}
             onRequestClose={onClose}
         >

@@ -34,9 +34,11 @@ const colors = {
     dangerLight : '#ffe8e8',
     warningLight : '#fffae8',
     infoLight : '#e8f1ff',
+    
     gold: '#FFD700',
     lightGreen: '#06c212',
     lightBlue: '#87abc7',
+    lightRed: '#db583d',
 
     transparentDark: 'rgba(0, 0, 0, 0.5)',
   }
