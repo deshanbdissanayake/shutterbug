@@ -2,7 +2,7 @@ import { StyleSheet, Text, View, TouchableOpacity, ActivityIndicator, Alert } fr
 import React from 'react'
 import colors from '../../assets/colors/colors'
 
-const Button = ({bgColor, content, func, bdr='', loading = false, paddingStt = true, btnDisabled = false, errorMessage = "Error"}) => {
+const Button = ({bgColor, content, func, bdr='', loading = false, loaderIconColor = colors.textDark,  paddingStt = true, btnDisabled = false, errorMessage = "Error"}) => {
 
   //to show an alert to the user why button is disabled
   const showAlert = (msg) => {
@@ -22,11 +22,11 @@ const Button = ({bgColor, content, func, bdr='', loading = false, paddingStt = t
       {loading ? (
         <View style={[styles.buttonWrapper, {backgroundColor: colors.border}]}>
           <View style={styles.buttonText}>
-            <ActivityIndicator size={24} color={colors.textDark} />
+            <ActivityIndicator size={24} color={loaderIconColor} />
           </View>
         </View>
       ): (
-        (btnDisabled) ? (
+        (!btnDisabled) ? (
           <>
             <TouchableOpacity
               style={[
