@@ -24,8 +24,8 @@ const ChatListScreen = () => {
     getData();
   }, [])
 
-  const handleChatClick = (chat_id) => {
-    navigation.navigate('Single Chat', { chat_id })
+  const handleChatClick = (chat_data) => {
+    navigation.navigate('Single Chat', {chat_data})
   }
 
   return (
