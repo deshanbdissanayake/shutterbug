@@ -1,10 +1,10 @@
 const signUp = async (fullName, email, password, confPassword) => {
     const data = {
-        "status": "success",
-        "message": [
+        "stt": "success",
+        "msg": [
             "Your account has been successfully registered."
         ],
-        data: {}
+        "data": {}
     };
 
     return data;
@@ -22,30 +22,30 @@ const signIn = async (username, password) => {
     
     if(!emailValiation){ // if email valiation failed
         data = {
-            "status": "info",
-            "message": [
+            "stt": "info",
+            "msg": [
                 "Please validate your email address to continue."
             ],
-            data: {}
+            "data": {}
         };
     }else{ // if email validation passed
         if(username == "test@test.com" && password == "1234"){
             data = {
-                "status": "success",
-                "message": [
+                "stt": "success",
+                "msg": [
                     "Login Success."
                 ],
-                data: {
+                "data": {
                     "token": "ABcd12343443Xffdfs-dadaddhfgfhgah4545-234324gghgfdfghfdsff"
                 }
             }
         }else{
             data = {
-                "status": "error",
-                "message": [
+                "stt": "error",
+                "msg": [
                     "Invalid username or password."
                 ],
-                data: {}
+                "data": {}
             }
         }
     }
@@ -55,11 +55,11 @@ const signIn = async (username, password) => {
 
 const forgotPassword = async (email) => {
     const data = {
-        "status": "success",
-        "message": [
+        "stt": "success",
+        "msg": [
             "Please check your email inbox for OTP code."
         ],
-        data: {}
+        "data": {}
     };
 
     return data;

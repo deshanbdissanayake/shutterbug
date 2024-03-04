@@ -4,8 +4,8 @@ const AppContext = createContext();
 
 export const AppProvider = ({ children }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [isPageLoading, setIsPageLoading] = useState(true);
-  const [showSplashScreen, setShowSplashScreen] = useState(true);
+  const [isPageLoading, setIsPageLoading] = useState(false);
+  const [showSplashScreen, setShowSplashScreen] = useState(false);
   return(
     <AppContext.Provider 
         value={{ isLoggedIn, setIsLoggedIn, isPageLoading, setIsPageLoading, showSplashScreen, setShowSplashScreen }}

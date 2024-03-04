@@ -71,14 +71,14 @@ const SignupScreen = () => {
     setIsLoading(true);
 
     signUp(fullName, email, password, confPassword).then((data) => {
-      if(data.status == "success"){
-        setAlertMessage(data.message[0]);
+      if(data.stt == "success"){
+        setAlertMessage(data.msg[0]);
         setAlertTitle("Success!!");
         setAlertType("success");
         setSignUpSuccess(true);
         setShowAlert(true);
       }else{
-        setAlertMessage(data.message[0]);
+        setAlertMessage(data.msg[0]);
         setAlertTitle("Error!!");
         setAlertType("error");
         setShowAlert(true);

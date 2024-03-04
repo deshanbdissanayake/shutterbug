@@ -55,7 +55,7 @@ const SigninScreen = ({ navigation }) => {
         setIsLoading(true);
 
         signIn(userName, password).then((data) => {
-            if(data.status == "success"){
+            if(data.stt == "success"){
                 setToken(data["data"].token).then((res) => {
                     // to remove loading
                     setTimeout(() => {
@@ -80,9 +80,9 @@ const SigninScreen = ({ navigation }) => {
                     setIsLoading(false);
                 }, 100);
 
-                setAlertMessage(data.message[0]);
-                setAlertTitle(<Text style={{textTransform: "capitalize"}}>{data.status}!!</Text>);
-                setAlertType(data.status);
+                setAlertMessage(data.msg[0]);
+                setAlertTitle(<Text style={{textTransform: "capitalize"}}>{data.stt}!!</Text>);
+                setAlertType(data.stt);
                 setShowAlert(true);
             }
         })
@@ -101,9 +101,9 @@ const SigninScreen = ({ navigation }) => {
         setIsLoading(true);
 
         forgotPassword(userName).then((res) => {
-            if(res.status == "success"){
+            if(res.stt == "success"){
                 setAlertTitle("Email Sent");
-                setAlertMessage(res.message[0]);
+                setAlertMessage(res.msg[0]);
                 setAlertType("success");
                 setShowAlert(true);
                 // hide alert window after 1.5s if user doesn't close
@@ -113,7 +113,7 @@ const SigninScreen = ({ navigation }) => {
                 }, 3000);
             }else{
                 setAlertTitle("Error!!");
-                setAlertMessage(res.message[0]);
+                setAlertMessage(res.msg[0]);
                 setAlertType("error");
                 setShowAlert(true);
             }
