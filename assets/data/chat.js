@@ -50,7 +50,14 @@ const chatListByUserId = async () => {
 
 const chatMessagesByChatId = async (chat_id) => {
     let data = [
-        {msgId: 1, msgBy: 1, msgType: 'text', msgText: 'Hi', createdAt: '2024-03-04 11:35:00', readStt: 1},
+        {
+            msgId: 1, 
+            msgBy: 1, 
+            msgType: 'text', 
+            msgText: 'Hi', // text or image link or doc link
+            createdAt: '2024-03-04 11:35:00', 
+            readStt: 1
+        },
         {msgId: 2, msgBy: 2, msgType: 'text', msgText: 'Hi', createdAt: '2024-03-05 11:37:00', readStt: 1},
         {msgId: 3, msgBy: 2, msgType: 'text', msgText: 'How are you?', createdAt: '2024-03-05 11:38:00', readStt: 1},
         {msgId: 4, msgBy: 1, msgType: 'text', msgText: 'I\'m fine. Wbu?', createdAt: '2024-03-05 11:39:00', readStt: 1},
@@ -63,8 +70,22 @@ const chatMessagesByChatId = async (chat_id) => {
         {msgId: 11, msgBy: 2, msgType: 'text', msgText: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc facilisis lacus id arcu condimentum facilisis. Curabitur id molestie arcu. Mauris eu orci at neque condimentum ornare sit amet ut nisi.', createdAt: '2024-03-06 11:42:00', readStt: 0},
         {msgId: 12, msgBy: 2, msgType: 'text', msgText: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc facilisis lacus id arcu condimentum facilisis. Curabitur id molestie arcu. Mauris eu orci at neque condimentum ornare sit amet ut nisi.', createdAt: '2024-03-06 11:42:00', readStt: 0},
         {msgId: 13, msgBy: 2, msgType: 'text', msgText: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc facilisis lacus id arcu condimentum facilisis. Curabitur id molestie arcu. Mauris eu orci at neque condimentum ornare sit amet ut nisi.', createdAt: '2024-03-06 11:42:00', readStt: 0},
-        {msgId: 14, msgBy: 2, msgType: 'text', msgText: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc facilisis lacus id arcu condimentum facilisis. Curabitur id molestie arcu. Mauris eu orci at neque condimentum ornare sit amet ut nisi.', createdAt: '2024-03-06 11:42:00', readStt: 0},
-        {msgId: 15, msgBy: 2, msgType: 'text', msgText: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc facilisis lacus id arcu condimentum facilisis. Curabitur id molestie arcu. Mauris eu orci at neque condimentum ornare sit amet ut nisi.', createdAt: '2024-03-06 11:42:00', readStt: 0},
+        {
+            msgId: 14, 
+            msgBy: 2, 
+            msgType: 'doc', 
+            msgText: 'https://shutterbug.introps.com/documents/user/test-1.jpg', 
+            createdAt: '2024-03-06 11:42:00', 
+            readStt: 0
+        },
+        {
+            msgId: 15, 
+            msgBy: 2, 
+            msgType: 'image', 
+            msgText: 'https://shutterbug.introps.com/documents/service/test-1.jpg', 
+            createdAt: '2024-03-06 11:42:00', 
+            readStt: 0
+        },
         {msgId: 16, msgBy: 1, msgType: 'text', msgText: 'ok', createdAt: '2024-03-06 11:42:00', readStt: 1},
     ];
 

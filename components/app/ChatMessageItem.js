@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { Image, StyleSheet, Text, View, Linking, TouchableOpacity } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import colors from '../../assets/colors/colors';
 
@@ -10,10 +10,26 @@ const ChatMessageItem = ({ msgData }) => {
   const bgColor = isCurrentUser ? colors.bgLight : colors.borderGrayExtraLight;
   const checkmarkColor = isCurrentUser && msgData.readStt ? colors.primary : colors.textGray;
 
+  const handleDownload = (fileUrl) => {
+    // Open the file URL in the default browser or file viewer
+    Linking.openURL(fileUrl);
+  };
+
   return (
       <View style={[styles.container, { alignItems: isCurrentUser ? 'flex-end' : 'flex-start' }]}>
         <View style={[styles.msgWrapper, { backgroundColor: bgColor }]}>
-          <Text style={[styles.msgTextStyles]}>{msgData.msgText}</Text>
+          {msgData.msgType === 'text' ? (
+            <Text style={styles.msgTextStyles}>{msgData.msgText}</Text>
+          ) : msgData.msgType === 'image' ? (
+            <TouchableOpacity onPress={() => handleDownload(msgData.msgText)}>
+              <Image style={styles.chatImageStyles} source={{ uri: msgData.msgText }} />
+            </TouchableOpacity>
+          ) : (
+            <TouchableOpacity onPress={() => handleDownload(msgData.msgText)}>
+              <Text style={styles.docDownloadTextStyles}>Download File</Text>
+            </TouchableOpacity>
+          )}
+
           <View style={styles.sttWrapper}>
             <Text style={[styles.timeTextStyles]}>{msgData.createdAt}</Text>
             {isCurrentUser && (
@@ -41,6 +57,16 @@ const styles = StyleSheet.create({
   },
   msgTextStyles: {
     color: colors.textDark,
+  },
+  chatImageStyles: {
+    width: 240,
+    height: 160,
+    resizeMode: 'cover',
+    borderRadius: 5,
+  },
+  docDownloadTextStyles: {
+    textDecorationLine: 'underline',
+    color: colors.primary,
   },
   sttWrapper: {
     flexDirection: 'row',

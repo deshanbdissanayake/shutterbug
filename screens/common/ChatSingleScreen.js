@@ -8,6 +8,7 @@ import Input from '../../components/general/Input';
 import ChatMessageItem from '../../components/app/ChatMessageItem';
 import { chatMessagesByChatId } from '../../assets/data/chat'; // Assuming you have a function to fetch chat messages
 import NoData from '../../components/app/NoData';
+import * as DocumentPicker from 'expo-document-picker';
 
 const ChatSingleScreen = () => {
   const navigation = useNavigation();
@@ -25,9 +26,24 @@ const ChatSingleScreen = () => {
     navigation.goBack();
   };
 
-  const handleFileSelect = () => {
-    // Implement handle File Select functionality
-  };
+  const handleFileSelect = async () => {
+    try {
+      const result = await DocumentPicker.getDocumentAsync({
+        type: '*/*', // Allow any type of file to be picked
+        copyToCacheDirectory: false, // Don't copy the file to app's cache directory
+      });
+  
+      if (result.type === 'success') {
+        // Handle the selected file, for example, you can log its URI
+        console.log('Selected file URI:', result.uri);
+      } else {
+        // User canceled the file picking
+        console.log('File picking canceled');
+      }
+    } catch (error) {
+      console.error('Error selecting file:', error);
+    }
+  };  
 
   const handleSendMessage = () => {
     // Implement sending message functionality
@@ -37,7 +53,6 @@ const ChatSingleScreen = () => {
     try {
       const data = await chatMessagesByChatId(chatId, numberOfMsgs);
       setMessages(data);
-      flatListRef.current.scrollToEnd(); // Scroll to the end after loading messages
     } catch (error) {
       console.error('Error fetching messages:', error);
     }
@@ -79,6 +94,15 @@ const ChatSingleScreen = () => {
             data={messages}
             renderItem={({ item }) => <ChatMessageItem msgData={item} />}
             keyExtractor={(item) => item.msgId}
+            initialScrollIndex={messages.length - 1}
+            getItemLayout={(data, index) => ({
+              length: 100,
+              offset: 100 * index,
+              index
+            })}
+            onScrollToIndexFailed={(info) => {
+              console.warn('Failed to scroll to index:', info.index);
+            }}
             onScroll={handleScroll}
             onEndReached={loadMoreMessages}
             onEndReachedThreshold={0.1}
