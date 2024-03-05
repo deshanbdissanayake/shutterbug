@@ -32,10 +32,12 @@ const ChatSingleScreen = () => {
         type: '*/*', // Allow any type of file to be picked
         copyToCacheDirectory: false, // Don't copy the file to app's cache directory
       });
+      console.log(result)
   
-      if (result.type === 'success') {
+      if (!result.canceled) {
         // Handle the selected file, for example, you can log its URI
-        console.log('Selected file URI:', result.uri);
+        console.log('Selected file URI:', result.assets[0].uri);
+        setNewMessage('File Selected to send');
       } else {
         // User canceled the file picking
         console.log('File picking canceled');

@@ -52,6 +52,7 @@ const styles = StyleSheet.create({
         paddingVertical: 10,
         paddingHorizontal: 10,
         flexDirection: 'row',
+        overflow: 'scroll',
     },
     inputTextStyles: {
         fontSize: 14,
