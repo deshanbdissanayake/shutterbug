@@ -1,5 +1,5 @@
-import { Image, ScrollView, StyleSheet, Text, TouchableOpacity, View, StatusBar } from 'react-native'
-import React, { useCallback, useState } from 'react'
+import { Image, ScrollView, StyleSheet, Text, TouchableOpacity, View, StatusBar, BackHandler } from 'react-native'
+import React, { useCallback, useState, useEffect } from 'react'
 import colors from '../../assets/colors/colors'
 import MiniButton from '../../components/general/MiniButton'
 import { useNavigation, useFocusEffect } from '@react-navigation/native'
@@ -12,6 +12,7 @@ import Subtitle from '../../components/app/Subtitle'
 import Button from '../../components/general/Button'
 import CustomModal from '../../components/general/CustomModal'
 import Alert from '../../components/general/Alert'
+import { useTabBarVisibility } from '../../layouts/TabBarContext'
 
 const JobSingleScreen = () => {
   const navigation = useNavigation();
@@ -27,6 +28,27 @@ const JobSingleScreen = () => {
     onClose: resetAlert
   })
 
+  /*========================================================================= */
+  // hide tab bar
+  const { setTabBarVisible } = useTabBarVisibility()
+  useEffect(() => {
+      setTabBarVisible(false);
+      
+      const backAction = () => {
+        setTabBarVisible(true);
+        navigation.goBack();
+        return true;
+      };
+      const backHandler = BackHandler.addEventListener('hardwareBackPress', backAction);
+      return () => backHandler.remove();
+  }, [])
+
+  const handleGoBack = () => {
+      setTabBarVisible(true);
+      navigation.goBack();
+  };
+  /*========================================================================= */
+
   const resetAlert = () => {
     setAlert({
       showAlert: false, 
@@ -34,10 +56,6 @@ const JobSingleScreen = () => {
       msg: null,
       onClose: resetAlert
     })
-  }
-
-  const backBtnClick = () => {
-    navigation.goBack();
   }
 
   const handleChatClick = (chat_id) => {
@@ -98,7 +116,7 @@ const JobSingleScreen = () => {
         <View>
           <View style={styles.headerWrapper}>
             <MiniButton
-              func={backBtnClick}
+              func={handleGoBack}
               content={<AntDesign name="arrowleft" size={24} color={colors.textDark} />}
             />
             <TouchableOpacity style={styles.chatBtnWrapper} onPress={() => handleChatClick(jobData.chat_id)}>

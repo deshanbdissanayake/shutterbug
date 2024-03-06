@@ -8,6 +8,7 @@ import ClientNavSearch from './ClientNavSearch';
 import ClientNavChat from './ClientNavChat';
 import ClientNavJob from './ClientNavJob';
 import CustomOfferViewScreen from '../screens/client/CustomOfferViewScreen';
+import { TabBarProvider, useTabBarVisibility } from '../layouts/TabBarContext';
 
 function MyTabBar({ state, descriptors, navigation }) {
   return (
@@ -72,16 +73,13 @@ function MyTabBar({ state, descriptors, navigation }) {
 
 const Tab = createBottomTabNavigator();
 
-export default function ClientNav() {
-  const [shouldShowTabBar, setShouldShowTabBar] = useState(true)
-
-  const handleShowTabBar = (val) => {
-    setShouldShowTabBar(val);
-  }
+const TabNav = () => {
+  
+  const { tabBarVisible } = useTabBarVisibility();
 
   return (
-      <Tab.Navigator tabBar={shouldShowTabBar ? props => <MyTabBar {...props} /> : () => null}>
-        <Tab.Screen 
+    <Tab.Navigator tabBar={tabBarVisible ? props => <MyTabBar {...props} /> : () => null}>
+       <Tab.Screen 
           name="Client Home" 
           component={ClientNavHome} 
           options={{ headerShown: false }} 
@@ -91,9 +89,11 @@ export default function ClientNav() {
           component={ClientNavSearch} 
           options={{ headerShown: false }} 
         />
-        <Tab.Screen name="Client Chats" options={{ headerShown: false }} >
-          {() => <ClientNavChat handleShowTabBar={handleShowTabBar} />}
-        </Tab.Screen>
+        <Tab.Screen 
+          name="Client Chats" 
+          component={ClientNavChat}
+          options={{ headerShown: false}}
+        />
         <Tab.Screen 
           name="Client Orders" 
           component={ClientNavJob} 
@@ -105,6 +105,17 @@ export default function ClientNav() {
           options={{ headerShown: false }} 
         />
       </Tab.Navigator>
+  )
+}
+
+export default function ClientNav() {
+
+  
+
+  return (
+    <TabBarProvider>
+      <TabNav/>
+    </TabBarProvider>
   );
 }
 

@@ -1,4 +1,4 @@
-import { StyleSheet, View, ScrollView, Image, Text, TouchableOpacity } from 'react-native'
+import { StyleSheet, View, ScrollView, BackHandler } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import colors from '../../assets/colors/colors'
 import { useNavigation } from '@react-navigation/native'
@@ -10,10 +10,32 @@ import PackagesSec from '../../components/other/PackagesSec'
 import FeedbacksSec from '../../components/other/FeedbackSec';
 import { getServiceById } from '../../assets/data/service';
 import ChatBtnSec from '../../components/other/ChatBtnSec';
+import { useTabBarVisibility } from '../../layouts/TabBarContext'
 
 const ServiceScreenSingle = ({ s_id }) => {
   const navigation = useNavigation();
   const [serviceData, setServiceData] = useState(null);
+
+  /*========================================================================= */
+  // hide tab bar
+  const { setTabBarVisible } = useTabBarVisibility()
+  useEffect(() => {
+    setTabBarVisible(false);
+    
+    const backAction = () => {
+      setTabBarVisible(true);
+      navigation.goBack();
+      return true;
+    };
+    const backHandler = BackHandler.addEventListener('hardwareBackPress', backAction);
+    return () => backHandler.remove();
+  }, [])
+
+  const handleGoBack = () => {
+    setTabBarVisible(true);
+    navigation.goBack();
+  };
+  /*========================================================================= */
 
   useEffect(() => {
     const getData = async () => {
@@ -27,7 +49,7 @@ const ServiceScreenSingle = ({ s_id }) => {
     <ScrollView contentContainerStyle={styles.container} showsVerticalScrollIndicator={false}>
       {serviceData && 
         <View>
-          <ImagesSec imageArr={serviceData.s_images} />
+          <ImagesSec imageArr={serviceData.s_images} handleGoBack={handleGoBack} />
           <ProviderSec 
             p_id={serviceData.provider_id}
             p_img={serviceData.provider_pro_pic}

@@ -8,15 +8,11 @@ import colors from '../../assets/colors/colors';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useNavigation } from '@react-navigation/native'
 
-const ImagesSec = ({ imageArr }) => {
+const ImagesSec = ({ imageArr, handleGoBack }) => {
   const navigation = useNavigation();
 
   const width = Dimensions.get('window').width;
   const [currentIndex, setCurrentIndex] = useState(1);
-
-  const backBtnClick = () => {
-    navigation.goBack();
-  }
 
   const onImageClick = (img_id) => {
     console.log(img_id)
@@ -31,7 +27,7 @@ const ImagesSec = ({ imageArr }) => {
         />
         <View style={styles.backBtnStyles}>
             <MiniButton
-                func={backBtnClick}
+                func={handleGoBack}
                 content={<AntDesign name="arrowleft" size={24} color={colors.textLight} />}
             />
         </View>

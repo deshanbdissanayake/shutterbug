@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react'
-import { StyleSheet, Text, View, ScrollView, Image } from 'react-native'
+import { StyleSheet, Text, View, ScrollView, Image, BackHandler } from 'react-native'
 import { AntDesign } from '@expo/vector-icons'
 import MiniButton from '../../components/general/MiniButton'
 import colors from '../../assets/colors/colors';
 import { getNewsById } from '../../assets/data/news';
 import SplashScreen from '../SplashScreen';
 import { useNavigation, useRoute } from '@react-navigation/native'
+import { useTabBarVisibility } from '../../layouts/TabBarContext'
 
 const SingleNewsScreen = () => {
     const navigation = useNavigation();
@@ -15,6 +16,27 @@ const SingleNewsScreen = () => {
     const [loading, setLoading] = useState(true);
 
     const newsID  = route.params.news_id;
+
+    /*========================================================================= */
+    // hide tab bar
+    const { setTabBarVisible } = useTabBarVisibility()
+    useEffect(() => {
+        setTabBarVisible(false);
+        
+        const backAction = () => {
+            setTabBarVisible(true);
+            navigation.goBack();
+            return true;
+        };
+        const backHandler = BackHandler.addEventListener('hardwareBackPress', backAction);
+        return () => backHandler.remove();
+    }, [])
+
+    const handleGoBack = () => {
+        setTabBarVisible(true);
+        navigation.goBack();
+    };
+    /*========================================================================= */
 
     // Getting news data by ID
     const fetchNewsData = async () => {
@@ -31,11 +53,6 @@ const SingleNewsScreen = () => {
         fetchNewsData();
     }, []);
 
-    //for back button click function
-    const backBtnClick = () => {
-        navigation.goBack();
-    };
-
     if(loading){ // when fetching data
         return(
             <SplashScreen />
@@ -46,7 +63,7 @@ const SingleNewsScreen = () => {
                 <View style={styles.newsHeadingWrapper}>
                     <View style={styles.backButtonWrapper}>
                         <MiniButton 
-                            func = {backBtnClick}
+                            func = {handleGoBack}
                             content = {<AntDesign name="arrowleft" size={24} color={colors.textDark} />}
                         />
                     </View>

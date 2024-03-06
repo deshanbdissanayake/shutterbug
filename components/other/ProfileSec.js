@@ -5,13 +5,9 @@ import { AntDesign } from '@expo/vector-icons'
 import colors from '../../assets/colors/colors'
 import { useNavigation } from '@react-navigation/native'
 
-const ProfileSec = ({ p_id, pro_pic, fullname, username, p_ratings, number_of_reviews }) => {
+const ProfileSec = ({ p_id, pro_pic, fullname, username, p_ratings, number_of_reviews, handleGoBack }) => {
 
   const navigation = useNavigation();
-
-  const handleBackClick = () => {
-    navigation.goBack()
-  }
 
   const handleChatClick = (p_id) => {
     navigation.navigate('Single Chat', { p_id })
@@ -22,7 +18,7 @@ const ProfileSec = ({ p_id, pro_pic, fullname, username, p_ratings, number_of_re
       <View style={styles.topWrapper}>
         <View style={styles.leftWrapper}>
           <MiniButton
-            func={handleBackClick}
+            func={handleGoBack}
             content={<AntDesign name="arrowleft" size={24} color={colors.textDark} />}
           />
         </View>

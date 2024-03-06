@@ -1,4 +1,4 @@
-import { FlatList, KeyboardAvoidingView, Platform, StyleSheet, View } from 'react-native'
+import { FlatList, KeyboardAvoidingView, Platform, StyleSheet, View, BackHandler } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import colors from '../../assets/colors/colors'
 import Input from '../../components/general/Input'
@@ -8,17 +8,45 @@ import ServiceItem from '../../components/app/ServiceItem'
 import { getServices } from '../../assets/data/service'
 import { useNavigation, useRoute } from '@react-navigation/native'
 import NoData from '../../components/app/NoData'
+import { useTabBarVisibility } from '../../layouts/TabBarContext'
 
 const SearchScreen = () => {
     const navigation = useNavigation();
     const route = useRoute();
-
+    
     let searchItem = route.params === undefined ? '' : route.params.cat_name;
     
     const [searchText, setSearchText] = useState(searchItem);
     const [serviceListOriginal, setServiceListOriginal] = useState([]);
     const [serviceList, setServiceList] = useState([]);
     
+    /*========================================================================= */
+    // hide tab bar
+    const { setTabBarVisible } = useTabBarVisibility()
+    useEffect(() => {
+        setTabBarVisible(false);
+        
+        const backAction = () => {
+            setTabBarVisibleFunc()
+            navigation.goBack();
+            return true;
+        };
+        const backHandler = BackHandler.addEventListener('hardwareBackPress', backAction);
+        return () => backHandler.remove();
+    }, [])
+
+    const handleGoBack = () => {
+        setTabBarVisibleFunc()
+        navigation.goBack();
+    };
+
+    const setTabBarVisibleFunc = () => {
+        if(route.name !== 'Search'){
+            setTabBarVisible(true);
+        }
+    }
+    /*========================================================================= */
+
     useEffect(() => {
         const getData = async () => {
             const services =  await getServices();
@@ -30,10 +58,6 @@ const SearchScreen = () => {
     useEffect(()=>{
         searchFunc(searchText);
     },[serviceListOriginal])
-    
-    const backBtnClick = () => {
-        navigation.goBack();
-    };
     
     const handleServiceItemClick = (s_id) => {
         navigation.navigate('Service Single', { s_id })
@@ -57,12 +81,16 @@ const SearchScreen = () => {
         >
             <View style={styles.container}>
                 <View style={styles.searchWrapper}>
-                    <View style={styles.backBtnWrapper}>
-                        <MiniButton 
-                            func = {backBtnClick}
-                            content = {<AntDesign name="arrowleft" size={24} color={colors.textDark} />}
-                        />
-                    </View>
+                    {route.name == 'Search' ? (
+                        null
+                    ) : (
+                        <View style={styles.backBtnWrapper}>
+                            <MiniButton 
+                                func = {handleGoBack}
+                                content = {<AntDesign name="arrowleft" size={24} color={colors.textDark} />}
+                            />
+                        </View>
+                    )}
                     <View style={styles.searchInputWrapper}>
                         <Input
                             keyboardType = {'default'}

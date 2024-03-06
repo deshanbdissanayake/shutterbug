@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, BackHandler, TouchableOpacity, Platform, KeyboardAvoidingView, ScrollView, StatusBar } from 'react-native'
+import { StyleSheet, Text, View, BackHandler, Platform, KeyboardAvoidingView, ScrollView, StatusBar } from 'react-native'
 import React, { useState, useEffect } from 'react'
 import { useNavigation, useRoute } from '@react-navigation/native'
 import colors from '../../assets/colors/colors';
@@ -9,6 +9,7 @@ import Button from '../../components/general/Button';
 import { AntDesign, Ionicons } from '@expo/vector-icons';
 import Alert from '../../components/general/Alert';
 import MiniButton from '../../components/general/MiniButton';
+import { useTabBarVisibility } from '../../layouts/TabBarContext'
 
 const JobCaseFormScreen = () => {
     const route = useRoute();
@@ -22,20 +23,37 @@ const JobCaseFormScreen = () => {
         showAlert: false,
         type: null,
         msg: null,
-        onClose: goBackFunc,
+        onClose: handleGoBack,
     });
+
+    /*========================================================================= */
+    // hide tab bar
+    const { setTabBarVisible } = useTabBarVisibility()
+    useEffect(() => {
+        setTabBarVisible(false);
+        
+        const backAction = () => {
+        setTabBarVisible(true);
+        navigation.goBack();
+        return true;
+        };
+        const backHandler = BackHandler.addEventListener('hardwareBackPress', backAction);
+        return () => backHandler.remove();
+    }, [])
+
+    const handleGoBack = () => {
+        setTabBarVisible(true);
+        navigation.goBack();
+    };
+    /*========================================================================= */
 
     const resetAlertFunc = () => {
         setAlert({
             showAlert: false,
             type: null,
             msg: null,
-            onClose: goBackFunc,
+            onClose: handleGoBack,
         })
-    }
-
-    const goBackFunc = () => {
-        navigation.goBack();
     }
 
     useEffect(()=>{
@@ -68,7 +86,7 @@ const JobCaseFormScreen = () => {
                     showAlert: true,
                     type: 'success',
                     msg: data.msg,
-                    onClose: goBackFunc,
+                    onClose: handleGoBack,
                 })
             }else{
                 setAlert({
@@ -101,7 +119,7 @@ const JobCaseFormScreen = () => {
         >
             <ScrollView contentContainerStyle={styles.scrollViewContent} showsVerticalScrollIndicator={false}>
                 <MiniButton 
-                    func = {goBackFunc}
+                    func = {handleGoBack}
                     content = {<AntDesign name="arrowleft" size={24} color={colors.textDark} />}
                 />
                 <View style={styles.successMsgWrapper}>
@@ -141,7 +159,7 @@ const JobCaseFormScreen = () => {
                         />
                         <Button
                             content={<Text style={{color: colors.textDark}}>Cancel</Text>}
-                            func={() => goBackFunc()}
+                            func={() => handleGoBack()}
                             bdr={colors.borderGrayLight}
                         />
                     </View>

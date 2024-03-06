@@ -8,6 +8,7 @@ import Input from '../../components/general/Input';
 import Button from '../../components/general/Button';
 import { AntDesign, Ionicons } from '@expo/vector-icons';
 import Alert from '../../components/general/Alert';
+import { useTabBarVisibility } from '../../layouts/TabBarContext'
 
 const JobReviewFormScreen = () => {
     const route = useRoute();
@@ -21,20 +22,37 @@ const JobReviewFormScreen = () => {
         showAlert: false,
         type: null,
         msg: null,
-        onClose: goBackFunc,
+        onClose: handleGoBack,
     });
+
+    /*========================================================================= */
+    // hide tab bar
+    const { setTabBarVisible } = useTabBarVisibility()
+    useEffect(() => {
+        setTabBarVisible(false);
+        
+        const backAction = () => {
+        setTabBarVisible(true);
+        navigation.goBack();
+        return true;
+        };
+        const backHandler = BackHandler.addEventListener('hardwareBackPress', backAction);
+        return () => backHandler.remove();
+    }, [])
+
+    const handleGoBack = () => {
+        setTabBarVisible(true);
+        navigation.goBack();
+    };
+    /*========================================================================= */
 
     const resetAlertFunc = () => {
         setAlert({
             showAlert: false,
             type: null,
             msg: null,
-            onClose: goBackFunc,
+            onClose: handleGoBack,
         })
-    }
-
-    const goBackFunc = () => {
-        navigation.navigate("Job List")
     }
 
     useEffect(()=>{
@@ -84,7 +102,7 @@ const JobReviewFormScreen = () => {
                     showAlert: true,
                     type: 'success',
                     msg: data.msg,
-                    onClose: goBackFunc,
+                    onClose: handleGoBack,
                 })
             }else{
                 setAlert({
@@ -157,7 +175,7 @@ const JobReviewFormScreen = () => {
                         />
                         <Button
                             content={<Text style={{color: colors.textDark}}>Skip</Text>}
-                            func={() => goBackFunc()}
+                            func={() => handleGoBack()}
                             bdr={colors.borderGrayLight}
                         />
                     </View>
