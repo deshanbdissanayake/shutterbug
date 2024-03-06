@@ -7,7 +7,7 @@ const ChatMessageItem = ({ msgData }) => {
   const user_id = 1; // Assume user ID retrieval from async storage
 
   const isCurrentUser = msgData.msgBy === user_id;
-  const bgColor = isCurrentUser ? colors.bgLight : colors.borderGrayExtraLight;
+  const bgColor = isCurrentUser ? colors.infoLight : colors.warningLight;
   const checkmarkColor = isCurrentUser && msgData.readStt ? colors.primary : colors.textGray;
 
   const handleDownload = (fileUrl) => {

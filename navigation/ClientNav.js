@@ -12,7 +12,7 @@ import { TabBarProvider, useTabBarVisibility } from '../layouts/TabBarContext';
 
 function MyTabBar({ state, descriptors, navigation }) {
   return (
-    <View style={{ flexDirection: 'row' }}>
+    <View style={{ flexDirection: 'row', backgroundColor: colors.bgLight }}>
       {state.routes.map((route, index) => {
         const { options } = descriptors[route.key];
         const isFocused = state.index === index;

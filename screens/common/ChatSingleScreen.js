@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { FlatList, Image, StyleSheet, Text, TouchableOpacity, View, ActivityIndicator, BackHandler  } from 'react-native';
 import { useRoute, useNavigation } from '@react-navigation/native';
-import { AntDesign, Entypo, Feather } from '@expo/vector-icons';
+import { AntDesign, Entypo, Feather, FontAwesome, FontAwesome5 } from '@expo/vector-icons';
 import colors from '../../assets/colors/colors';
 import MiniButton from '../../components/general/MiniButton';
 import Input from '../../components/general/Input';
@@ -20,6 +20,13 @@ const ChatSingleScreen = () => {
   const [numberOfMsgs, setNumberOfMsgs] = useState(50);
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState('');
+  const [selectedFileURI, setSelectedFileURI] = useState('');
+  const [selectedFileType, setSelectedFileType] = useState('');
+
+  const selectedFileRemoveFunc = () => {
+    setSelectedFileType('');
+    setSelectedFileURI('');
+  }
 
   const [isAtTop, setIsAtTop] = useState(false); // Track if user is at the top of the messages
 
@@ -33,12 +40,12 @@ const ChatSingleScreen = () => {
         type: '*/*', // Allow any type of file to be picked
         copyToCacheDirectory: false, // Don't copy the file to app's cache directory
       });
-      console.log(result)
   
       if (!result.canceled) {
         // Handle the selected file, for example, you can log its URI
-        console.log('Selected file URI:', result.assets[0].uri);
-        setNewMessage('File Selected to send');
+        setSelectedFileURI(result.assets[0].uri);
+        const fileType = result.assets[0].mimeType.split('/')[0];
+        setSelectedFileType(fileType)
       } else {
         // User canceled the file picking
         console.log('File picking canceled');
@@ -110,27 +117,47 @@ const ChatSingleScreen = () => {
             onEndReached={loadMoreMessages}
             onEndReachedThreshold={0.1}
             ListFooterComponent={isAtTop && <ActivityIndicator />}
+            contentContainerStyle={styles.msgListStyles}
           />
         ) : (
           <NoData text={`Start a conversation with ${chat_data.chat_user_name}`} />
         )}
-        <View style={styles.newMsgWrapper}>
-          <View style={styles.inputWrapper}>
-            <Input
-              keyboardType="default"
-              value={newMessage}
-              onChangeText={setNewMessage}
-              placeholder="Message"
-              icon={<MiniButton
-                content={<Entypo name="attachment" size={24} color={colors.primary}/>}
-                func={handleFileSelect}
-                paddingStt={false}
-              />}
-            />
+        <View style={styles.inputSecWrapper}>
+          {selectedFileURI !== '' && (
+            <View>
+              <TouchableOpacity onPress={selectedFileRemoveFunc} style={styles.closeWrapper}>
+                <FontAwesome name="times" size={24} color={colors.textDark} />
+              </TouchableOpacity>
+              {
+                selectedFileType === 'image' ? (
+                  <Image source={{ uri: selectedFileURI }} style={styles.selectedFileStyles} />
+                ) : (
+                  <View style={styles.selectedFileStyles}>
+                    <FontAwesome5 name="file-alt" size={70} color={colors.textDark} />
+                    <Text style={styles.selectedFileTextStyles}>Document selected to send</Text>
+                  </View>
+                )
+              }
+            </View>
+          )}
+          <View style={styles.newMsgWrapper}>
+            <View style={styles.inputWrapper}>
+              <Input
+                keyboardType="default"
+                value={newMessage}
+                onChangeText={setNewMessage}
+                placeholder="Message"
+                icon={<MiniButton
+                  content={<Entypo name="attachment" size={24} color={colors.primary}/>}
+                  func={handleFileSelect}
+                  paddingStt={false}
+                />}
+              />
+            </View>
+            <TouchableOpacity onPress={handleSendMessage} style={styles.btnWrapper}>
+              <Feather name="send" size={24} color={colors.primary} />
+            </TouchableOpacity>
           </View>
-          <TouchableOpacity onPress={handleSendMessage} style={styles.btnWrapper}>
-            <Feather name="send" size={24} color={colors.primary} />
-          </TouchableOpacity>
         </View>
       </View>
     </View>
@@ -174,16 +201,27 @@ const styles = StyleSheet.create({
   },
   chatBodyWrapper: {
     flex: 1,
-    paddingVertical: 10,
+  },
+  msgListStyles: {
     paddingHorizontal: 15,
+    paddingVertical: 10,
   },
   newMsgWrapper: {
     flexDirection: 'row',
     alignItems: 'center',
     marginTop: 10,
   },
+  inputSecWrapper: {
+    paddingBottom: 10,
+    paddingHorizontal: 15,
+    backgroundColor: colors.white, 
+    borderTopWidth: 1,
+    borderTopColor: colors.bgLight,
+  },
   inputWrapper: {
     flex: 7,
+    backgroundColor: colors.white,
+    borderRadius: 10,
   },
   btnWrapper: {
     flex: 1,
@@ -195,6 +233,32 @@ const styles = StyleSheet.create({
     borderColor: colors.primary,
     borderRadius: 10,
     marginLeft: 10,
+    backgroundColor: colors.bgLight,
+  },
+  selectedFileStyles: {
+    width: '100%', 
+    height: 200,
+    marginTop: 20,
+    borderRadius: 10,
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingHorizontal: 10,
+    backgroundColor: colors.infoLight,
+  },
+  selectedFileTextStyles: {
+    color: colors.textDark,
+    marginTop: 15,
+  },
+  closeWrapper: {
+    position: 'absolute',
+    top: 25,
+    right: 5,
+    backgroundColor: colors.bgLight,
+    borderWidth: 1,
+    borderColor: colors.border,
+    padding: 5,
+    zIndex: 2,
+    borderRadius: 5,
   },
 });
 
