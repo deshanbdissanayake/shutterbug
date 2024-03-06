@@ -25,26 +25,9 @@ const JobReviewFormScreen = () => {
         onClose: handleGoBack,
     });
 
-    /*========================================================================= */
-    // hide tab bar
-    const { setTabBarVisible } = useTabBarVisibility()
-    useEffect(() => {
-        setTabBarVisible(false);
-        
-        const backAction = () => {
-        setTabBarVisible(true);
-        navigation.goBack();
-        return true;
-        };
-        const backHandler = BackHandler.addEventListener('hardwareBackPress', backAction);
-        return () => backHandler.remove();
-    }, [])
-
     const handleGoBack = () => {
-        setTabBarVisible(true);
         navigation.goBack();
     };
-    /*========================================================================= */
 
     const resetAlertFunc = () => {
         setAlert({

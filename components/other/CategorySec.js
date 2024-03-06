@@ -19,7 +19,7 @@ const CategorySec = () => {
   }
   
   const handleCategoryClick = (cat_name) => {
-      navigation.navigate('Search', { cat_name })
+      navigation.navigate('Search Item', { cat_name })
   }
   
   const categoryListOriginal = useRef([]);

@@ -21,7 +21,7 @@ const ClientNavHome = ({ navigation }) => {
   return (
     <Stack.Navigator>
         <Stack.Screen name="Home" component={HomeScreen} options={{ headerShown: false }} />
-        <Stack.Screen name="Search" component={SearchScreen} options={{ headerShown: false }} />
+        <Stack.Screen name="Search Item" component={SearchScreen} options={{ headerShown: false }} />
         <Stack.Screen name="Service Single" component={ServiceScreenSingle} options={{ headerShown: false }} />
         <Stack.Screen name="Provider Profile" component={ProfileScreen} options={{ headerShown: false }} />
         <Stack.Screen name="Single Chat" component={ChatSingleScreen} options={{ headerShown: false }} />

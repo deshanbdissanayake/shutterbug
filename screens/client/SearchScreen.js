@@ -8,7 +8,6 @@ import ServiceItem from '../../components/app/ServiceItem'
 import { getServices } from '../../assets/data/service'
 import { useNavigation, useRoute } from '@react-navigation/native'
 import NoData from '../../components/app/NoData'
-import { useTabBarVisibility } from '../../layouts/TabBarContext'
 
 const SearchScreen = () => {
     const navigation = useNavigation();
@@ -19,33 +18,10 @@ const SearchScreen = () => {
     const [searchText, setSearchText] = useState(searchItem);
     const [serviceListOriginal, setServiceListOriginal] = useState([]);
     const [serviceList, setServiceList] = useState([]);
-    
-    /*========================================================================= */
-    // hide tab bar
-    const { setTabBarVisible } = useTabBarVisibility()
-    useEffect(() => {
-        setTabBarVisible(false);
-        
-        const backAction = () => {
-            setTabBarVisibleFunc()
-            navigation.goBack();
-            return true;
-        };
-        const backHandler = BackHandler.addEventListener('hardwareBackPress', backAction);
-        return () => backHandler.remove();
-    }, [])
 
     const handleGoBack = () => {
-        setTabBarVisibleFunc()
         navigation.goBack();
     };
-
-    const setTabBarVisibleFunc = () => {
-        if(route.name !== 'Search'){
-            setTabBarVisible(true);
-        }
-    }
-    /*========================================================================= */
 
     useEffect(() => {
         const getData = async () => {

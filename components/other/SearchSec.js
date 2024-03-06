@@ -9,7 +9,7 @@ const SearchSec = () => {
   const navigation = useNavigation();
 
   const searchBtnClick = () => {
-    navigation.navigate('Search');
+    navigation.navigate('Search Item');
   }
 
   return (

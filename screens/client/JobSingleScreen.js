@@ -2,7 +2,7 @@ import { Image, ScrollView, StyleSheet, Text, TouchableOpacity, View, StatusBar,
 import React, { useCallback, useState, useEffect } from 'react'
 import colors from '../../assets/colors/colors'
 import MiniButton from '../../components/general/MiniButton'
-import { useNavigation, useFocusEffect } from '@react-navigation/native'
+import { useNavigation, useFocusEffect, useRoute } from '@react-navigation/native'
 import { AntDesign } from '@expo/vector-icons'
 import { getJobByJobId, jobMarkAsComplete } from '../../assets/data/jobs'
 import ProviderSec from '../../components/other/ProviderSec'
@@ -16,6 +16,7 @@ import { useTabBarVisibility } from '../../layouts/TabBarContext'
 
 const JobSingleScreen = () => {
   const navigation = useNavigation();
+  const route = useRoute();
 
   const [jobData, setJobData] = useState();
   const [loading, setLoading] = useState(true);
@@ -28,26 +29,9 @@ const JobSingleScreen = () => {
     onClose: resetAlert
   })
 
-  /*========================================================================= */
-  // hide tab bar
-  const { setTabBarVisible } = useTabBarVisibility()
-  useEffect(() => {
-      setTabBarVisible(false);
-      
-      const backAction = () => {
-        setTabBarVisible(true);
-        navigation.goBack();
-        return true;
-      };
-      const backHandler = BackHandler.addEventListener('hardwareBackPress', backAction);
-      return () => backHandler.remove();
-  }, [])
-
   const handleGoBack = () => {
-      setTabBarVisible(true);
       navigation.goBack();
   };
-  /*========================================================================= */
 
   const resetAlert = () => {
     setAlert({

@@ -17,26 +17,9 @@ const SingleNewsScreen = () => {
 
     const newsID  = route.params.news_id;
 
-    /*========================================================================= */
-    // hide tab bar
-    const { setTabBarVisible } = useTabBarVisibility()
-    useEffect(() => {
-        setTabBarVisible(false);
-        
-        const backAction = () => {
-            setTabBarVisible(true);
-            navigation.goBack();
-            return true;
-        };
-        const backHandler = BackHandler.addEventListener('hardwareBackPress', backAction);
-        return () => backHandler.remove();
-    }, [])
-
     const handleGoBack = () => {
-        setTabBarVisible(true);
         navigation.goBack();
     };
-    /*========================================================================= */
 
     // Getting news data by ID
     const fetchNewsData = async () => {

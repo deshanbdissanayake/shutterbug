@@ -9,7 +9,6 @@ import ChatMessageItem from '../../components/app/ChatMessageItem';
 import { chatMessagesByChatId } from '../../assets/data/chat'; // Assuming you have a function to fetch chat messages
 import NoData from '../../components/app/NoData';
 import * as DocumentPicker from 'expo-document-picker';
-import { useTabBarVisibility } from '../../layouts/TabBarContext'
 
 const ChatSingleScreen = () => {
   const navigation = useNavigation();
@@ -24,28 +23,10 @@ const ChatSingleScreen = () => {
 
   const [isAtTop, setIsAtTop] = useState(false); // Track if user is at the top of the messages
 
-  /*========================================================================= */
-  // hide tab bar
-  const { setTabBarVisible } = useTabBarVisibility()
-  useEffect(() => {
-    setTabBarVisible(false);
-    
-    const backAction = () => {
-      setTabBarVisible(true);
-      navigation.goBack();
-      return true;
-    };
-    const backHandler = BackHandler.addEventListener('hardwareBackPress', backAction);
-    return () => backHandler.remove();
-  }, [])
-
   const handleGoBack = () => {
-    setTabBarVisible(true);
     navigation.goBack();
   };
-  /*========================================================================= */
   
-
   const handleFileSelect = async () => {
     try {
       const result = await DocumentPicker.getDocumentAsync({

@@ -1,7 +1,7 @@
 import { StyleSheet, View, ScrollView, BackHandler } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import colors from '../../assets/colors/colors'
-import { useNavigation } from '@react-navigation/native'
+import { useNavigation, useRoute } from '@react-navigation/native'
 
 import ImagesSec from '../../components/other/ImagesSec';
 import ProviderSec from '../../components/other/ProviderSec';
@@ -10,32 +10,16 @@ import PackagesSec from '../../components/other/PackagesSec'
 import FeedbacksSec from '../../components/other/FeedbackSec';
 import { getServiceById } from '../../assets/data/service';
 import ChatBtnSec from '../../components/other/ChatBtnSec';
-import { useTabBarVisibility } from '../../layouts/TabBarContext'
 
 const ServiceScreenSingle = ({ s_id }) => {
   const navigation = useNavigation();
+  const route = useRoute();
+
   const [serviceData, setServiceData] = useState(null);
 
-  /*========================================================================= */
-  // hide tab bar
-  const { setTabBarVisible } = useTabBarVisibility()
-  useEffect(() => {
-    setTabBarVisible(false);
-    
-    const backAction = () => {
-      setTabBarVisible(true);
-      navigation.goBack();
-      return true;
-    };
-    const backHandler = BackHandler.addEventListener('hardwareBackPress', backAction);
-    return () => backHandler.remove();
-  }, [])
-
   const handleGoBack = () => {
-    setTabBarVisible(true);
     navigation.goBack();
   };
-  /*========================================================================= */
 
   useEffect(() => {
     const getData = async () => {
