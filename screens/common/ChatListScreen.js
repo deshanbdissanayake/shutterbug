@@ -6,23 +6,63 @@ import Header from '../../components/app/Header'
 import NoData from '../../components/app/NoData'
 import colors from '../../assets/colors/colors'
 import { useNavigation } from '@react-navigation/native'
+import { collection, getDocs, getFirestore, addDoc } from "firebase/firestore"; 
+import db from '../../assets/firestore/firestore'
 
 const ChatListScreen = () => {
   const navigation = useNavigation();
+  const firestore = getFirestore();
+  const chatCollection = collection(firestore, 'chat'); 
+
   const [chatList, setChatList] = useState(null);
 
   useEffect(() => {
     const getData = async () => {
       try {
-        let data = await chatListByUserId();
+        const data = await chatListByUserId();
         setChatList(data);
       } catch (error) {
-        console.log('error at getting chats', error)
-        setChatList(null)
+        console.log('Error fetching chats:', error);
+        setChatList(null);
       }
-    }
+    };
+  
+    const getFirestoreData = async () => {
+      try {
+        const querySnapshot = await getDocs(chatCollection);
+        const data = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+        console.log('Firestore datsa:', data);
+      } catch (error) {
+        console.log('Error fetching Firestore data:', error);
+      }
+    };
+  
     getData();
-  }, [])
+    getFirestoreData();
+    
+    setFirestoreData();
+  }, []);
+  
+  //this function should come in single chat
+  const setFirestoreData = async () => {
+    const data = {
+      c_date: 'March 4, 2024 at 12:00:00 AM UTC+5:30',
+      chatId: 1, 
+      msgId: 2, 
+      msgText: 'hi',
+      receiverId: 2, 
+      senderId: 1, 
+      status: 'active'
+    };
+  
+    try {
+      await addDoc(chatCollection, data);
+      console.log('Added');
+    } catch (error) {
+      console.error('Error adding document: ', error);
+    }
+  }
+  //=================================================================
 
   const handleChatClick = (chat_data) => {
     navigation.navigate('Single Chat', {chat_data})

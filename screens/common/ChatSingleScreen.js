@@ -22,13 +22,12 @@ const ChatSingleScreen = () => {
   const [newMessage, setNewMessage] = useState('');
   const [selectedFileURI, setSelectedFileURI] = useState('');
   const [selectedFileType, setSelectedFileType] = useState('');
+  const [isAtTop, setIsAtTop] = useState(false); // Track if user is at the top of the messages
 
   const selectedFileRemoveFunc = () => {
     setSelectedFileType('');
     setSelectedFileURI('');
-  }
-
-  const [isAtTop, setIsAtTop] = useState(false); // Track if user is at the top of the messages
+  };
 
   const handleGoBack = () => {
     navigation.goBack();
@@ -53,7 +52,7 @@ const ChatSingleScreen = () => {
     } catch (error) {
       console.error('Error selecting file:', error);
     }
-  };  
+  };
 
   const handleSendMessage = () => {
     // Implement sending message functionality

@@ -1,6 +1,6 @@
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import React from 'react'
-import { FontAwesome, Ionicons } from '@expo/vector-icons'
+import { Ionicons } from '@expo/vector-icons'
 import colors from '../../assets/colors/colors'
 
 const ChatItem = ({ chatData, handleChatClick }) => {
@@ -18,10 +18,12 @@ const ChatItem = ({ chatData, handleChatClick }) => {
                     <View style={styles.msgTextWrapper}>
                         <Text style={styles.msgTextStyles} numberOfLines={2}>{ chatData.chat_last_msg }</Text>
                         {
-                            chatData.chat_seen_status == 'yes' ? (
+                            chatData.chat_unread == 0 ? (
                                 <Ionicons name="checkmark-done-sharp" size={16} color={colors.lightBlue} style={styles.checkTextStyles} />
                             ) : (
-                                <FontAwesome name="circle" size={16} color={colors.lightGreen} style={styles.checkTextStyles} />
+                                <View style={styles.chatCountWrapper}>
+                                    <Text style={styles.chatCountTextStyles}>{chatData.chat_unread}</Text>
+                                </View>
                             )
                         }
                     </View>
@@ -35,8 +37,8 @@ export default ChatItem
 
 const styles = StyleSheet.create({
     container: {
-        borderTopWidth: 1,
-        borderTopColor: colors.borderGrayExtraLight,
+        borderBottomWidth: 1,
+        borderBottomColor: colors.borderGrayExtraLight,
         alignItems: 'center',
         flexDirection: 'row',
         paddingVertical: 10,
@@ -82,5 +84,17 @@ const styles = StyleSheet.create({
     checkTextStyles: {
         flex: 1,
         textAlign: 'right',
+    },
+    chatCountWrapper: {
+        backgroundColor: colors.lightGreen,
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderRadius: 50,
+        width: 20,
+        height: 20,
+    },
+    chatCountTextStyles: {
+        fontSize: 10,
+        color: colors.textLight,
     },
 })
