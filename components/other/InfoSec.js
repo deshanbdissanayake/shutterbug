@@ -19,7 +19,7 @@ export default InfoSec
 
 const styles = StyleSheet.create({
   container: {
-    marginBottom: 20,
+    marginBottom: 10,
   },
   descStyles: {
     color: colors.textDark,

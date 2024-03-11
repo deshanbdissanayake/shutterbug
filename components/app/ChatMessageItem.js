@@ -1,9 +1,11 @@
 import React from 'react';
 import { Image, StyleSheet, Text, View, Linking, TouchableOpacity } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
+import { FontAwesome5, Ionicons } from '@expo/vector-icons';
 import colors from '../../assets/colors/colors';
+import { useNavigation } from '@react-navigation/native'
 
-const ChatMessageItem = ({ msgData }) => {
+const ChatMessageItem = ({ msgData, sender }) => {
+  const navigation = useNavigation();
   const user_id = 1; // Assume user ID retrieval from async storage
 
   const isCurrentUser = msgData.msgBy === user_id;
@@ -15,20 +17,71 @@ const ChatMessageItem = ({ msgData }) => {
     Linking.openURL(fileUrl);
   };
 
+  const handleOfferClick = () => {
+    navigation.navigate('Custom Offer', msgData.msgText.offer_id);
+  }
+
+  if( msgData.msgType === 'offer' ){
+    
+    let msgText = ''
+    let showLink = false;
+    let offer_stt = msgData.msgText.offer_stt;
+    let offerBgColor = offer_stt == 'pending' ? bgColor : offer_stt == 'confirm' ? colors.successLight : colors.dangerLight;
+
+    if(isCurrentUser){
+      if(offer_stt == 'pending'){
+        msgText = 'You have sent an offer';
+        showLink = true;
+      }else if(offer_stt == 'confirm'){
+        msgText = sender + ' has Accepted your offer';
+        showLink = true;
+      }else{
+        msgText = sender + ' has Rejected this offer';
+        showLink = false;
+      }
+    }else{
+      if(offer_stt == 'pending'){
+        msgText = sender + ' has sent an offer';
+        showLink = true;
+      }else if(offer_stt == 'confirm'){
+        msgText = 'You have Accepted your offer';
+        showLink = true;
+      }else{
+        msgText = 'You have Rejected this offer';
+        showLink = false;
+      }
+    }
+
+    return (
+      <TouchableOpacity onPress={handleOfferClick} style={[styles.offerWrapper, { backgroundColor: offerBgColor }]}>
+        <FontAwesome5 name="list-alt" size={36} color={colors.textDark} />  
+        <View style={styles.offerTextWrapper}>
+            <Text style={styles.offerTextTitleStyles}>{msgText}</Text>
+            {showLink && (
+              <Text style={styles.offerTextStyles}>Click here to view</Text>
+            )}
+        </View>
+      </TouchableOpacity>
+    )
+  }
+
   return (
       <View style={[styles.container, { alignItems: isCurrentUser ? 'flex-end' : 'flex-start' }]}>
         <View style={[styles.msgWrapper, { backgroundColor: bgColor }]}>
-          {msgData.msgType === 'text' ? (
-            <Text style={styles.msgTextStyles}>{msgData.msgText}</Text>
-          ) : msgData.msgType === 'image' ? (
-            <TouchableOpacity onPress={() => handleDownload(msgData.msgText)}>
-              <Image style={styles.chatImageStyles} source={{ uri: msgData.msgText }} />
-            </TouchableOpacity>
-          ) : (
-            <TouchableOpacity onPress={() => handleDownload(msgData.msgText)}>
-              <Text style={styles.docDownloadTextStyles}>Download File</Text>
-            </TouchableOpacity>
-          )}
+
+          {
+              msgData.msgType === 'text' ? (
+              <Text style={styles.msgTextStyles}>{msgData.msgText}</Text>
+            ) : msgData.msgType === 'image' ? (
+              <TouchableOpacity onPress={() => handleDownload(msgData.msgText)}>
+                <Image style={styles.chatImageStyles} source={{ uri: msgData.msgText }} />
+              </TouchableOpacity>
+            ) : (
+              <TouchableOpacity onPress={() => handleDownload(msgData.msgText)}>
+                <Text style={styles.docDownloadTextStyles}>Download File</Text>
+              </TouchableOpacity>
+            )
+          }
 
           <View style={styles.sttWrapper}>
             <Text style={[styles.timeTextStyles]}>{msgData.createdAt}</Text>
@@ -79,5 +132,24 @@ const styles = StyleSheet.create({
   },
   checkTextStyles: {
     marginLeft: 5,
+  },
+  offerWrapper: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingVertical: 15,
+    paddingHorizontal: 10,
+  },
+  offerTextWrapper: {
+    marginLeft: 10,
+    paddingHorizontal: 20,
+  },
+  offerTextTitleStyles: {
+    fontSize: 16,
+    color: colors.textDark,
+  },
+  offerTextStyles: {
+    color: colors.textDark,
+    textDecorationLine: 'underline',
   },
 });

@@ -1,20 +1,19 @@
-import { Image, ScrollView, StyleSheet, Text, TouchableOpacity, View, StatusBar, BackHandler } from 'react-native'
-import React, { useCallback, useState, useEffect } from 'react'
+import { ScrollView, StyleSheet, Text, TouchableOpacity, View, StatusBar } from 'react-native'
+import React, { useCallback, useState } from 'react'
 import colors from '../../assets/colors/colors'
 import MiniButton from '../../components/general/MiniButton'
 import { useNavigation, useFocusEffect, useRoute } from '@react-navigation/native'
 import { AntDesign } from '@expo/vector-icons'
-import { getJobByJobId, jobMarkAsComplete } from '../../assets/data/jobs'
-import ProviderSec from '../../components/other/ProviderSec'
-import InfoSec from '../../components/other/InfoSec'
-import SplashScreen from '../SplashScreen'
-import Subtitle from '../../components/app/Subtitle'
+import { getJobById, jobMarkAsComplete } from '../../assets/data/jobs'
+import LoadingScreen from '../LoadingScreen'
 import Button from '../../components/general/Button'
 import CustomModal from '../../components/general/CustomModal'
 import Alert from '../../components/general/Alert'
-import { useTabBarVisibility } from '../../layouts/TabBarContext'
+import JobInfoSec from '../../components/other/JobInfoSec'
+import ProviderSec from '../../components/other/ProviderSec'
+import Subtitle from '../../components/app/Subtitle'
 
-const JobSingleScreen = () => {
+const JobSingleScreen = ({job_id}) => {
   const navigation = useNavigation();
   const route = useRoute();
 
@@ -32,6 +31,23 @@ const JobSingleScreen = () => {
   const handleGoBack = () => {
       navigation.goBack();
   };
+
+  useFocusEffect(
+    useCallback(() => {
+        const getData = async () => {
+            try {
+                let data = await getJobById('job', job_id);
+                setJobData(data);
+                setLoading(false);
+                setShowCompleteModal(false);
+                setShowCaseModal(false);
+            } catch (error) {
+              console.log('error getting job item data', data)
+            }
+        };
+        getData();
+    }, [])
+  );
 
   const resetAlert = () => {
     setAlert({
@@ -74,24 +90,14 @@ const JobSingleScreen = () => {
     navigation.navigate("Job Case", { job_id })
   }
 
-  useFocusEffect(
-    useCallback(() => {
-        const getData = async () => {
-            try {
-                let data = await getJobByJobId();
-                setJobData(data);
-                setLoading(false);
-            } catch (error) {
-              console.log('error getting job item data', data)
-            }
-        };
-        getData();
-    }, [])
-);
+  const handleInvoiceClick = async () => {
+    navigation.navigate('Invoice View', job_id)
+  }
+
 
   //add no data screen if data is not available
   if(loading){
-    return <SplashScreen/>
+    return <LoadingScreen/>
   }
 
   return (
@@ -107,31 +113,20 @@ const JobSingleScreen = () => {
               <Text style={styles.chatBtnTextStyles}>Contact</Text>
             </TouchableOpacity>
           </View>
-          <View style={styles.serviceDetailsWrapper}>
-            <Image style={styles.serviceImageStyles} source={{ uri: jobData.service_img }} />
-            <View style={styles.serviceWrapper}>
-              <View style={styles.serviceTextWrapper}>
-                <View style={styles.serviceInfoTopWrapper}>
-                  <Text style={styles.jobTokenTextStyles}>Job ID: # {jobData.job_token}</Text>
-                  <Text style={styles.priceTextStyles}>$ {jobData.jof_price}</Text>
-                </View>
-                <View style={styles.serviceInfoBottomWrapper}>
-                  <Text style={styles.catTextStyles} numberOfLines={1}>{jobData.service_cat_type} | {jobData.service_cat}</Text>
-                  <Text style={styles.serviceTextStyles} numberOfLines={2} >{jobData.service_name}</Text>
-                  <Text style={styles.pkgTextStyles}  numberOfLines={1}>{jobData.pkg_name} Package</Text>
-                </View>
-              </View>
-            </View>
-          </View>
-          <InfoSec title={'Job Description'} description={jobData.jof_desc} showAllStt={true} />
+          <JobInfoSec jobData={jobData} />
+          <Button
+            content={<Text style={{color: colors.primary}}>View Invoice</Text>}
+            func={handleInvoiceClick}
+            bdr={colors.primary}
+          />
           <View style={styles.providerWrapper}>
-            <Subtitle text={'Job Provider'} />
-            <ProviderSec
-                p_id={jobData.provider_id}
-                p_img={jobData.provider_img}
-                fname={jobData.provider_fullname}
-                uname={jobData.provider_username}
-            />
+              <Subtitle text={'Job Provider'} />
+              <ProviderSec
+                  p_id={jobData.provider_id}
+                  p_img={jobData.provider_img}
+                  fname={jobData.provider_fullname}
+                  uname={jobData.provider_username}
+              />
           </View>
         </View>
             <View style={styles.btnsWrapper}>
@@ -227,69 +222,6 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     color: colors.textDark,
   },
-  serviceDetailsWrapper: {
-    marginTop: 20,
-  },
-  serviceWrapper: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    paddingBottom: 10,
-    marginBottom: 15,
-    borderBottomWidth: 1,
-    borderBottomColor: colors.borderGrayExtraLight,
-  },
-  serviceImageStyles: {
-    width: '100%',
-    height: 150,
-    resizeMode: 'cover',
-    borderRadius: 5,
-    marginBottom: 15,
-  },
-  serviceTextWrapper: {
-    width: '100%',
-  },
-  serviceInfoTopWrapper: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginBottom: 10,
-    backgroundColor: colors.bgLight,
-    paddingVertical: 5,
-    paddingHorizontal: 3,
-  },
-  jobTokenTextStyles: {
-    fontSize: 16,
-    fontWeight: '500',
-    color: colors.textDark,
-  },
-  priceTextStyles: {
-    fontSize: 20,
-    fontWeight: '500',
-    color: colors.textDark,
-  },
-  serviceInfoBottomWrapper: {
-    justifyContent: 'space-between',
-  },
-  catTextStyles: {
-    fontSize: 12,
-    textTransform: 'capitalize',
-    color: colors.textGraySecondary,
-    marginBottom: 5,
-  },
-  serviceTextStyles: {
-    fontSize: 16,
-    fontWeight: '400',
-    color: colors.textDark,
-  },
-  pkgTextStyles: {
-    paddingLeft: 2,
-    fontSize: 12,
-    fontWeight: '300',
-    color: colors.textDark,
-  },
-  providerWrapper: {
-    marginBottom: 20,
-  },
   modalsWrapper:{
     flex: 1,
     position: 'absolute',
@@ -306,6 +238,10 @@ const styles = StyleSheet.create({
       fontWeight: '600',
       color: colors.textLight,
       textAlign: 'center',
+  },
+  providerWrapper: {
+    marginBottom: 20,
+    marginTop: 10,
   },
 
 })

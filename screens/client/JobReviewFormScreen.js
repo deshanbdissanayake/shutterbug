@@ -2,7 +2,7 @@ import { StyleSheet, Text, View, BackHandler, TouchableOpacity, Platform, Keyboa
 import React, { useState, useEffect } from 'react'
 import { useNavigation, useRoute } from '@react-navigation/native'
 import colors from '../../assets/colors/colors';
-import { getJobByJobId, saveRatings } from '../../assets/data/jobs';
+import { getJobById, saveRatings } from '../../assets/data/jobs';
 import SplashScreen from '../SplashScreen';
 import Input from '../../components/general/Input';
 import Button from '../../components/general/Button';
@@ -41,7 +41,7 @@ const JobReviewFormScreen = () => {
     useEffect(()=>{
         const getData = async () => {
             try {
-                let data = await getJobByJobId(job_id);
+                let data = await getJobById('job', job_id);
                 setJobData(data);
             } catch (error) {
                 console.log('error job review getting job data', error)
@@ -120,7 +120,7 @@ const JobReviewFormScreen = () => {
                 <View style={styles.successMsgWrapper}>
                     <Text style={styles.jobTokenTextStyles}>Job ID: #{jobData.job_token}</Text>
                     <Text style={styles.successTitleTextStyles}>Successful</Text>
-                    <Ionicons name="checkmark-circle" size={120} color={colors.lightGreen} />
+                    <Ionicons name="checkmark-circle" size={100} color={colors.lightGreen} />
                     <Text style={styles.successMsgTextStyles}>Thank you for using our services. We hope you're satisfied with the outcome. Your feedback helps us improve our service quality. Please take a moment to rate your experience and provide any additional feedback.</Text>
                 </View>
                 <View>

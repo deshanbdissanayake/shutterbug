@@ -48,6 +48,21 @@ const chatListByUserId = async () => {
     return data;
 }
 
+const chatDataByChatId = async (chat_id) => {
+    let data = {
+        chat_id: 4,
+        chat_user_img: 'https://shutterbug.introps.com/documents/user/test-1.jpg',
+        chat_user_name: 'Pubudu Galpatha',
+        chat_last_msg_time: '2023-10-24',
+        chat_last_msg: 'Aliquam erat volutpat.',
+        chat_unread: 10,
+        offer_id: 4,
+        service: 'outdoor',
+        pkg: 'wow',
+    }
+    return data;
+}
+
 const chatMessagesByChatId = async (chat_id) => {
     let data = [
         {
@@ -87,9 +102,20 @@ const chatMessagesByChatId = async (chat_id) => {
             readStt: 0
         },
         {msgId: 16, msgBy: 1, msgType: 'text', msgText: 'ok', createdAt: '2024-03-06 11:42:00', readStt: 1},
+        {
+            msgId: 17, 
+            msgBy: 2,
+            msgType: 'offer', 
+            msgText: {
+                offer_id: 1,
+                offer_stt: 'pending',
+            }, 
+            createdAt: '2024-03-06 11:42:00', 
+            readStt: 1
+        },
     ];
 
     return data;
 }
 
-export { chatListByUserId, chatMessagesByChatId };
+export { chatListByUserId, chatMessagesByChatId, chatDataByChatId };

@@ -32,6 +32,7 @@ const App = () => {
 
   return (
     <AppProvider>
+      <StatusBar backgroundColor={colors.primary} barStyle="light-content" />
       <AppContent />
     </AppProvider>
   );
@@ -90,7 +91,6 @@ const AppContent = () => {
     return(
       <SafeAreaView style={styles.container}>
         <GestureHandlerRootView style={styles.container}>
-            <StatusBar backgroundColor={colors.primary} barStyle="light-content" />
             <NavigationContainer>
               <Stack.Navigator>
                 {!isLoggedIn ? (

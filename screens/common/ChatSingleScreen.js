@@ -6,17 +6,19 @@ import colors from '../../assets/colors/colors';
 import MiniButton from '../../components/general/MiniButton';
 import Input from '../../components/general/Input';
 import ChatMessageItem from '../../components/app/ChatMessageItem';
-import { chatMessagesByChatId } from '../../assets/data/chat'; // Assuming you have a function to fetch chat messages
+import { chatMessagesByChatId, chatDataByChatId } from '../../assets/data/chat'; // Assuming you have a function to fetch chat messages
 import NoData from '../../components/app/NoData';
 import * as DocumentPicker from 'expo-document-picker';
+import LoadingScreen from '../LoadingScreen';
 
-const ChatSingleScreen = () => {
+const ChatSingleScreen = ({chat_id}) => {
   const navigation = useNavigation();
   const route = useRoute();
 
   const flatListRef = useRef(null);
-  const chat_data = route.params?.chat_data || ''; // Using optional chaining for safety
 
+  const [loading, setLoading] = useState(true);
+  const [chatData, setChatData] = useState(null)
   const [numberOfMsgs, setNumberOfMsgs] = useState(50);
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState('');
@@ -24,15 +26,32 @@ const ChatSingleScreen = () => {
   const [selectedFileType, setSelectedFileType] = useState('');
   const [isAtTop, setIsAtTop] = useState(false); // Track if user is at the top of the messages
 
+  const handleGoBack = () => {
+    navigation.goBack();
+  };
+
+  const fetchData = async () => {
+    try {
+      const chatDataResult = await chatDataByChatId(chat_id);
+      const messagesDataResult = await chatMessagesByChatId(chat_id, numberOfMsgs);
+  
+      setChatData(chatDataResult);
+      setMessages(messagesDataResult);
+      setLoading(false);
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
+  };
+  
+  useEffect(() => {
+    fetchData();
+  }, [numberOfMsgs]);  
+
   const selectedFileRemoveFunc = () => {
     setSelectedFileType('');
     setSelectedFileURI('');
   };
 
-  const handleGoBack = () => {
-    navigation.goBack();
-  };
-  
   const handleFileSelect = async () => {
     try {
       const result = await DocumentPicker.getDocumentAsync({
@@ -58,19 +77,6 @@ const ChatSingleScreen = () => {
     // Implement sending message functionality
   };
 
-  const getData = async (chatId, numberOfMsgs) => {
-    try {
-      const data = await chatMessagesByChatId(chatId, numberOfMsgs);
-      setMessages(data);
-    } catch (error) {
-      console.error('Error fetching messages:', error);
-    }
-  };
-
-  useEffect(() => {
-    getData(chat_data.chat_id, numberOfMsgs);
-  }, [numberOfMsgs]);
-
   const loadMoreMessages = () => {
     setNumberOfMsgs(numberOfMsgs + 50);
   };
@@ -80,19 +86,23 @@ const ChatSingleScreen = () => {
     setIsAtTop(contentOffset.y <= 0);
   };
 
+  if(loading){
+    return <LoadingScreen/>
+  }
+
   return (
     <View style={styles.container}>
       <View style={styles.chatHeaderWrapper}>
         <View style={styles.chatImageWrapper}>
           <MiniButton func={handleGoBack} content={<AntDesign name="arrowleft" size={24} color={colors.textLight} />} />
-          <Image style={styles.chatImageStyles} source={{ uri: chat_data.chat_user_img }} />
+          <Image style={styles.chatImageStyles} source={{ uri: chatData.chat_user_img }} />
         </View>
         <View style={styles.headerTextWrapper}>
           <Text style={styles.nameTextStyles} numberOfLines={1}>
-            {chat_data.chat_user_name}
+            {chatData.chat_user_name}
           </Text>
           <Text style={styles.jobTextStyles} numberOfLines={2}>
-            {chat_data.service} ({chat_data.pkg} package)
+            {chatData.service} ({chatData.pkg} package)
           </Text>
         </View>
       </View>
@@ -101,7 +111,7 @@ const ChatSingleScreen = () => {
           <FlatList
             ref={flatListRef}
             data={messages}
-            renderItem={({ item }) => <ChatMessageItem msgData={item} />}
+            renderItem={({ item }) => <ChatMessageItem msgData={item} sender={chatData.chat_user_name} />}
             keyExtractor={(item) => item.msgId}
             initialScrollIndex={messages.length - 1}
             getItemLayout={(data, index) => ({
@@ -119,7 +129,7 @@ const ChatSingleScreen = () => {
             contentContainerStyle={styles.msgListStyles}
           />
         ) : (
-          <NoData text={`Start a conversation with ${chat_data.chat_user_name}`} />
+          <NoData text={`Start a conversation with ${chatData.chat_user_name}`} />
         )}
         <View style={styles.inputSecWrapper}>
           {selectedFileURI !== '' && (

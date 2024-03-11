@@ -9,6 +9,9 @@ import ClientNavChat from './ClientNavChat';
 import ClientNavJob from './ClientNavJob';
 import CustomOfferViewScreen from '../screens/client/CustomOfferViewScreen';
 import { TabBarProvider, useTabBarVisibility } from '../layouts/TabBarContext';
+import JobSingleScreen from '../screens/client/JobSingleScreen';
+import InvoiceViewScreen from '../screens/client/InvoiceViewScreen';
+import SettingsScreen from '../screens/client/SettingsScreen';
 
 function MyTabBar({ state, descriptors, navigation }) {
   return (
@@ -101,7 +104,7 @@ const TabNav = () => {
         />
         <Tab.Screen 
           name="Client Account" 
-          component={CustomOfferViewScreen} 
+          component={SettingsScreen} 
           options={{ headerShown: false }} 
         />
       </Tab.Navigator>

@@ -76,7 +76,9 @@ const getJobsByUserId = async () => {
     return data
 }
 
-const getJobByJobId = async () => {
+const getJobById = async (type, id) => {
+    //type can be 'job' or 'offer'
+    //id can be 'job_id' or 'offer_id'
     let data = {
         job_id: 1,
         job_token: 'Dafsdewdf13sd',
@@ -85,8 +87,8 @@ const getJobByJobId = async () => {
         jof_desc: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce turpis nunc, tincidunt eget viverra in, iaculis non risus. Nam vel mi eros. Suspendisse maximus imperdiet arcu, imperdiet facilisis ipsum viverra sagittis. Curabitur venenatis nisl vestibulum risus bibendum tempus. ',
         jof_sdate: '2024-02-14',
         jof_edate: '2024-03-29',
-        status: 'done', //active, done, closed
-        case: '', // 1 or 0
+        status: 'active', //active, done, closed
+        case: 0, // 1 or 0
         job_date: '2024-02-14',
         provider_id: 1,
         provider_fullname: 'Nadun Tharaka',
@@ -118,4 +120,22 @@ const saveRatings = async () => {
     return data;
 }
 
-export { getJobsByUserId, getJobByJobId, jobMarkAsComplete, jobOpenCase, saveRatings }
+const getJobInvoiceByJobId = async () => {
+    let data = {
+        inv_id: 1,
+        inv_token: 'asdfsdfadf',
+        job_id: 1,
+        job_token: 'asdfasdfas',
+        chat_id: 2,
+        provider_id: 1,
+        provider_name: 'Sam Wick',
+        client_id: 2,
+        client_name: 'Desh Dissanayake',
+        inv_date: '2024-03-15 12:24:56', 
+        inv_amt: '3000.00',
+        service_charge: '300.00',
+    } 
+    return data;
+}
+
+export { getJobsByUserId, getJobById, jobMarkAsComplete, jobOpenCase, saveRatings, getJobInvoiceByJobId }

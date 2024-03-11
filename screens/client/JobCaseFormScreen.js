@@ -2,7 +2,7 @@ import { StyleSheet, Text, View, BackHandler, Platform, KeyboardAvoidingView, Sc
 import React, { useState, useEffect } from 'react'
 import { useNavigation, useRoute } from '@react-navigation/native'
 import colors from '../../assets/colors/colors';
-import { getJobByJobId, jobOpenCase } from '../../assets/data/jobs';
+import { getJobById, jobOpenCase } from '../../assets/data/jobs';
 import SplashScreen from '../SplashScreen';
 import Input from '../../components/general/Input';
 import Button from '../../components/general/Button';
@@ -42,7 +42,7 @@ const JobCaseFormScreen = () => {
     useEffect(()=>{
         const getData = async () => {
             try {
-                let data = await getJobByJobId(job_id);
+                let data = await getJobById('job', job_id);
                 setJobData(data);
             } catch (error) {
                 console.log('error job review getting job data', error)
@@ -108,7 +108,7 @@ const JobCaseFormScreen = () => {
                 <View style={styles.successMsgWrapper}>
                     <Text style={styles.jobTokenTextStyles}>Job ID: #{jobData.job_token}</Text>
                     <Text style={styles.successTitleTextStyles}>Open a case</Text>
-                    <Ionicons name="warning-outline"  size={60} color={colors.white} style={styles.caseIconStyles} />
+                    <Ionicons name="warning-outline"  size={40} color={colors.white} style={styles.caseIconStyles} />
                     <Text style={styles.successMsgTextStyles}>If you encountered any issues or have concerns about the service provided, you can open a case here. Our team will review your case and work towards a resolution.</Text>
                 </View>
                 <View style={styles.reviewFormWrapper}>
