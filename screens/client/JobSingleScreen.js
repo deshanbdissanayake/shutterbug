@@ -28,6 +28,8 @@ const JobSingleScreen = ({job_id}) => {
     onClose: resetAlert
   })
 
+  //use react native alert instead of custom alerts
+
   const handleGoBack = () => {
       navigation.goBack();
   };

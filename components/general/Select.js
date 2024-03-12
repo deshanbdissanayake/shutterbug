@@ -142,8 +142,6 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     optionBorderStyles: {
-        borderTopWidth: 1,
-        borderColor: colors.border,
         marginHorizontal: 10,
         justifyContent: 'center',
     },
@@ -152,8 +150,8 @@ const styles = StyleSheet.create({
         color: colors.textGraySecondary,
     },
     selectedOption: {
-        borderRadius: 10,
-        backgroundColor: colors.border,
+        borderRadius: 5,
+        backgroundColor: colors.bgLight,
     },
     modalContainer: {
         flex: 1,
@@ -164,8 +162,8 @@ const styles = StyleSheet.create({
     modalContent: {
         width: 300,
         maxHeight: 400,
-        backgroundColor: colors.bgLight,
-        borderRadius: 10,
+        backgroundColor: colors.white,
+        borderRadius: 5,
     },
 });
 

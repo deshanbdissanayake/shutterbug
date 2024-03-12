@@ -8,10 +8,10 @@ const getAllRequests = async () => {
             cat_id: 1,
             category: 'Wedding',
             title: 'Need a wedding photographer',
-            desc: "I need a wedding photographer for my friend's wedding. I am looking for a professional who has at least 5 years of experience and a good portfolio.",
+            desc: "I need a wedding photographer for my friend's wedding. I am looking for a professional who has at least 5 years of experience and a good portfolio. I need a wedding photographer for my friend's wedding. I am looking for a professional who has at least 5 years of experience and a good portfolio.",
             budget: '4300.00',
-            sdate: '2024-03-12 12:14:23',
-            edate: '2024-03-12 16:30:00',
+            sdate: '2024-03-12',
+            edate: '2024-03-12',
             status: 'active',
         },
         {
@@ -24,8 +24,8 @@ const getAllRequests = async () => {
             title: 'Need a wedding photographer',
             desc: "I need a wedding photographer for my friend's wedding. I am looking for a professional who has at least 5 years of experience and a good portfolio.",
             budget: '4300.00',
-            sdate: '2024-03-12 12:14:23',
-            edate: '2024-03-12 16:30:00',
+            sdate: '2024-03-12',
+            edate: '2024-03-12',
             status: 'active',
         },
         {
@@ -38,8 +38,8 @@ const getAllRequests = async () => {
             title: 'Need a wedding photographer',
             desc: "I need a wedding photographer for my friend's wedding. I am looking for a professional who has at least 5 years of experience and a good portfolio.",
             budget: '4300.00',
-            sdate: '2024-03-12 12:14:23',
-            edate: '2024-03-12 16:30:00',
+            sdate: '2024-03-12',
+            edate: '2024-03-12',
             status: 'active',
         },
         {
@@ -52,8 +52,8 @@ const getAllRequests = async () => {
             title: 'Need a wedding photographer',
             desc: "I need a wedding photographer for my friend's wedding. I am looking for a professional who has at least 5 years of experience and a good portfolio.",
             budget: '4300.00',
-            sdate: '2024-03-12 12:14:23',
-            edate: '2024-03-12 16:30:00',
+            sdate: '2024-03-12',
+            edate: '2024-03-12',
             status: 'active',
         },
         {
@@ -66,8 +66,8 @@ const getAllRequests = async () => {
             title: 'Need a wedding photographer',
             desc: "I need a wedding photographer for my friend's wedding. I am looking for a professional who has at least 5 years of experience and a good portfolio.",
             budget: '4300.00',
-            sdate: '2024-03-12 12:14:23',
-            edate: '2024-03-12 16:30:00',
+            sdate: '2024-03-12',
+            edate: '2024-03-12',
             status: 'active',
         },
         {
@@ -89,4 +89,22 @@ const getAllRequests = async () => {
     return data;
 }
 
-export { getAllRequests }
+const deleteRequest = async (req_id) => {
+    let data = {
+        stt: 'ok',
+        msg: 'Job Request Deleted Successfully!',
+        data: ''
+    }
+    return data;
+}
+
+const createRequest = async () => {
+    let data = {
+        stt: 'ok',
+        msg: 'Job Request Created Successfully!',
+        data: ''
+    }
+    return data;
+}
+
+export { getAllRequests, deleteRequest, createRequest }

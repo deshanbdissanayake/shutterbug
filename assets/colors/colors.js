@@ -39,6 +39,7 @@ const colors = {
     lightGreen: '#06c212',
     lightBlue: '#87abc7',
     lightRed: '#db583d',
+    lightGray: '#f0ebed',
 
     transparentDark: 'rgba(0, 0, 0, 0.5)',
   }

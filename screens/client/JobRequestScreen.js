@@ -1,13 +1,14 @@
-import { FlatList, ScrollView, StyleSheet, View, Text } from 'react-native'
+import { FlatList, ScrollView, StyleSheet, View, Text, Alert, StatusBar } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import colors from '../../assets/colors/colors'
 import Header from '../../components/app/Header'
 import { useNavigation } from '@react-navigation/native'
-import { getAllRequests } from '../../assets/data/requests'
+import { deleteRequest, getAllRequests } from '../../assets/data/requests'
 import LoadingScreen from '../LoadingScreen'
 import JobRequestItem from '../../components/app/JobRequestItem'
 import MiniButton from '../../components/general/MiniButton'
 import { Entypo } from '@expo/vector-icons'
+import CustomModal from '../../components/general/CustomModal'
 
 const JobRequestScreen = () => {
     const navigation = useNavigation();
@@ -22,6 +23,8 @@ const JobRequestScreen = () => {
 
     const [requests, setRequests] = useState(null);
     const [loading, setLoading] = useState(true);
+    const [showDeleteModal, setShowDeleteModal] = useState(false);
+    const [selectedRequest, setSelectedRequest] = useState(null);
 
     useEffect(() => {
         const getData = async () => {
@@ -37,29 +40,67 @@ const JobRequestScreen = () => {
         getData();
     },[])
 
+    const handleDeleteRequest = async (req_id) => {
+        setShowDeleteModal(true)
+        setSelectedRequest(req_id)
+    }
+
+    const deleteFunc = async () => {
+        try {
+            let data = await deleteRequest(selectedRequest);
+            setShowDeleteModal(false)
+            setSelectedRequest(null);
+            if(data.stt == 'ok'){
+                Alert.alert('Success', data.msg)
+            }else{
+                Alert.alert('Failed', data.msg)
+            }
+        } catch (error) {
+            console.error('Error at deleting request: ', error);
+            setShowDeleteModal(false)
+            setSelectedRequest(null);
+            Alert.alert('Error', 'Something went wrong.')
+        } 
+    }
+
     if(loading){
         return <LoadingScreen/>
     }
 
     return (
         <View style={styles.container}>
-            <Header 
-                text={'Job Requests'} 
-                handleGoBack={handleGoBack} 
-                component={
-                    <MiniButton
-                        bgColor={colors.bgLight}
-                        func={handleCreateClick}
-                        content={<Entypo name="plus" size={24} color={colors.textDark} />}
+            <View style={styles.bodyWrapper}>
+                <Header 
+                    text={'Job Requests'} 
+                    handleGoBack={handleGoBack} 
+                    component={
+                        <MiniButton
+                            bgColor={colors.primary}
+                            func={handleCreateClick}
+                            content={<Entypo name="plus" size={24} color={colors.textLight} />}
+                        />
+                    }   
+                />
+                <FlatList
+                    data={requests}
+                    keyExtractor={(item) => item.req_id}
+                    renderItem={({ item }) => <JobRequestItem data={item} handleDelete={handleDeleteRequest} />}
+                    showsVerticalScrollIndicator={false}
+                />
+            </View>
+            {showDeleteModal && (
+                <View style={styles.modalsWrapper}>
+                    <StatusBar backgroundColor={colors.textGraySecondary} barStyle="light-content" />
+                    <CustomModal 
+                        title={'Delete Job Request'}
+                        content={'Are you sure?'}
+                        pressOk={deleteFunc}
+                        okButtonText={'Confirm'}
+                        pressCancel={() => setShowDeleteModal(false)}
+                        cancelButtonText={'Cancel'}
                     />
-                }   
-            />
-            <FlatList
-                data={requests}
-                keyExtractor={(item) => item.req_id}
-                renderItem={({ item }) => <JobRequestItem data={item} />}
-                showsVerticalScrollIndicator={false}
-            />
+                </View>
+            )}
         </View>
     )
 }
@@ -70,8 +111,19 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: colors.white,
-        paddingVertical: 15,
+    },
+    bodyWrapper: {
+        flex: 1,
+        paddingTop: 15,
         paddingHorizontal: 15,
     },
+    modalsWrapper:{
+        flex: 1,
+        position: 'absolute',
+        alignSelf: 'center',
+        backgroundColor: colors.transparentDark,
+        width: "100%",
+        height: "100%",
+      },
 })
 

@@ -25,13 +25,15 @@ const CategorySec = () => {
   const categoryListOriginal = useRef([]);
   
   useEffect(() => {
-      async function fetchData() {
-          const categories = getCategories; //make this await function
+      const getData = async () => {
+          const categories = await getCategories();
           categoryListOriginal.current = categories;
-          const events = getEvents; //make this await function
+          const events = await getEvents();
+          setCategoryList(categories);
           setEventList(events);
+          setLoading(false)
       }
-      fetchData();
+      getData();
   }, []);
   
   useEffect(() => {
@@ -40,7 +42,7 @@ const CategorySec = () => {
       ));
       setCategoryList(filteredList);
   }, [selectedType, selectedEvent]);
-  
+
   return (
     <View style={styles.container} >
 
