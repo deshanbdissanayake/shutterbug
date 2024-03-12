@@ -1,11 +1,64 @@
-import { StyleSheet, Text, View } from 'react-native'
+import { Pressable, StyleSheet, Text, View, Linking } from 'react-native'
 import React from 'react'
 import colors from '../../assets/colors/colors'
+import NavCard from '../../components/app/NavCard'
+import { FontAwesome6, FontAwesome5, FontAwesome, MaterialIcons } from '@expo/vector-icons'
+import MyProfile from '../../components/app/MyProfile'
+import { useNavigation } from '@react-navigation/native'
+
 
 const SettingsScreen = () => {
+  const version = '1.0.0' // get from the async storage
+  const navigation = useNavigation();
+
+  const handleLinkClick = () => {
+    Linking.openURL('https://www.introps.com');
+  }
+
+  const handleChangeProfile = () => {}
+  const handleJobRequest = () => {
+    navigation.navigate('Job Request')
+  }
+  const handleBilling = () => {}
+  const handleProfile = () => {}
+  const handleLogout = () => {}
+
   return (
     <View style={styles.container}>
-      <Text>Under development</Text>
+      <View>
+        <MyProfile/>
+        <NavCard 
+          icon={<FontAwesome5 name="exchange-alt" size={24} color={colors.textDark} />} 
+          title={'Change to Provider Profile'}
+          func={handleChangeProfile}
+        />
+        <NavCard 
+          icon={<FontAwesome name="briefcase" size={24} color={colors.textDark} />} 
+          title={'Job Request'}
+          func={handleJobRequest}
+        />
+        <NavCard 
+          icon={<FontAwesome6 name="file-invoice" size={24} color={colors.textDark} />} 
+          title={'Billing & Payment'}
+          func={handleBilling}
+        />
+        <NavCard 
+          icon={<FontAwesome name="user" size={24} color={colors.textDark} />} 
+          title={'Profile'}
+          func={handleProfile}
+        />
+        <NavCard 
+          icon={<MaterialIcons name="logout" size={24} color={colors.textDark} />} 
+          title={'Logout'}
+          func={handleLogout}
+        />
+      </View>
+      <View style={styles.footerWrapper}>
+        <Text style={styles.versionTextStyles}>Shutterbug Version {version}</Text>
+        <Pressable onPress={handleLinkClick}>
+          <Text style={styles.devTextStyles}>Developed by Introps</Text>
+        </Pressable>
+      </View>
     </View>
   )
 }
@@ -16,7 +69,24 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: colors.white,
-        paddingVertical: 10,
-        paddingHorizontal: 15,
+        justifyContent: 'space-between',
+    },
+    footerWrapper: {
+        justifyContent: 'center',
+        marginVertical: 15,
+    },
+    versionTextStyles: {
+        textAlign: 'center',
+        fontWeight: '300',
+        color: colors.textGray,
+        fontSize: 12,
+        marginRight: 5,
+    },
+    devTextStyles: {
+        textAlign: 'center',
+        fontWeight: '300',
+        color: colors.textGray,
+        fontSize: 12,
+        textDecorationLine: 'underline',
     },
 })

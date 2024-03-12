@@ -7,11 +7,8 @@ import ClientNavHome from './ClientNavHome';
 import ClientNavSearch from './ClientNavSearch';
 import ClientNavChat from './ClientNavChat';
 import ClientNavJob from './ClientNavJob';
-import CustomOfferViewScreen from '../screens/client/CustomOfferViewScreen';
 import { TabBarProvider, useTabBarVisibility } from '../layouts/TabBarContext';
-import JobSingleScreen from '../screens/client/JobSingleScreen';
-import InvoiceViewScreen from '../screens/client/InvoiceViewScreen';
-import SettingsScreen from '../screens/client/SettingsScreen';
+import ClientNavSettings from './ClientNavSettings';
 
 function MyTabBar({ state, descriptors, navigation }) {
   return (
@@ -49,7 +46,7 @@ function MyTabBar({ state, descriptors, navigation }) {
             icon = <Octicons name="search" size={24} />;
         } else if (route.name === 'Client Orders') {
             icon = <MaterialCommunityIcons name="file-table-box-multiple-outline" size={24}/>;
-        } else if (route.name === 'Client Account') {
+        } else if (route.name === 'Client Settings') {
             icon = <FontAwesome5 name="user" size={24} />;
         }
         
@@ -103,8 +100,8 @@ const TabNav = () => {
           options={{ headerShown: false }}
         />
         <Tab.Screen 
-          name="Client Account" 
-          component={SettingsScreen} 
+          name="Client Settings" 
+          component={ClientNavSettings} 
           options={{ headerShown: false }} 
         />
       </Tab.Navigator>

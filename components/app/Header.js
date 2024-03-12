@@ -4,18 +4,21 @@ import colors from '../../assets/colors/colors'
 import MiniButton from '../general/MiniButton'
 import { AntDesign } from '@expo/vector-icons'
 
-const Header = ({text, handleGoBack = null}) => {
+const Header = ({text, handleGoBack = null, component = null}) => {
   return (
-    <View style={styles.headerWrapper}>
-      {handleGoBack && (
-        <View style={styles.btnWrapper}>
-          <MiniButton
-            func={handleGoBack}
-            content={<AntDesign name="arrowleft" size={24} color={colors.textDark} />}
-          />
-        </View>
-      )}
-      <Text style={styles.headerTextStyles}>{text}</Text>
+    <View style={styles.container}>
+      <View style={styles.headerWrapper}>
+        {handleGoBack && (
+          <View style={styles.btnWrapper}>
+            <MiniButton
+              func={handleGoBack}
+              content={<AntDesign name="arrowleft" size={24} color={colors.textDark} />}
+            />
+          </View>
+        )}
+        <Text style={styles.headerTextStyles}>{text}</Text>
+      </View>
+      {component && component}
     </View>
   )
 }
@@ -23,10 +26,15 @@ const Header = ({text, handleGoBack = null}) => {
 export default Header
 
 const styles = StyleSheet.create({
+  container: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 20,
+  },
   headerWrapper: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: 20,
   },
   btnWrapper: {
     marginRight: 10,

@@ -18,7 +18,7 @@ const styles = StyleSheet.create({
     miniButtonStyles: {
       justifyContent: 'center',
       alignItems: 'center',
-      borderRadius: 100,
+      borderRadius: 50,
       backgroundColor: 'red'
     },
     paddingStyles: {

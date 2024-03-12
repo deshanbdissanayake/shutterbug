@@ -21,7 +21,8 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.desh1234.snack8e484cee0ba54aa68c67eda6efeddabb"
     },
     "web": {
       "favicon": "./assets/favicon.png"
@@ -34,6 +35,11 @@
           "iCloudContainerEnvironment": "Production"
         }
       ]
-    ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "cbf1f51f-1c0e-45b0-9ccc-004db7810465"
+      }
+    }
   }
 }
