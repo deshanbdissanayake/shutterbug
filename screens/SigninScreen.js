@@ -125,8 +125,8 @@ const SigninScreen = ({ navigation }) => {
         })
     }
 
-    const handleGoogleClick = () => {
-        //add function to redirect to google login
+    const handleGoogleClick = async () => {
+        
     }
 
     const handleRegClick = () => {
