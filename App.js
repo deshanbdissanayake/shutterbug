@@ -14,6 +14,7 @@ import SplashScreen from './screens/SplashScreen';
 import WelcomeNav from './navigation/WelcomeNav';
 import ClientNav from './navigation/ClientNav';
 import LoadingScreen from './screens/LoadingScreen';
+import ProviderNav from './navigation/ProviderNav';
 
 const Stack = createStackNavigator();
 
@@ -96,7 +97,8 @@ const AppContent = () => {
                 {!isLoggedIn ? (
                     <Stack.Screen name="Welcome Nav" component={WelcomeNav} options={{headerShown: false}} />
                   ) : (
-                    <Stack.Screen name="Client Main" component={ClientNav} options={{headerShown: false}} />
+                    <Stack.Screen name="Provider Main" component={ProviderNav} options={{headerShown: false}} />
+                    /*<Stack.Screen name="Client Main" component={ClientNav} options={{headerShown: false}} />*/
                   )}
               </Stack.Navigator>
             </NavigationContainer>

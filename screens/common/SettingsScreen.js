@@ -9,6 +9,7 @@ import { useNavigation } from '@react-navigation/native'
 
 const SettingsScreen = () => {
   const version = '1.0.0' // get from the async storage
+  const isClient = false 
   const navigation = useNavigation();
 
   const handleLinkClick = () => {
@@ -23,10 +24,9 @@ const SettingsScreen = () => {
   const handleProfile = () => {}
   const handleLogout = () => {}
 
-  return (
-    <View style={styles.container}>
-      <View>
-        <MyProfile/>
+  const ClientSettings = () => {
+    return (
+      <>
         <NavCard 
           icon={<FontAwesome5 name="exchange-alt" size={24} color={colors.textDark} />} 
           title={'Change to Provider Profile'}
@@ -34,7 +34,7 @@ const SettingsScreen = () => {
         />
         <NavCard 
           icon={<FontAwesome name="briefcase" size={24} color={colors.textDark} />} 
-          title={'Job Request'}
+          title={'My Job Requests'}
           func={handleJobRequest}
         />
         <NavCard 
@@ -52,6 +52,47 @@ const SettingsScreen = () => {
           title={'Logout'}
           func={handleLogout}
         />
+      </>
+    )
+  }
+
+  const ProviderSettings = () => {
+    return (
+      <>
+        <NavCard 
+          icon={<FontAwesome5 name="exchange-alt" size={24} color={colors.textDark} />} 
+          title={'Change to Client Profile'}
+          func={handleChangeProfile}
+        />
+        <NavCard 
+          icon={<FontAwesome name="briefcase" size={24} color={colors.textDark} />} 
+          title={'Job Requests'}
+          func={handleJobRequest}
+        />
+        <NavCard 
+          icon={<FontAwesome5 name="money-bill" size={20} color={colors.textDark} />} 
+          title={'Earnings'}
+          func={handleBilling}
+        />
+        <NavCard 
+          icon={<FontAwesome name="user" size={24} color={colors.textDark} />} 
+          title={'Profile'}
+          func={handleProfile}
+        />
+        <NavCard 
+          icon={<MaterialIcons name="logout" size={24} color={colors.textDark} />} 
+          title={'Logout'}
+          func={handleLogout}
+        />
+      </>
+    )
+  }
+
+  return (
+    <View style={styles.container}>
+      <View>
+        <MyProfile/>
+        {isClient ? <ClientSettings/> : <ProviderSettings/>}
       </View>
       <View style={styles.footerWrapper}>
         <Text style={styles.versionTextStyles}>Shutterbug Version {version}</Text>

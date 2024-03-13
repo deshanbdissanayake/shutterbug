@@ -11,7 +11,7 @@ import Header from '../../components/app/Header'
 const CustomOfferViewScreen = ({offer_id}) => {
   const navigation = useNavigation();
   const route = useRoute();
-  const user_id = 2; // Assume user ID retrieval from async storage
+  const user_id = 1; // Assume user ID retrieval from async storage
 
   const handleGoBack = () => {
     navigation.goBack();

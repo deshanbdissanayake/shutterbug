@@ -34,21 +34,21 @@ const getCategories = async () => {
         },
         { 
             id: 4, 
-            name: 'drone', 
+            name: 'Drone', 
             image: 'https://shutterbug.introps.com/documents/category/test-4.png', 
             type: 'videography',
             events: [1, 2] 
         },
         { 
             id: 5, 
-            name: 'fineart',
+            name: 'Fineart',
             image: 'https://shutterbug.introps.com/documents/category/test-5.png', 
             type: 'videography',
             events: [1] 
         },
         { 
             id: 6, 
-            name: 'portrait',
+            name: 'Portrait',
             image: 'https://shutterbug.introps.com/documents/category/test-6.png', 
             type: 'photography',
             events: [2, 3] 

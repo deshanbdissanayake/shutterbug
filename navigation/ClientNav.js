@@ -9,6 +9,7 @@ import ClientNavChat from './ClientNavChat';
 import ClientNavJob from './ClientNavJob';
 import { TabBarProvider, useTabBarVisibility } from '../layouts/TabBarContext';
 import ClientNavSettings from './ClientNavSettings';
+import LoadingScreen from '../screens/LoadingScreen';
 
 function MyTabBar({ state, descriptors, navigation }) {
   return (
@@ -110,7 +111,9 @@ const TabNav = () => {
 
 export default function ClientNav() {
 
-  
+  setTimeout(() => {
+    return <LoadingScreen/>
+  }, 3000);
 
   return (
     <TabBarProvider>

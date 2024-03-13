@@ -5,7 +5,7 @@ import { getMyData } from '../../assets/data/profile'
 import LoadingScreen from '../../screens/LoadingScreen'
 import colors from '../../assets/colors/colors'
 
-const MyProfile = () => {
+const MyProfile = ({isClient}) => {
 
     const [myData, setMyData] = useState(null);
     const [loading, setLoading] = useState(true);
@@ -39,6 +39,7 @@ const MyProfile = () => {
                 </View>
                 <Text style={styles.emailTextStyles}>{myData.email}</Text>
                 <Text style={styles.balanceTextStyles}>Personal Balance: ${myData.balance}</Text>
+                <Text style={styles.userTypeTextStyles}>{isClient ? 'Client' : 'Provider'} Profile</Text>
             </View>
         </View>
     )
@@ -51,7 +52,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         backgroundColor: colors.bgLight,
-        paddingVertical: 40,
+        paddingVertical: 30,
         paddingHorizontal: 20,
     },
     imageStyles: {
@@ -82,5 +83,13 @@ const styles = StyleSheet.create({
         marginTop: 7,
         color: colors.textDark,
         fontWeight: '300',
+    },
+    userTypeTextStyles: {
+        color: colors.textLight,
+        backgroundColor: colors.primary,
+        paddingVertical: 5,
+        marginTop: 10,
+        maxWidth: 130,
+        textAlign: 'center',
     },
 })

@@ -6,7 +6,7 @@ import JobRequestCreateScreen from '../screens/client/JobRequestCreateScreen';
 
 const Stack = createStackNavigator();
 
-const ClientNavSettings = ({ navigation }) => {
+const ProviderNavSettings = ({ navigation }) => {
 
   React.useLayoutEffect(() => {
     const unsubscribe = navigation.addListener('focus', () => {
@@ -19,9 +19,8 @@ const ClientNavSettings = ({ navigation }) => {
     <Stack.Navigator>
         <Stack.Screen name="Settings" component={SettingsScreen} options={{ headerShown: false }} />
         <Stack.Screen name="Job Request" component={JobRequestScreen} options={{ headerShown: false }} />
-        <Stack.Screen name="Job Request Create" component={JobRequestCreateScreen} options={{ headerShown: false }} />
     </Stack.Navigator>
   );
 };
 
-export default ClientNavSettings;
+export default ProviderNavSettings;

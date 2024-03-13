@@ -98,7 +98,7 @@ const deleteRequest = async (req_id) => {
     return data;
 }
 
-const createRequest = async () => {
+const createRequest = async (formData) => {
     let data = {
         stt: 'ok',
         msg: 'Job Request Created Successfully!',

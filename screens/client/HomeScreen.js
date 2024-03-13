@@ -14,7 +14,7 @@ const HomeScreen = () => {
     return (
         <View style={styles.container}>
             <View style={styles.headerWrapper}>
-                <HeaderSec title={'Hello Nathan !'} desc={'Your Location'} handleMoreClick={handleMoreClick} />
+                <HeaderSec title={'Hello Nathan !'} desc={'Toronto, Canada'} handleMoreClick={handleMoreClick} />
             </View>
             <View style={styles.bodyWrapper}>
                 <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.bodyScrollWrapper}>
