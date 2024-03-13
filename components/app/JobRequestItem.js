@@ -4,36 +4,77 @@ import colors from '../../assets/colors/colors'
 import ShowAll from './ShowAll'
 import { AntDesign } from '@expo/vector-icons'
 import MiniButton from '../general/MiniButton'
+import Button from '../general/Button'
 
-const JobRequestItem = ({data, isClient = true, handleDelete = null}) => {
+const JobRequestItem = ({data, isClient, handleDelete = null, handleApply = null, handleView = null, noButtons = false}) => {
     const [showAll, setShowAll] = useState(false);
 
     return (
         <View style={styles.container}>
-            {!isClient && (
-                <View style={styles.nameTextWrapper}>
-                    <Text style={styles.fnameTextStyles}>{data.user_fullname}</Text>
-                    <Text style={styles.unameTextStyles}>(@{data.user_username})</Text>
+            <View style={styles.headerWrapper}>
+                <View>
+                    {!isClient && (
+                        <View style={styles.nameTextWrapper}>
+                            <Text style={styles.fnameTextStyles}>{data.user_fullname}</Text>
+                            <Text style={styles.unameTextStyles}>(@{data.user_username})</Text>
+                        </View>
+                    )}
+                    <Text style={styles.titleTextStyles}>{data.title}</Text>
                 </View>
-            )}
-            <Text style={styles.categoryTextStyles}>{data.category}</Text>
-            <Text style={styles.titleTextStyles}>{data.title}</Text>
+                <Text style={styles.categoryTextStyles}>{data.category}</Text>
+            </View>
             <Text style={styles.budgetTextStyles}>Budget: ${data.budget}</Text>
             <Text style={styles.descTextStyles} numberOfLines={showAll ? null : 3}>{data.desc}</Text>
             <ShowAll showAll={showAll} setShowAll={setShowAll}/>
             <View style={styles.dateWrapper}>
                 <Text style={styles.sdateTextStyles}>Start Date: {data.sdate}</Text>
                 <Text style={styles.edateTextStyles}>End Date: {data.edate}</Text>
-            </View>
+            </View>     
+                {(data.offer_status == 'confirm') && (
+                    <View style={[styles.btnWrapper, {marginTop: 10}]}>
+                        <Button
+                            content={<Text style={{color: colors.success}}>Offer Confirmed</Text>}
+                            func={() => !noButtons ? handleView(data.req_id) : null}
+                            bdr={colors.success}
+                        />
+                    </View>
+                )}
 
-            {isClient && (
-                <View style={styles.btnWrapper}>
-                    <MiniButton
-                        func={() => handleDelete(data.req_id)}
-                        content={<AntDesign name="delete" size={24} color={colors.primary} />}
-                    />
-                </View>
-            )}
+                {!noButtons && (
+                    isClient ? (
+                        <View style={styles.btnsWrapper}>
+                            {!(data.offer_status == 'confirm') && (
+                                <>
+                                    <View style={styles.btnWrapper}>
+                                        <Button
+                                            content={<Text style={{color: colors.textDark}}>View Offers</Text>}
+                                            func={() => handleView(data.req_id)}
+                                            bdr={colors.textDark}
+                                        />
+                                    </View>
+                                    <View style={styles.btnWrapper}>
+                                        <Button
+                                            content={<Text style={{color: colors.primary}}>Delete</Text>}
+                                            func={() => handleDelete(data.req_id)}
+                                            bdr={colors.primary}
+                                        />
+                                    </View>
+                                </>
+                            )}
+                            
+                        </View>
+                    ) : (
+                        <View style={styles.btnsWrapper}>
+                            <Button
+                                content={<Text style={{ color: data.status === 'active' ? colors.primary : colors.success }}>
+                                    {data.status === 'active' ? 'Apply' : 'Already Applied'}
+                                </Text>}
+                                func={() => handleApply(data.req_id)}
+                                bdr={data.status === 'active' ? colors.primary : colors.success}
+                            />
+                        </View>
+                    )
+                )}
         </View>
     )
 }
@@ -42,16 +83,19 @@ export default JobRequestItem
 
 const styles = StyleSheet.create({
     container: {
-        marginBottom: 15,
+        marginTop: 5,
+        marginBottom: 10,
         paddingVertical: 15,
         paddingHorizontal: 15,
         backgroundColor: colors.lightGray,
         borderRadius: 5,
     },
+    headerWrapper: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+    },
     categoryTextStyles: {
-        position: 'absolute',
-        right: 10,
-        top: 10,
         backgroundColor: colors.white,
         paddingVertical: 5,
         paddingHorizontal: 10,
@@ -61,7 +105,10 @@ const styles = StyleSheet.create({
         fontSize: 16,
         fontWeight: '400',
         color: colors.textDark,
-        marginBottom: 10,
+        paddingBottom: 5,
+        marginBottom: 5,
+        borderBottomWidth: 1,
+        borderBottomColor: colors.textGraySecondary,
     },
     nameTextWrapper: {
         flexDirection: 'row',
@@ -100,8 +147,13 @@ const styles = StyleSheet.create({
         fontWeight: '400',
         color: colors.textDark,
     },
-    btnWrapper: {
-        alignItems: 'flex-end',
+    btnsWrapper: {
         marginTop: 10,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+    },
+    btnWrapper: {
+        flex: 1,
+        marginHorizontal: 2,
     },
 })

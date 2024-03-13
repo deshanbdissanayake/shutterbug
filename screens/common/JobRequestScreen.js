@@ -12,6 +12,7 @@ import CustomModal from '../../components/general/CustomModal'
 
 const JobRequestScreen = () => {
     const navigation = useNavigation();
+    const isClient = true; //get from async storage
 
     const handleGoBack = () => {
         navigation.goBack();
@@ -45,6 +46,14 @@ const JobRequestScreen = () => {
         setSelectedRequest(req_id)
     }
 
+    const handleApplyRequest = async (req_id) => {
+        navigation.navigate('Job Request Apply', req_id)
+    }
+
+    const handleViewRequest = async (req_id) => {
+        navigation.navigate('Job Request Offers', req_id)
+    }
+
     const deleteFunc = async () => {
         try {
             let data = await deleteRequest(selectedRequest);
@@ -74,17 +83,27 @@ const JobRequestScreen = () => {
                     text={'Job Requests'} 
                     handleGoBack={handleGoBack} 
                     component={
-                        <MiniButton
+                        isClient ? 
+                        (<MiniButton
                             bgColor={colors.primary}
                             func={handleCreateClick}
                             content={<Entypo name="plus" size={24} color={colors.textLight} />}
-                        />
+                        />)
+                        : null
                     }   
                 />
                 <FlatList
                     data={requests}
                     keyExtractor={(item) => item.req_id}
-                    renderItem={({ item }) => <JobRequestItem data={item} handleDelete={handleDeleteRequest} />}
+                    renderItem={({ item }) => (
+                        <JobRequestItem 
+                            data={item} 
+                            isClient={isClient} 
+                            handleDelete={handleDeleteRequest} 
+                            handleApply={handleApplyRequest}
+                            handleView={handleViewRequest}
+                        />
+                    )}
                     showsVerticalScrollIndicator={false}
                 />
             </View>

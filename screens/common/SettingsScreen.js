@@ -21,7 +21,9 @@ const SettingsScreen = () => {
     navigation.navigate('Job Request')
   }
   const handleBilling = () => {}
-  const handleProfile = () => {}
+  const handleProfile = () => {
+    navigation.navigate('Profile Edit')
+  }
   const handleLogout = () => {}
 
   const ClientSettings = () => {
@@ -91,7 +93,7 @@ const SettingsScreen = () => {
   return (
     <View style={styles.container}>
       <View>
-        <MyProfile/>
+        <MyProfile isClient={isClient} />
         {isClient ? <ClientSettings/> : <ProviderSettings/>}
       </View>
       <View style={styles.footerWrapper}>
