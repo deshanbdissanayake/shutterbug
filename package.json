@@ -23,7 +23,9 @@
     "react-native-paper": "4.9.2",
     "react-native-reanimated": "~3.6.2",
     "react-native-reanimated-carousel": "^3.5.1",
-    "@react-native-community/datetimepicker": "7.6.1"
+    "@react-native-community/datetimepicker": "7.6.1",
+    "expo-location": "~16.5.5",
+    "expo-application": "~5.8.3"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0"

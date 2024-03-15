@@ -1,10 +1,16 @@
 import React, { useEffect } from 'react';
-import { Keyboard, StyleSheet, SafeAreaView, StatusBar } from 'react-native';
+import { Keyboard, StyleSheet, SafeAreaView, StatusBar, Alert } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { useFonts } from 'expo-font';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+
+//expo location
+import * as Location from 'expo-location'
+
+//expo application
+import * as Application from 'expo-application';
 
 // import layout
 import { AppProvider, useAppContext } from './layouts/AppContext';
@@ -44,6 +50,35 @@ const AppContent = () => {
   const { isLoggedIn, setIsLoggedIn, isPageLoading, setIsPageLoading, showSplashScreen, setShowSplashScreen } = useAppContext();
 
   useEffect(() => {
+    const getInstallationId = async () => {
+      const applicationId = Application.applicationId;
+      console.log('Installation ID:', applicationId);
+    };
+
+    getInstallationId();
+    
+    // Function to fetch the user's current location
+    const fetchLocation = async () => {
+      try {
+        const { status } = await Location.requestForegroundPermissionsAsync();
+        if (status !== 'granted') {
+          Alert.alert('Location Permission Denied', 'Without location access, we cannot show results based on nearby locations');
+          return;
+        }
+        
+        const location = await Location.getCurrentPositionAsync({ accuracy: Location.Accuracy.High });
+        // save current location in async storage
+        await AsyncStorage.clear();
+        await AsyncStorage.setItem("currentLocation", JSON.stringify(location));
+      } catch (error) {
+        // Handle errors
+        Alert.alert('Error', 'Failed to get location');
+        //console.error(error);
+      }
+    };
+
+    fetchLocation();
+
     // to authenticate the user
     const authUser = async () => {
       try{
