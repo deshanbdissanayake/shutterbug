@@ -1,14 +1,18 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { ScrollView, StyleSheet, View } from 'react-native';
 import CategorySec from '../../components/other/CategorySec';
 import HeaderSec from '../../components/other/HeaderSec';
 import NewsSec from '../../components/other/NewsSec';
 import SearchSec from '../../components/other/SearchSec';
 import colors from '../../assets/colors/colors';
+import FloatingMenu from '../../components/other/FloatingMenu';
 
 const HomeScreen = () => {
+
+    const [isShowFloatingMenu, setIsShowFloatingMenu] = useState(false);
+
     const handleMoreClick = () => {
-        console.log('3 dots clicked')
+        setIsShowFloatingMenu(!isShowFloatingMenu);
     };
 
     return (
@@ -29,6 +33,10 @@ const HomeScreen = () => {
                     </View>
                 </ScrollView>
             </View>
+            {/* for floating menu */}
+            {isShowFloatingMenu ? (
+                <FloatingMenu />
+            ) : (null)}
         </View>
     );
 };
