@@ -33,7 +33,7 @@ const JobRequestItem = ({data, isClient, handleDelete = null, handleApply = null
                     <View style={[styles.btnWrapper, {marginTop: 10}]}>
                         <Button
                             content={<Text style={{color: colors.success}}>Offer Confirmed</Text>}
-                            func={() => !noButtons ? handleView(data.req_id) : null}
+                            func={() => (!noButtons && isClient) ? handleView(data.req_id) : null}
                             bdr={colors.success}
                         />
                     </View>

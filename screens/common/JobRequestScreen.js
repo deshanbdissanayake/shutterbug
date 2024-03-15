@@ -1,8 +1,8 @@
 import { FlatList, ScrollView, StyleSheet, View, Text, Alert, StatusBar } from 'react-native'
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import colors from '../../assets/colors/colors'
 import Header from '../../components/app/Header'
-import { useNavigation } from '@react-navigation/native'
+import { useNavigation, useFocusEffect } from '@react-navigation/native'
 import { deleteRequest, getAllRequests } from '../../assets/data/requests'
 import LoadingScreen from '../LoadingScreen'
 import JobRequestItem from '../../components/app/JobRequestItem'
@@ -41,10 +41,12 @@ const JobRequestScreen = () => {
         }
     }
 
-    useEffect(() => {
-        getData();
-    },[])
-
+    useFocusEffect(
+        useCallback(()=>{
+            getData();
+        },[])
+    )
+    
     const handleDeleteRequest = async (req_id) => {
         setShowDeleteModal(true)
         setSelectedRequest(req_id)

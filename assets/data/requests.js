@@ -175,4 +175,31 @@ const createRequest = async (formData) => {
     return data;
 }
 
-export { getAllRequests, deleteRequest, createRequest, getRequestById, getOffersByReqId }
+const createOffer = async (offer_id) => {
+    let data = {
+        stt: 'ok',
+        msg: 'Job Offer Created Successfully!',
+        data: ''
+    }
+    return data;
+}
+
+const confirmOffer = async (offer_id) => {
+    let data = {
+        stt: 'ok',
+        msg: 'Job Offer Confirmed Successfully!',
+        data: ''
+    }
+    return data;
+}
+
+const rejectOffer = async (offer_id) => {
+    let data = {
+        stt: 'ok',
+        msg: 'Job Offer Rejected Successfully!',
+        data: ''
+    }
+    return data;
+}
+
+export { getAllRequests, deleteRequest, createRequest, getRequestById, getOffersByReqId, createOffer, confirmOffer, rejectOffer }

@@ -1,9 +1,9 @@
-import { FlatList, ScrollView, StatusBar, StyleSheet, Text, View } from 'react-native'
+import { Alert, FlatList, ScrollView, StatusBar, StyleSheet, Text, View } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import colors from '../../assets/colors/colors'
 import Header from '../../components/app/Header'
 import { useNavigation } from '@react-navigation/native'
-import { getRequestById, getOffersByReqId } from '../../assets/data/requests'
+import { getRequestById, getOffersByReqId, confirmOffer, rejectOffer } from '../../assets/data/requests'
 import LoadingScreen from '../LoadingScreen'
 import JobRequestOfferItem from '../../components/app/JobRequestOfferItem'
 import JobRequestItem from '../../components/app/JobRequestItem'
@@ -41,16 +41,26 @@ const JobRequestOffers = ({req_id}) => {
         getData();
     },[])
 
-    const sttUpdate = async () => {
+    const sttUpdate = async (type) => {
         setShowConfirmModal(false);
         setShowRejectModal(false);
 
         try {
-            //selectedOffer
+            let data;
+            if (type === 'confirm') {
+                data = await confirmOffer(selectedOffer);
+            } else {
+                data = await rejectOffer(selectedOffer);
+            }
+
+            if(data.stt == 'ok'){
+                Alert.alert('Successful', data.msg)
+            }else{
+                Alert.alert('Failed', data.msg)
+            }
         } catch (error) {
-            console.error('error at stt update request offers: ', error)
-        }
-        //check here
+            console.error('Error at stt update request offers:', error);
+        }        
     }
 
     const handleConfirm = (offer_id) => {
@@ -70,30 +80,31 @@ const JobRequestOffers = ({req_id}) => {
 
     return (
         <>
-            <ScrollView contentContainerStyle={styles.container} showsVerticalScrollIndicator={false}>
+            <View style={styles.container}>
                 <Header text={'Offers for Request'} handleGoBack={handleGoBack} />
+                <ScrollView contentContainerStyle={styles.contentWrapper} showsVerticalScrollIndicator={false}>
+                    <Subtitle text={'Request Details'}/>
+                    <JobRequestItem data={reqData} noButtons={true} />
 
-                <Subtitle text={'Request Details'}/>
-                <JobRequestItem data={reqData} noButtons={true} />
-
-                <Subtitle text={'Offers'}/>
-                { offerData && offerData.map((item)=>(
-                    <JobRequestOfferItem 
-                        key={item.offer_id.toString()}
-                        offerData={item} 
-                        handleConfirm={handleConfirm} 
-                        handleReject={handleReject}
-                        offerStatus={reqData.offer_status}
-                    />
-                ))}
-            </ScrollView>
+                    <Subtitle text={'Offers'}/>
+                    { offerData && offerData.map((item)=>(
+                        <JobRequestOfferItem 
+                            key={item.offer_id.toString()}
+                            offerData={item} 
+                            handleConfirm={handleConfirm} 
+                            handleReject={handleReject}
+                            offerStatus={reqData.offer_status}
+                        />
+                    ))}
+                </ScrollView>
+            </View>
             {showConfirmModal && (
                 <View style={styles.modalsWrapper}>
                     <StatusBar backgroundColor={colors.textGraySecondary} barStyle="light-content" />
                     <CustomModal 
                         title={'Confirm Job Request'}
                         content={'Are you sure?'}
-                        pressOk={sttUpdate}
+                        pressOk={() => sttUpdate('confirm')}
                         okButtonText={'Confirm'}
                         pressCancel={() => setShowConfirmModal(false)}
                         cancelButtonText={'Cancel'}
@@ -106,7 +117,7 @@ const JobRequestOffers = ({req_id}) => {
                     <CustomModal 
                         title={'Reject Job Request'}
                         content={'Are you sure?'}
-                        pressOk={sttUpdate}
+                        pressOk={() => sttUpdate('reject')}
                         okButtonText={'Reject'}
                         pressCancel={() => setShowRejectModal(false)}
                         cancelButtonText={'Cancel'}
@@ -121,10 +132,13 @@ export default JobRequestOffers
 
 const styles = StyleSheet.create({
     container: {
-        flexGrow: 1,
+        flex: 1,
         backgroundColor: colors.white,
         paddingVertical: 15,
         paddingHorizontal: 15,
+    },
+    contentWrapper: {
+        flexGrow: 1,
     },
     modalsWrapper:{
         flex: 1,
