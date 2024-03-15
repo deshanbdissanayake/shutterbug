@@ -2,7 +2,7 @@ import { StyleSheet, Text, View, Animated, Easing, Pressable, Platform } from 'r
 import React, { useState, useEffect} from 'react'
 import colors from '../../assets/colors/colors'
 import { useAppContext } from '../../layouts/AppContext';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import { removeAsync } from '../../assets/store/asyncStorage';
 
 const FloatingMenu = () => {
 
@@ -19,9 +19,9 @@ const FloatingMenu = () => {
         }).start();
     }, []);
 
-    const goToFunction = (nav) => {
+    const goToFunction = async (nav) => {
         if(nav == "logout"){
-            AsyncStorage.removeItem("shutterbug-app-login-token");
+            await removeAsync("shutterbug-app-login-token");
             setIsLoggedIn(false);
         }else{
             console.log(nav);

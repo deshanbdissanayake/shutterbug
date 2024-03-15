@@ -108,8 +108,8 @@ const getRequestById = async (req_id) => {
         budget: '4300.00',
         sdate: '2024-03-12',
         edate: '2024-03-12',
-        apply_status: 'applied', //active, applied - whether provider applied or not
-        offer_status: 'confirm', //active, confirm - whether client confirmed or not
+        apply_status: 'active', //active, applied - whether provider applied or not
+        offer_status: 'active', //active, confirm - whether client confirmed or not
     };
     return data;
 }
@@ -130,13 +130,9 @@ const getOffersByReqId = async (req_id) => {
             s_type: 'photography',
             s_img: 'https://shutterbug.introps.com/documents/service/test-1.jpg',
             offer_status: 'confirm', // active or confirm - whether client confirmed an offer or not
+            offer_note: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam cursus ipsum in elementum iaculis. Nam eu libero rutrum, scelerisque massa ut, vestibulum tortor. Proin ultricies magna aliquam, eleifend lacus a, semper risus. Donec tempor pharetra quam, nec euismod ligula tincidunt et. In eget odio id erat bibendum consequat.',
             pkg_id: 1,
             pkg_name: 'Normal',
-            pkg_price: '1000',
-            pkg_desc: 'this is normal package description',
-            highlight_1: '3 hrs',
-            highlight_2: 'portrait only',
-            highlight_3: 'album with 20 photos',
         },
         {
             offer_id: 2,
@@ -152,13 +148,9 @@ const getOffersByReqId = async (req_id) => {
             s_type: 'photography',
             s_img: 'https://shutterbug.introps.com/documents/service/test-1.jpg',
             offer_status: 'active',
+            offer_note: 'offer note',
             pkg_id: 1,
             pkg_name: 'Normal',
-            pkg_price: '1000',
-            pkg_desc: 'this is normal package description',
-            highlight_1: '3 hrs',
-            highlight_2: 'portrait only',
-            highlight_3: 'album with 20 photos',
         }
     ];
 

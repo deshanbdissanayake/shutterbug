@@ -41,7 +41,7 @@ const App = () => {
 
 const AppContent = () => {
   // for check the login status globally
-  const { isLoggedIn, setIsLoggedIn, isPageLoading, setIsPageLoading, showSplashScreen, setShowSplashScreen } = useAppContext();
+  const { isLoggedIn, setIsLoggedIn, isPageLoading, setIsPageLoading, showSplashScreen, setShowSplashScreen, isClient, setIsClient } = useAppContext();
 
   useEffect(() => {
     // to authenticate the user
@@ -97,8 +97,11 @@ const AppContent = () => {
                 {!isLoggedIn ? (
                     <Stack.Screen name="Welcome Nav" component={WelcomeNav} options={{headerShown: false}} />
                   ) : (
-                    /*<Stack.Screen name="Provider Main" component={ProviderNav} options={{headerShown: false}} />*/
-                    <Stack.Screen name="Client Main" component={ClientNav} options={{headerShown: false}} />
+                    isClient ? (
+                      <Stack.Screen name="Client Main" component={ClientNav} options={{headerShown: false}} />
+                    ) : (
+                      <Stack.Screen name="Provider Main" component={ProviderNav} options={{headerShown: false}} />
+                    )
                   )}
               </Stack.Navigator>
             </NavigationContainer>

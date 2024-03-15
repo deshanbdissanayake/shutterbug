@@ -1,30 +1,51 @@
-import { Pressable, StyleSheet, Text, View, Linking } from 'react-native'
-import React from 'react'
+import { Pressable, StyleSheet, Text, View, Linking, StatusBar } from 'react-native'
+import React, { useState } from 'react'
 import colors from '../../assets/colors/colors'
 import NavCard from '../../components/app/NavCard'
 import { FontAwesome6, FontAwesome5, FontAwesome, MaterialIcons } from '@expo/vector-icons'
 import MyProfile from '../../components/app/MyProfile'
 import { useNavigation } from '@react-navigation/native'
+import { useAppContext } from '../../layouts/AppContext'
+import CustomModal from '../../components/general/CustomModal'
+import { removeAsync } from '../../assets/store/asyncStorage'
 
 
 const SettingsScreen = () => {
   const version = '1.0.0' // get from the async storage
-  const isClient = false 
   const navigation = useNavigation();
+  const { isClient, setIsClient, setIsLoggedIn } = useAppContext();
+
+  const [showProfileChangeAlert, setShowProfileChangeAlert] = useState(false);
+  const [showLogoutAlert, setShowLogoutAlert] = useState(false);
 
   const handleLinkClick = () => {
     Linking.openURL('https://www.introps.com');
   }
 
-  const handleChangeProfile = () => {}
+  const handleChangeProfile = () => {
+    setShowProfileChangeAlert(false);
+    setIsClient(!isClient)
+  }
+
   const handleJobRequest = () => {
     navigation.navigate('Job Request')
   }
+
   const handleBilling = () => {}
+
   const handleProfile = () => {
     navigation.navigate('Profile Edit')
   }
-  const handleLogout = () => {}
+
+  const handleLogout = async () => {
+    setShowLogoutAlert(false);
+    try {
+      await removeAsync("shutterbug-app-login-token");
+      setIsLoggedIn(false)
+    } catch (error) {
+      console.error('error at setting screen logout: ', error)
+    }
+  }
 
   const ClientSettings = () => {
     return (
@@ -32,7 +53,7 @@ const SettingsScreen = () => {
         <NavCard 
           icon={<FontAwesome5 name="exchange-alt" size={24} color={colors.textDark} />} 
           title={'Change to Provider Profile'}
-          func={handleChangeProfile}
+          func={() => setShowProfileChangeAlert(true)}
         />
         <NavCard 
           icon={<FontAwesome name="briefcase" size={24} color={colors.textDark} />} 
@@ -52,7 +73,7 @@ const SettingsScreen = () => {
         <NavCard 
           icon={<MaterialIcons name="logout" size={24} color={colors.textDark} />} 
           title={'Logout'}
-          func={handleLogout}
+          func={() => setShowLogoutAlert(true)}
         />
       </>
     )
@@ -64,7 +85,7 @@ const SettingsScreen = () => {
         <NavCard 
           icon={<FontAwesome5 name="exchange-alt" size={24} color={colors.textDark} />} 
           title={'Change to Client Profile'}
-          func={handleChangeProfile}
+          func={() => setShowProfileChangeAlert(true)}
         />
         <NavCard 
           icon={<FontAwesome name="briefcase" size={24} color={colors.textDark} />} 
@@ -84,7 +105,7 @@ const SettingsScreen = () => {
         <NavCard 
           icon={<MaterialIcons name="logout" size={24} color={colors.textDark} />} 
           title={'Logout'}
-          func={handleLogout}
+          func={() => setShowLogoutAlert(true)}
         />
       </>
     )
@@ -102,6 +123,34 @@ const SettingsScreen = () => {
           <Text style={styles.devTextStyles}>Developed by Introps</Text>
         </Pressable>
       </View>
+
+      {showProfileChangeAlert && (
+        <View style={styles.modalsWrapper}>
+          <StatusBar backgroundColor={colors.textGraySecondary} barStyle="light-content" />
+          <CustomModal
+            title={'Are you sure?'}
+            content={'Change Profile Type to ' + (isClient ? 'Client' : 'Provider')}
+            cancelButtonText={'Cancel'}
+            okButtonText={'Confirm'}
+            pressCancel={() => setShowProfileChangeAlert(false)}
+            pressOk={handleChangeProfile}
+          />
+        </View>
+      )}
+
+      {showLogoutAlert && (
+        <View style={styles.modalsWrapper}>
+          <StatusBar backgroundColor={colors.textGraySecondary} barStyle="light-content" />
+          <CustomModal
+            title={'Logout'}
+            content={'Are you sure?'}
+            cancelButtonText={'Cancel'}
+            okButtonText={'Confirm'}
+            pressCancel={() => setShowLogoutAlert(false)}
+            pressOk={handleLogout}
+          />
+        </View>
+      )}
     </View>
   )
 }
@@ -113,6 +162,14 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: colors.white,
         justifyContent: 'space-between',
+    },
+    modalsWrapper:{
+      flex: 1,
+      position: 'absolute',
+      alignSelf: 'center',
+      backgroundColor: colors.transparentDark,
+      width: "100%",
+      height: "100%",
     },
     footerWrapper: {
         justifyContent: 'center',

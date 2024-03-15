@@ -9,10 +9,10 @@ import JobRequestItem from '../../components/app/JobRequestItem'
 import MiniButton from '../../components/general/MiniButton'
 import { Entypo } from '@expo/vector-icons'
 import CustomModal from '../../components/general/CustomModal'
+import { getAsync } from '../../assets/store/asyncStorage'
 
 const JobRequestScreen = () => {
     const navigation = useNavigation();
-    const isClient = true; //get from async storage
 
     const handleGoBack = () => {
         navigation.goBack();
@@ -24,20 +24,24 @@ const JobRequestScreen = () => {
 
     const [requests, setRequests] = useState(null);
     const [loading, setLoading] = useState(true);
+    const [isClient, setIsClient] = useState(true);
     const [showDeleteModal, setShowDeleteModal] = useState(false);
     const [selectedRequest, setSelectedRequest] = useState(null);
 
-    useEffect(() => {
-        const getData = async () => {
-            try {
-                let data = await getAllRequests();
-                setRequests(data);
-                setLoading(false);
-            } catch (error) {
-                console.error('error getting requests: ', error)
-                setLoading(false);
-            }
+    const getData = async () => {
+        try {
+            let data = await getAllRequests();
+            let asyncData = await getAsync('isClient');
+            setRequests(data);
+            setLoading(false);
+            setIsClient(asyncData)
+        } catch (error) {
+            console.error('error getting requests: ', error)
+            setLoading(false);
         }
+    }
+
+    useEffect(() => {
         getData();
     },[])
 
@@ -143,6 +147,6 @@ const styles = StyleSheet.create({
         backgroundColor: colors.transparentDark,
         width: "100%",
         height: "100%",
-      },
+    },
 })
 

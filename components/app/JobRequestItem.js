@@ -8,7 +8,6 @@ import Button from '../general/Button'
 
 const JobRequestItem = ({data, isClient, handleDelete = null, handleApply = null, handleView = null, noButtons = false}) => {
     const [showAll, setShowAll] = useState(false);
-
     return (
         <View style={styles.container}>
             <View style={styles.headerWrapper}>
@@ -42,35 +41,32 @@ const JobRequestItem = ({data, isClient, handleDelete = null, handleApply = null
 
                 {!noButtons && (
                     isClient ? (
-                        <View style={styles.btnsWrapper}>
-                            {!(data.offer_status == 'confirm') && (
-                                <>
-                                    <View style={styles.btnWrapper}>
-                                        <Button
-                                            content={<Text style={{color: colors.textDark}}>View Offers</Text>}
-                                            func={() => handleView(data.req_id)}
-                                            bdr={colors.textDark}
-                                        />
-                                    </View>
-                                    <View style={styles.btnWrapper}>
-                                        <Button
-                                            content={<Text style={{color: colors.primary}}>Delete</Text>}
-                                            func={() => handleDelete(data.req_id)}
-                                            bdr={colors.primary}
-                                        />
-                                    </View>
-                                </>
-                            )}
-                            
-                        </View>
+                        !(data.offer_status == 'confirm') && (
+                            <View style={styles.btnsWrapper}>
+                                <View style={styles.btnWrapper}>
+                                    <Button
+                                        content={<Text style={{color: colors.textDark}}>View Offers</Text>}
+                                        func={() => handleView(data.req_id)}
+                                        bdr={colors.textDark}
+                                    />
+                                </View>
+                                <View style={styles.btnWrapper}>
+                                    <Button
+                                        content={<Text style={{color: colors.primary}}>Delete</Text>}
+                                        func={() => handleDelete(data.req_id)}
+                                        bdr={colors.primary}
+                                    />
+                                </View>
+                            </View>
+                        )
                     ) : (
                         <View style={styles.btnsWrapper}>
                             <Button
-                                content={<Text style={{ color: data.status === 'active' ? colors.primary : colors.success }}>
-                                    {data.status === 'active' ? 'Apply' : 'Already Applied'}
+                                content={<Text style={{ color: data.apply_status === 'active' ? colors.primary : colors.success }}>
+                                    {data.apply_status === 'active' ? 'Apply' : 'Already Applied'}
                                 </Text>}
-                                func={() => handleApply(data.req_id)}
-                                bdr={data.status === 'active' ? colors.primary : colors.success}
+                                func={() => data.apply_status === 'active' ? handleApply(data.req_id) : null}
+                                bdr={data.apply_status === 'active' ? colors.primary : colors.success}
                             />
                         </View>
                     )
