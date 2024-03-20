@@ -7,7 +7,7 @@ import NoData from '../../components/app/NoData'
 import colors from '../../assets/colors/colors'
 import { useNavigation } from '@react-navigation/native'
 import { collection, getDocs, getFirestore, addDoc } from "firebase/firestore"; 
-import db from '../../assets/firestore/firestore'
+import db from '../../assets/store/firestore'
 
 const ChatListScreen = () => {
   const navigation = useNavigation();
