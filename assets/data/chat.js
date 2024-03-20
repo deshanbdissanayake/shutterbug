@@ -7,9 +7,6 @@ const chatListByUserId = async () => {
             chat_last_msg_time: '1.30 pm',
             chat_last_msg: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eget feugiat metus. Aenean faucibus vulputate sapien, et pretium risus pharetra sed.',
             chat_unread: 0,
-            offer_id: 1,
-            service: 'wildlife',
-            pkg: 'premium',
         },
         {
             chat_id: 2,
@@ -18,9 +15,6 @@ const chatListByUserId = async () => {
             chat_last_msg_time: 'Yesterday',
             chat_last_msg: 'Nullam varius ac enim eu pharetra. Donec eget mollis purus. Suspendisse potenti. Sed luctus nibh cursus fringilla laoreet. Aenean scelerisque, orci vestibulum aliquam egestas, dui nulla aliquet eros, posuere mattis quam velit et massa. Nulla tristique, massa bibendum egestas consequat, dui purus ornare ante, vel venenatis quam nunc sit amet libero.',
             chat_unread: 0,
-            offer_id: 2,
-            service: 'wedding',
-            pkg: 'plus',
         },
         {
             chat_id: 3,
@@ -29,9 +23,6 @@ const chatListByUserId = async () => {
             chat_last_msg_time: '2024-02-10',
             chat_last_msg: 'Nullam blandit erat ac lacinia cursus. Integer dapibus molestie enim, in malesuada erat interdum et.',
             chat_unread: 2,
-            offer_id: 3,
-            service: 'drone',
-            pkg: 'platinum',
         },
         {
             chat_id: 4,
@@ -40,9 +31,6 @@ const chatListByUserId = async () => {
             chat_last_msg_time: '2023-10-24',
             chat_last_msg: 'Aliquam erat volutpat.',
             chat_unread: 10,
-            offer_id: 4,
-            service: 'outdoor',
-            pkg: 'wow',
         },
     ];
     return data;
@@ -56,7 +44,6 @@ const chatDataByChatId = async (chat_id) => {
         chat_last_msg_time: '2023-10-24',
         chat_last_msg: 'Aliquam erat volutpat.',
         chat_unread: 10,
-        offer_id: 4,
         service: 'outdoor',
         pkg: 'wow',
     }

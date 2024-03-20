@@ -4,6 +4,7 @@ import colors from '../../assets/colors/colors'
 import Header from '../../components/app/Header'
 import { useNavigation } from '@react-navigation/native'
 import Button from '../../components/general/Button'
+import EarningsCard from '../../components/app/EarningsCard'
 
 const EarningsScreen = () => {
     const navigation = useNavigation();
@@ -12,7 +13,7 @@ const EarningsScreen = () => {
         navigation.goBack();
     }
 
-    const handleWithdraw = () => {
+    const handleWithdrawClick = () => {
         navigation.navigate('Withdraw')
     }
 
@@ -23,33 +24,13 @@ const EarningsScreen = () => {
                 handleGoBack={handleGoBack}
             />
 
-            <View style={styles.tableStyles}>
-                <View style={styles.tableRowStyles}>
-                    <Text style={styles.tableHeaderStyles}>Personal Balance</Text>
-                    <Text style={styles.tableDataStyles}></Text>
-                </View>
-                <View style={styles.tableRowStyles}>
-                    <Text style={styles.tableHeaderStyles}>Earning in this month</Text>
-                    <Text style={styles.tableDataStyles}></Text>
-                </View>
-                <View style={styles.tableRowStyles}>
-                    <Text style={styles.tableHeaderStyles}>Avg. Job Price</Text>
-                    <Text style={styles.tableDataStyles}></Text>
-                </View>
-                <View style={styles.tableRowStyles}>
-                    <Text style={styles.tableHeaderStyles}>Pending Clearance</Text>
-                    <Text style={styles.tableDataStyles}></Text>
-                </View>
-                <View style={styles.tableRowStyles}>
-                    <Text style={styles.tableHeaderStyles}>Active Jobs</Text>
-                    <Text style={styles.tableDataStyles}></Text>
-                </View>
-            </View>
+            <EarningsCard />
 
             <Button
-                bgColor={colors.primary}
-                content={<Text style={{color: colors.textLight}}>Withdraw</Text>}
-                func={handleWithdraw}
+                bgColor={colors.white}
+                content={<Text style={{color: colors.primary}}>Go to Withdrawals</Text>}
+                func={handleWithdrawClick}
+                bdr={colors.primary}
             />
 
         </View>
@@ -64,22 +45,5 @@ const styles = StyleSheet.create({
         backgroundColor: colors.white,
         paddingVertical: 15,
         paddingHorizontal: 15,
-    },
-    tableStyles: {
-
-    },
-    tableRowStyles: {
-        borderBottomWidth: 1,
-        borderBottomColor: colors.borderGrayExtraLight,
-        paddingVertical: 5,
-        flexDirection: 'row',
-    },
-    tableHeaderStyles: {
-        flex: 1,
-        fontWeight: '400',
-    },
-    tableDataStyles: {
-        flex: 1,
-        fontWeight: '300',
     },
 })
