@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { Keyboard, StyleSheet, SafeAreaView, StatusBar } from 'react-native';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { useFonts } from 'expo-font';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -77,24 +78,37 @@ const AppContent = () => {
     };
   }, []);
 
-
-    return(
+  if(isPageLoading){
+    return(  
       <SafeAreaView style={styles.container}>
-        <NavigationContainer>
-          <Stack.Navigator>
-            {!isLoggedIn ? (
-                <Stack.Screen name="Welcome Nav" component={WelcomeNav} options={{headerShown: false}} />
-              ) : (
-                isClient ? (
-                  <Stack.Screen name="Client Main" component={ClientNav} options={{headerShown: false}} />
-                ) : (
-                  <Stack.Screen name="Provider Main" component={ProviderNav} options={{headerShown: false}} />
-                )
-              )}
-          </Stack.Navigator>
-        </NavigationContainer>
+        {(showSplashScreen) ? (
+          <SplashScreen/>
+        ) : (
+          <LoadingScreen />
+        )}
       </SafeAreaView>
     )
+  }else{
+    return(
+      <SafeAreaView style={styles.container}>
+        <GestureHandlerRootView style={styles.container}>
+            <NavigationContainer>
+              <Stack.Navigator>
+                {!isLoggedIn ? (
+                    <Stack.Screen name="Welcome Nav" component={WelcomeNav} options={{headerShown: false}} />
+                  ) : (
+                    isClient ? (
+                      <Stack.Screen name="Client Main" component={ClientNav} options={{headerShown: false}} />
+                    ) : (
+                      <Stack.Screen name="Provider Main" component={ProviderNav} options={{headerShown: false}} />
+                    )
+                  )}
+              </Stack.Navigator>
+            </NavigationContainer>
+        </GestureHandlerRootView>
+      </SafeAreaView>
+    )
+  }
 }
 
 export default App;

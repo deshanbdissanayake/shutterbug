@@ -118,4 +118,8 @@ const chatMessagesByChatId = async (chat_id) => {
     return data;
 }
 
+const lastMessageSeen = async (chat_id) => {}
+
+
+
 export { chatListByUserId, chatMessagesByChatId, chatDataByChatId };

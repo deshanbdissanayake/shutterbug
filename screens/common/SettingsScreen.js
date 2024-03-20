@@ -31,7 +31,9 @@ const SettingsScreen = () => {
     navigation.navigate('Job Request')
   }
 
-  const handleBilling = () => {}
+  const handleBilling = () => {
+    navigation.navigate('Earnings')
+  }
 
   const handleProfile = () => {
     navigation.navigate('Profile Edit')
