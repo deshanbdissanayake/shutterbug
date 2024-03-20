@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
 import { Keyboard, StyleSheet, SafeAreaView, StatusBar } from 'react-native';
-import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { useFonts } from 'expo-font';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -55,7 +54,7 @@ const AppContent = () => {
           setIsLoggedIn(false);
         }
       }catch(error){
-        //console.log(error);
+        setIsLoggedIn(false);
       }
     }
 
@@ -78,20 +77,9 @@ const AppContent = () => {
     };
   }, []);
 
-  if(isPageLoading){
-    return(  
-      <SafeAreaView style={styles.container}>
-        {(showSplashScreen) ? (
-          <SplashScreen/>
-        ) : (
-          <LoadingScreen />
-        )}
-      </SafeAreaView>
-    )
-  }else{
+
     return(
       <SafeAreaView style={styles.container}>
-        <GestureHandlerRootView style={styles.container}>
             <NavigationContainer>
               <Stack.Navigator>
                 {!isLoggedIn ? (
@@ -105,10 +93,8 @@ const AppContent = () => {
                   )}
               </Stack.Navigator>
             </NavigationContainer>
-        </GestureHandlerRootView>
       </SafeAreaView>
     )
-  }
 }
 
 export default App;
