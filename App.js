@@ -9,9 +9,6 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 //expo location
 import * as Location from 'expo-location'
 
-//expo application
-import * as Application from 'expo-application';
-
 // import layout
 import { AppProvider, useAppContext } from './layouts/AppContext';
 
@@ -50,13 +47,6 @@ const AppContent = () => {
   const { isLoggedIn, setIsLoggedIn, isPageLoading, setIsPageLoading, showSplashScreen, setShowSplashScreen, isClient, setIsClient } = useAppContext();
 
   useEffect(() => {
-    const getInstallationId = async () => {
-      const applicationId = Application.applicationId;
-      console.log('Installation ID:', applicationId);
-    };
-
-    getInstallationId();
-    
     // Function to fetch the user's current location
     const fetchLocation = async () => {
       try {
@@ -68,7 +58,7 @@ const AppContent = () => {
         
         const location = await Location.getCurrentPositionAsync({ accuracy: Location.Accuracy.High });
         // save current location in async storage
-        await AsyncStorage.clear();
+        await AsyncStorage.removeItem("currentLocation");
         await AsyncStorage.setItem("currentLocation", JSON.stringify(location));
       } catch (error) {
         // Handle errors
