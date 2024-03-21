@@ -90,7 +90,7 @@ const getJobById = async (type, id) => {
         status: 'active', //active, done, closed
         case: 0, // 1 or 0
         job_date: '2024-02-14',
-        provider_id: 1,
+        provider_id: 2,
         provider_fullname: 'Nadun Tharaka',
         provider_username: 'SNT',
         provider_img: 'https://shutterbug.introps.com/documents/user/test-1.jpg',

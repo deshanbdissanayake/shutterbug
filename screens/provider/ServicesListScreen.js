@@ -3,12 +3,20 @@ import React from 'react'
 
 const ServicesListScreen = () => {
   return (
-    <View>
-      <Text>ServicesListScreen</Text>
+    <View style={styles.container}>
+      <Text>Services List</Text>
+      <Text>under development</Text>
     </View>
   )
 }
 
 export default ServicesListScreen
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: colors.white,
+    paddingVertical: 10,
+    paddingHorizontal: 15,
+  },
+})

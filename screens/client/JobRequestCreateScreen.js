@@ -121,104 +121,92 @@ const JobRequestCreateScreen = () => {
     return (
         <KeyboardAvoidingView
             style={styles.container}
+            behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
         >
-            <ScrollView showsVerticalScrollIndicator={false}>
-                <View>
-                    <Header text={'Create Job Request'} handleGoBack={handleGoBack} />
-                    
-                    <View style={styles.formWrapper}>
-                        <View style={styles.formGroup}>
-                            <Text style={styles.labelTextStyles}>Select Category</Text>
-                            <Select
-                                value={selectedCategory}
-                                onSelect={setSelectedCategory}
-                                placeholder={'Select Category'}
-                                options={category}
-                            />
-                        </View>
+            <Header text={'Create Job Request'} handleGoBack={handleGoBack} />
+            <ScrollView contentContainerStyle={styles.contentWrapper} showsVerticalScrollIndicator={false}>
+                <View style={styles.formWrapper}>
+                    <View style={styles.formGroup}>
+                        <Text style={styles.labelTextStyles}>Select Category</Text>
+                        <Select
+                            value={selectedCategory}
+                            onSelect={setSelectedCategory}
+                            placeholder={'Select Category'}
+                            options={category}
+                        />
                     </View>
-                    
-                    <View style={styles.formWrapper}>
-                        <View style={styles.formGroup}>
-                            <Text style={styles.labelTextStyles}>Title</Text>
+                
+                    <View style={styles.formGroup}>
+                        <Text style={styles.labelTextStyles}>Title</Text>
+                        <Input
+                            keyboardType={'default'}
+                            value={title}
+                            onChangeText={(text) => setTitle(text)}
+                            placeholder={'Enter Job Title'}
+                        />
+                    </View>
+                
+                    <View style={styles.formGroup}>
+                        <Text style={styles.labelTextStyles}>Description</Text>
+                        <Input
+                            keyboardType={'default'}
+                            value={desc}
+                            onChangeText={(text) => setDesc(text)}
+                            placeholder={'Enter Job Description'}
+                            multiline={true}
+                            textArea={true}
+                        />
+                    </View>
+                
+                    <View style={styles.formGroup}>
+                        <Text style={styles.labelTextStyles}>Budget</Text>
+                        <Input
+                            icon={<Text style={{color: colors.textDark}}>$</Text>}
+                            keyboardType={'number-pad'}
+                            value={budget}
+                            onChangeText={(text) => setBudget(text)}
+                            placeholder={'Enter Job Budget'}
+                        />
+                    </View>
+                
+                    <View style={styles.formGroup}>
+                        <Text style={styles.labelTextStyles}>Start Date</Text>
+                        <Pressable onPress={() => setShowSdate(true)}>
                             <Input
-                                keyboardType={'default'}
-                                value={title}
-                                onChangeText={(text) => setTitle(text)}
-                                placeholder={'Enter Job Title'}
+                                value={sdate.toLocaleDateString()}
+                                placeholder={'Enter Job Start Date'}
+                                editable={false}
                             />
-                        </View>
+                        </Pressable>
+                        {showSdate && (
+                            <DateTimePicker
+                                testID="dateTimePicker"
+                                value={sdate}
+                                mode={'date'}
+                                onChange={(sd) => onChangeDate('sdate', new Date(sd.nativeEvent.timestamp))}
+                            />
+                        )}
                     </View>
-                    
-                    <View style={styles.formWrapper}>
-                        <View style={styles.formGroup}>
-                            <Text style={styles.labelTextStyles}>Description</Text>
+                
+                
+                    <View style={styles.formGroup}>
+                        <Text style={styles.labelTextStyles}>End Date</Text>
+                        <Pressable onPress={() => setShowEdate(true)}>
                             <Input
-                                keyboardType={'default'}
-                                value={desc}
-                                onChangeText={(text) => setDesc(text)}
-                                placeholder={'Enter Job Description'}
-                                multiline={true}
-                                textArea={true}
+                                value={edate.toLocaleDateString()}
+                                placeholder={'Enter Job End Date'}
+                                editable={false}
                             />
-                        </View>
-                    </View>
-                    
-                    <View style={styles.formWrapper}>
-                        <View style={styles.formGroup}>
-                            <Text style={styles.labelTextStyles}>Budget</Text>
-                            <Input
-                                icon={<Text style={{color: colors.textDark}}>$</Text>}
-                                keyboardType={'number-pad'}
-                                value={budget}
-                                onChangeText={(text) => setBudget(text)}
-                                placeholder={'Enter Job Budget'}
+                        </Pressable>
+                        {showEdate && (
+                            <DateTimePicker
+                                testID="dateTimePicker"
+                                value={edate}
+                                mode={'date'}
+                                onChange={(sd) => onChangeDate('edate', new Date(sd.nativeEvent.timestamp))}
                             />
-                        </View>
+                        )}
                     </View>
-                    
-                    <View style={styles.formWrapper}>
-                        <View style={styles.formGroup}>
-                            <Text style={styles.labelTextStyles}>Start Date</Text>
-                            <Pressable onPress={() => setShowSdate(true)}>
-                                <Input
-                                    value={sdate.toLocaleDateString()}
-                                    placeholder={'Enter Job Start Date'}
-                                    editable={false}
-                                />
-                            </Pressable>
-                            {showSdate && (
-                                <DateTimePicker
-                                    testID="dateTimePicker"
-                                    value={sdate}
-                                    mode={'date'}
-                                    onChange={(sd) => onChangeDate('sdate', new Date(sd.nativeEvent.timestamp))}
-                                />
-                            )}
-                        </View>
-                    </View>
-                    
-                    <View style={styles.formWrapper}>
-                        <View style={styles.formGroup}>
-                            <Text style={styles.labelTextStyles}>End Date</Text>
-                            <Pressable onPress={() => setShowEdate(true)}>
-                                <Input
-                                    value={edate.toLocaleDateString()}
-                                    placeholder={'Enter Job End Date'}
-                                    editable={false}
-                                />
-                            </Pressable>
-                            {showEdate && (
-                                <DateTimePicker
-                                    testID="dateTimePicker"
-                                    value={edate}
-                                    mode={'date'}
-                                    onChange={(sd) => onChangeDate('edate', new Date(sd.nativeEvent.timestamp))}
-                                />
-                            )}
-                        </View>
-                    </View>
-
                 </View>
                 {!errorMsg && (
                     <FormErrorMsg msg={errorMsg} />
@@ -239,10 +227,13 @@ export default JobRequestCreateScreen
 
 const styles = StyleSheet.create({
     container: {
-        flexGrow: 1,
+        flex: 1,
         backgroundColor: colors.white,
         paddingVertical: 15,
         paddingHorizontal: 15,
+    },
+    contentWrapper: {
+        flexGrow: 1,
         justifyContent: 'space-between',
     },
     formGroup: {

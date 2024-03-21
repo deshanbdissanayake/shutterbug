@@ -145,5 +145,105 @@ const getServiceById = async () => {
     return data;
 }
 
+const getServicesByUserId = async (user_id) => {
+    let data = [
+        {
+            s_id: 1,
+            provider_id: 1,
+            provider_name: 'Deshan Dissanayake',
+            provider_pro_pic: 'https://shutterbug.introps.com/documents/user/test-1.jpg',
+            s_rating: 4.8,
+            number_of_reviews: 1234,
+            cat_id: 1,
+            cat_name: 'Drone',
+            s_name: 'Portrait Photography',
+            s_desc: 'Best provider with highest ratings.',
+            s_type: 'photography',
+            main_pkg_price: '2000',
+            main_s_img: 'https://shutterbug.introps.com/documents/service/test-1.jpg',
+            packages: [
+                {
+                    pkg_id: 1,
+                    pkg_name: 'Normal',
+                    pkg_price: '1000',
+                    pkg_desc: 'this is normal package description',
+                    is_main: 1,
+                    highlight_1: '3 hrs',
+                    highlight_2: 'portrait only',
+                    highlight_3: 'album with 20 photos',
+                },
+                {
+                    pkg_id: 2,
+                    pkg_name: 'Premium',
+                    pkg_price: '2000',
+                    pkg_desc: 'this is premium package description',
+                    is_main: 0,
+                    highlight_1: '6 hrs',
+                    highlight_2: 'portrait and drone',
+                    highlight_3: 'album with 50 photos',
+                },
+                {
+                    pkg_id: 3,
+                    pkg_name: 'Plus',
+                    pkg_price: '5000',
+                    pkg_desc: 'this is plus package description',
+                    is_main: 0,
+                    highlight_1: '10 hrs',
+                    highlight_2: 'portrait and drone and everything',
+                    highlight_3: 'album with 100 photos',
+                },
+            ],
+        },
+        {
+            s_id: 2,
+            provider_id: 1,
+            provider_name: 'Deshan Dissanayake',
+            provider_pro_pic: 'https://shutterbug.introps.com/documents/user/test-1.jpg',
+            s_rating: 3.9,
+            number_of_reviews: 231,
+            cat_id: 2,
+            cat_name: 'Outdoor',
+            s_name: 'Wildlife Videography Wildlife Videography Wildlife Videography',
+            s_desc: 'Best provider with highest ratings.',
+            s_type: 'videography',
+            main_pkg_price: '1000',
+            main_s_img: 'https://shutterbug.introps.com/documents/service/test-2.jpg',
+            packages: [
+                {
+                    pkg_id: 1,
+                    pkg_name: 'Package 1',
+                    pkg_price: '1500',
+                    pkg_desc: 'this is normal package description',
+                    is_main: 1,
+                    highlight_1: '3 hrs',
+                    highlight_2: 'portrait only',
+                    highlight_3: 'album with 20 photos',
+                },
+                {
+                    pkg_id: 2,
+                    pkg_name: 'Package 2',
+                    pkg_price: '2500',
+                    pkg_desc: 'this is premium package description',
+                    is_main: 0,
+                    highlight_1: '6 hrs',
+                    highlight_2: 'portrait and drone',
+                    highlight_3: 'album with 50 photos',
+                },
+                {
+                    pkg_id: 3,
+                    pkg_name: 'Package 3',
+                    pkg_price: '5500',
+                    pkg_desc: 'this is plus package description',
+                    is_main: 0,
+                    highlight_1: '10 hrs',
+                    highlight_2: 'portrait and drone and everything',
+                    highlight_3: 'album with 100 photos',
+                },
+            ],
+        }
+    ];
 
-export { getServices, getServiceById };
+    return data;
+}
+
+export { getServices, getServiceById, getServicesByUserId };

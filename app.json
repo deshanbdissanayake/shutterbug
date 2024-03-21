@@ -2,7 +2,7 @@
   "expo": {
     "name": "shutterbug",
     "slug": "snack-8e484cee-0ba5-4aa6-8c67-eda6efeddabb",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
@@ -22,7 +22,8 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.desh1234.snack8e484cee0ba54aa68c67eda6efeddabb"
+      "package": "com.desh1234.snack8e484cee0ba54aa68c67eda6efeddabb",
+      "versionCode": 2
     },
     "web": {
       "favicon": "./assets/favicon.png"

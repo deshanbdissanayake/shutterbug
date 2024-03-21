@@ -18,7 +18,7 @@ const colors = {
     white : '#FFFFFF',
     black : '#000000',
     gray : '#d6d6d6', 
-    disabled: '#e0e0e0',
+    disabled: '#f2f2f2',
 
     border : '#E0115F', //pink
     borderGrayLight : '#bbb',

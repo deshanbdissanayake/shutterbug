@@ -29,7 +29,7 @@ const CategorySec = () => {
           const categories = await getCategories();
           categoryListOriginal.current = categories;
           const events = await getEvents();
-          setCategoryList(categories);
+          setCategoryList(categories.filter(cat => cat.type === selectedType && (selectedEvent === 0 || cat.events.includes(selectedEvent))));
           setEventList(events);
           setLoading(false)
       }

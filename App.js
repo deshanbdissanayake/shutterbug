@@ -47,7 +47,7 @@ const App = () => {
 
 const AppContent = () => {
   // for check the login status globally
-  const { isLoggedIn, setIsLoggedIn, isPageLoading, setIsPageLoading, showSplashScreen, setShowSplashScreen } = useAppContext();
+  const { isLoggedIn, setIsLoggedIn, isPageLoading, setIsPageLoading, showSplashScreen, setShowSplashScreen, isClient, setIsClient } = useAppContext();
 
   useEffect(() => {
     const getInstallationId = async () => {
@@ -125,20 +125,23 @@ const AppContent = () => {
     )
   }else{
     return(
-      <SafeAreaView style={styles.container}>
-        <GestureHandlerRootView style={styles.container}>
-            <NavigationContainer>
-              <Stack.Navigator>
-                {!isLoggedIn ? (
-                    <Stack.Screen name="Welcome Nav" component={WelcomeNav} options={{headerShown: false}} />
-                  ) : (
-                    /*<Stack.Screen name="Provider Main" component={ProviderNav} options={{headerShown: false}} />*/
-                    <Stack.Screen name="Client Main" component={ClientNav} options={{headerShown: false}} />
-                  )}
-              </Stack.Navigator>
-            </NavigationContainer>
-        </GestureHandlerRootView>
-      </SafeAreaView>
+      <NavigationContainer>
+        <SafeAreaView style={styles.container}>
+          <GestureHandlerRootView style={styles.container}>
+                <Stack.Navigator>
+                  {!isLoggedIn ? (
+                      <Stack.Screen name="Welcome Nav" component={WelcomeNav} options={{headerShown: false}} />
+                    ) : (
+                      isClient ? (
+                        <Stack.Screen name="Client Main" component={ClientNav} options={{headerShown: false}} />
+                      ) : (
+                        <Stack.Screen name="Provider Main" component={ProviderNav} options={{headerShown: false}} />
+                      )
+                    )}
+                </Stack.Navigator>
+          </GestureHandlerRootView>
+        </SafeAreaView>
+      </NavigationContainer>
     )
   }
 }
