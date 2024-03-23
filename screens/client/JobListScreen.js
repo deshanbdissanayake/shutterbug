@@ -51,8 +51,8 @@ export default JobListScreen
 const styles = StyleSheet.create({
     container: {
         flexGrow: 1,
-        paddingVertical: 20,
-        paddingHorizontal: 20,
+        paddingVertical: 15,
+        paddingHorizontal: 15,
         backgroundColor: colors.white,
     },
 })

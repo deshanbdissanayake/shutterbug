@@ -157,7 +157,7 @@ const getServicesByUserId = async (user_id) => {
             cat_id: 1,
             cat_name: 'Drone',
             s_name: 'Portrait Photography',
-            s_desc: 'Best provider with highest ratings.',
+            s_desc: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce fermentum venenatis metus id ultrices. Sed eu orci felis. Ut faucibus, tortor id viverra euismod, nisl libero lacinia nulla, sit amet venenatis nulla tortor nec mauris.',
             s_type: 'photography',
             main_pkg_price: '2000',
             main_s_img: 'https://shutterbug.introps.com/documents/service/test-1.jpg',
@@ -191,6 +191,23 @@ const getServicesByUserId = async (user_id) => {
                     highlight_1: '10 hrs',
                     highlight_2: 'portrait and drone and everything',
                     highlight_3: 'album with 100 photos',
+                },
+            ],
+            s_images: [
+                {
+                    si_id: 1,
+                    img: 'https://shutterbug.introps.com/documents/service/test-1.jpg',
+                    is_main: 1,
+                },
+                {
+                    si_id: 2,
+                    img: 'https://shutterbug.introps.com/documents/service/test-2.jpg',
+                    is_main: 0,
+                },
+                {
+                    si_id: 3,
+                    img: 'https://shutterbug.introps.com/documents/service/test-3.jpg',
+                    is_main: 0,
                 },
             ],
         },
@@ -246,4 +263,11 @@ const getServicesByUserId = async (user_id) => {
     return data;
 }
 
-export { getServices, getServiceById, getServicesByUserId };
+const saveService = async (formData, s_id) => {
+    // if s_id != null update otherwise add
+    let data = {stt: 'ok', msg: 'Successful', data: 1};
+    return data;
+}
+
+
+export { getServices, getServiceById, getServicesByUserId, saveService };

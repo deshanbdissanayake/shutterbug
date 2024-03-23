@@ -4,7 +4,7 @@ import { setAsync } from '../assets/store/asyncStorage';
 const AppContext = createContext();
 
 export const AppProvider = ({ children }) => {
-  const [isClient, setIsClient] = useState(true);
+  const [isClient, setIsClient] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isPageLoading, setIsPageLoading] = useState(true);
   const [showSplashScreen, setShowSplashScreen] = useState(true);

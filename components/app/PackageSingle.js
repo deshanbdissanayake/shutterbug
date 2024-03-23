@@ -3,13 +3,13 @@ import React, { useState } from 'react'
 import colors from '../../assets/colors/colors'
 import { FontAwesome } from '@expo/vector-icons'
 
-const PackageSingle = ({ pkg, selectedPkg, handlePackageSelect }) => {
+const PackageSingle = ({ pkg, selectedPkg, handlePackageSelect, isClient }) => {
     return (
         <Pressable onPress={() => handlePackageSelect(pkg.pkg_id)}>
-            <View style={[styles.container, selectedPkg === pkg.pkg_id ? styles.selectedPkgStyles : null]}>
+            <View style={[styles.container, (isClient && selectedPkg === pkg.pkg_id) ? styles.selectedPkgStyles : null]}>
                 <View style={styles.topWrapper}>
                     <Text style={styles.titleTextStyles} numberOfLines={1}>{pkg.pkg_name}</Text>
-                    {selectedPkg === pkg.pkg_id ? (
+                    {(isClient && selectedPkg === pkg.pkg_id) ? (
                         <Text style={styles.selectedPkgTextStyles}>Selected</Text>
                     ) : null}
                 </View>

@@ -9,7 +9,7 @@ const Select = ({ value, onSelect, placeholder, icon, options }) => {
     const [selectedOption, setSelectedOption] = useState(null);
 
     useEffect(() => {
-        if (value !== '') {
+        if (value !== '' && options) {
             const selected = options.find((option) => option.value === value);
             setSelectedOption(selected);
         }
@@ -72,10 +72,13 @@ const Select = ({ value, onSelect, placeholder, icon, options }) => {
                             <View style={styles.modalContent}>
                                 <ScrollView>
                                     {
-                                        (options !== null && options.length > 0) &&
+                                        (options !== null && options.length > 0) ?
                                             options.map((option, index)=>(
                                                 <RenderDropdownItem item={option} index={index} key={index} closeModal={closeModal}/>
                                             ))
+                                        : (
+                                            <RenderDropdownItem item={{value: 0, label: 'No Data'}} index={0} key={0} closeModal={closeModal}/>
+                                        )
                                     }
                                 </ScrollView>
                             </View>
@@ -127,7 +130,6 @@ const styles = StyleSheet.create({
         fontSize: 14,
         color: colors.textGraySecondary,
         width: '100%',
-        marginLeft: 10,
     },
     dropdownContainer: {
         borderColor: colors.border,
