@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Keyboard, StyleSheet, SafeAreaView, StatusBar, Alert } from 'react-native';
+import { Keyboard, StyleSheet, SafeAreaView, StatusBar, Alert, Platform } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { useFonts } from 'expo-font';
 import { NavigationContainer } from '@react-navigation/native';
@@ -8,6 +8,10 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 //expo location
 import * as Location from 'expo-location'
+
+// expo device and notifications
+import * as Device from 'expo-device';
+import * as Notifications from 'expo-notifications';
 
 // import layout
 import { AppProvider, useAppContext } from './layouts/AppContext';
@@ -52,7 +56,7 @@ const AppContent = () => {
       try {
         const { status } = await Location.requestForegroundPermissionsAsync();
         if (status !== 'granted') {
-          Alert.alert('Location Permission Denied', 'Without location access, we cannot show results based on nearby locations');
+          Alert.alert('Location Permission Denied', 'Without location access, we cannot show results based on nearby locations.');
           return;
         }
         
@@ -68,6 +72,31 @@ const AppContent = () => {
     };
 
     fetchLocation();
+
+    // Function to fetch the user's device token to push notifications
+    const registerForPushNotificationsAndSaveDevice = async () => {
+      let token;
+
+      if (Device.isDevice) {
+        const { status: existingStatus } = await Notifications.getPermissionsAsync();
+        let finalStatus = existingStatus;
+
+        if (existingStatus !== 'granted') {
+          const { status } = await Notifications.requestPermissionsAsync();
+          finalStatus = status;
+        }
+        token = (await Notifications.getExpoPushTokenAsync({ projectId: 'cbf1f51f-1c0e-45b0-9ccc-004db7810465' })).data;
+      }
+
+      // save notification token in async storage
+      await AsyncStorage.removeItem("notifyToken");
+      await AsyncStorage.setItem("notifyToken", token);
+      // save device details in async storage
+      await AsyncStorage.removeItem("deviceData");
+      await AsyncStorage.setItem("deviceData", JSON.stringify(Device));
+    }
+
+    registerForPushNotificationsAndSaveDevice();
 
     // to authenticate the user
     const authUser = async () => {

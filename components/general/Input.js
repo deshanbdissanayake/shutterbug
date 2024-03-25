@@ -50,7 +50,7 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderRadius: 10,
         paddingVertical: 10,
-        paddingHorizontal: 10,
+        paddingHorizontal: 30,
         flexDirection: 'row',
         overflow: 'scroll',
         justifyContent: 'center',

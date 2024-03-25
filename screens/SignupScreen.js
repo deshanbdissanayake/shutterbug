@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, Pressable, KeyboardAvoidingView, Platform, ScrollView, Linking } from 'react-native'
+import { StyleSheet, Text, View, Pressable, KeyboardAvoidingView, Platform, ScrollView, Linking, TextInput, BackHandler, Alert } from 'react-native'
 import React, { useState, useEffect } from 'react'
 import colors from '../assets/colors/colors'
 import { useNavigation } from '@react-navigation/native'
@@ -6,7 +6,7 @@ import Input from '../components/general/Input';
 import { Feather, FontAwesome5, Fontisto } from '@expo/vector-icons';
 import Button from '../components/general/Button';
 import Checkbox from '../components/general/Checkbox';
-import Alert from '../components/general/Alert';
+import CustomAlert from '../components/general/Alert';
 import { signUp } from '../assets/data/auth';
 import LoadingScreen from './LoadingScreen';
 
@@ -23,6 +23,9 @@ const SignupScreen = () => {
   const [secureTextEntry, setSecureTextEntry] = useState(true);
   const [secureTextEntry2, setSecureTextEntry2] = useState(true);
 
+  //otp states
+  const [isVerifyingEmail, setIsVerifyingEmail] = useState(false);
+
   // alert states
   const [showAlert, setShowAlert] = useState(false);
   const [alertType, setAlertType] = useState("error");
@@ -33,10 +36,33 @@ const SignupScreen = () => {
   //for page loading
   const [isLoading, setIsLoading] = useState(true);
 
-  //useeffect function
+  //use effect function
   useEffect(() => {
       setIsLoading(false); 
-  }, []);
+
+      const backAction = () => {
+        if(isVerifyingEmail){
+          Alert.alert('Hold on!', 'Are you sure you want to go back? If you do, please use the verification link to confirm and provide your credentials again.', [
+            {
+              text: 'Cancel',
+              onPress: () => null,
+              style: 'cancel',
+            },
+            {text: 'Yes', onPress: () => navigation.goBack()},
+          ]);
+          return true;
+        }else{
+          return false;
+        }
+      };
+  
+      const backHandler = BackHandler.addEventListener(
+        'hardwareBackPress',
+        backAction,
+      );
+  
+      return () => backHandler.remove();
+  }, [isVerifyingEmail]);
 
   //email validating fuction
   const validateEmail = (email) => {
@@ -127,8 +153,12 @@ const SignupScreen = () => {
       setSecureTextEntry(true);
       setSecureTextEntry2(true);
       setSignUpSuccess(false);
-      navigation.navigate('Sign In');
+      setIsVerifyingEmail(true);
     }
+  }
+
+  const veryfyEmail = async () => {
+    // for verify email
   }
 
   if(isLoading){
@@ -143,106 +173,129 @@ const SignupScreen = () => {
       >
         <ScrollView contentContainerStyle={styles.scrollViewContent} 
           showsVerticalScrollIndicator={false} keyboardShouldPersistTaps="handled">
-          <View style={styles.header}>
-            <Text style={[styles.textCenter, styles.mainHeading]}>Let's Go!</Text>
-            <Text style={[styles.textCenter, styles.subHeading]}>Create an account to continue</Text>
-          </View>
-          <View style={styles.form}>
-            <View style={styles.inputs}>
-              <Input
-                  keyboardType="default"
-                  value={fullName}
-                  onChangeText={(text) => setFullName(text)}
-                  placeholder="Enter Your Full Name"
-                  icon={<FontAwesome5 name="user" size={20} color={colors.textGray} />}
-                  editable={true}
-                  borderColor={colors.borderGrayLight}
-              />
-            </View>
-            <View style={styles.inputs}>
-              <Input
-                  keyboardType="default"
-                  value={email}
-                  onChangeText={(text) => setEmail(text)}
-                  placeholder="Enter Your Email"
-                  icon={<Fontisto name="email" size={20} color={colors.textGray} />}
-                  editable={true}
-                  borderColor={colors.borderGrayLight}
-              />
-            </View>
-            <View style={styles.inputs}>
-              <Input
-                  keyboardType="default"
-                  value={password}
-                  onChangeText={(text) => setPassword(text)}
-                  placeholder="Enter Your Password"
-                  icon={<Feather name="lock" size={20} color={colors.textGray} />}
-                  secureTextEntry={secureTextEntry}
-                  editable={true}
-                  borderColor={colors.borderGrayLight}
-              />
-              <Pressable 
-                  style={styles.viewPasswordStyle} 
-                  onPress={() => setSecureTextEntry(!secureTextEntry)}
-              >
-                  {secureTextEntry ? (<Feather name="eye" size={20} color={colors.textGray} />) : (<Feather name="eye-off" size={20} color={colors.textGray} />)}
-              </Pressable>
-            </View>
-            <View style={styles.inputs}>
-              <Input
-                  keyboardType="default"
-                  value={confPassword}
-                  onChangeText={(text) => setConfPassword(text)}
-                  placeholder="Confirm Your Password"
-                  icon={<Feather name="lock" size={20} color={colors.textGray} />}
-                  secureTextEntry={secureTextEntry2}
-                  editable={true}
-                  borderColor={colors.borderGrayLight}
-              />
-              <Pressable 
-                  style={styles.viewPasswordStyle} 
-                  onPress={() => setSecureTextEntry2(!secureTextEntry2)}
-              >
-                  {secureTextEntry2 ? (<Feather name="eye" size={20} color={colors.textGray} />) : (<Feather name="eye-off" size={20} color={colors.textGray} />)}
-              </Pressable>
-            </View>
-            <View style={styles.termsAndConditionsStyles}>
-              <View style={styles.checkBoxContainer}>
-                <Checkbox pressFunc={toggleCheckbox} pressed={isChecked} /> 
+          {(!isVerifyingEmail) ? (
+            <>
+              <View style={styles.header}>
+                <Text style={[styles.textCenter, styles.mainHeading]}>Let's Go!</Text>
+                <Text style={[styles.textCenter, styles.subHeading]}>Create an account to continue</Text>
               </View>
-              <View style={styles.policyTextContainer}>
-                <Text style={styles.policyTextStyle}>By signing up, you agree to the </Text> 
-                <Pressable onPress={redirectToTosPage}>
-                  <Text style={[styles.policyTextStyle, {color: colors.primary, fontWeight: 'bold'}]}>Terms of services</Text>
-                </Pressable>
-                <Text style={styles.policyTextStyle}> and </Text> 
-                <Pressable onPress={redirectToPpPage}>
-                  <Text style={[styles.policyTextStyle, {color: colors.primary, fontWeight: 'bold'}]}>Privacy policy.</Text>
-                </Pressable>
+              <View style={styles.form}>
+                <View style={styles.inputs}>
+                  <Input
+                      keyboardType="default"
+                      value={fullName}
+                      onChangeText={(text) => setFullName(text)}
+                      placeholder="Enter Your Full Name"
+                      icon={<FontAwesome5 name="user" size={20} color={colors.textGray} />}
+                      editable={true}
+                      borderColor={colors.borderGrayLight}
+                  />
+                </View>
+                <View style={styles.inputs}>
+                  <Input
+                      keyboardType="default"
+                      value={email}
+                      onChangeText={(text) => setEmail(text)}
+                      placeholder="Enter Your Email"
+                      icon={<Fontisto name="email" size={20} color={colors.textGray} />}
+                      editable={true}
+                      borderColor={colors.borderGrayLight}
+                  />
+                </View>
+                <View style={styles.inputs}>
+                  <Input
+                      keyboardType="default"
+                      value={password}
+                      onChangeText={(text) => setPassword(text)}
+                      placeholder="Enter Your Password"
+                      icon={<Feather name="lock" size={20} color={colors.textGray} />}
+                      secureTextEntry={secureTextEntry}
+                      editable={true}
+                      borderColor={colors.borderGrayLight}
+                  />
+                  <Pressable 
+                      style={styles.viewPasswordStyle} 
+                      onPress={() => setSecureTextEntry(!secureTextEntry)}
+                  >
+                      {secureTextEntry ? (<Feather name="eye" size={20} color={colors.textGray} />) : (<Feather name="eye-off" size={20} color={colors.textGray} />)}
+                  </Pressable>
+                </View>
+                <View style={styles.inputs}>
+                  <Input
+                      keyboardType="default"
+                      value={confPassword}
+                      onChangeText={(text) => setConfPassword(text)}
+                      placeholder="Confirm Your Password"
+                      icon={<Feather name="lock" size={20} color={colors.textGray} />}
+                      secureTextEntry={secureTextEntry2}
+                      editable={true}
+                      borderColor={colors.borderGrayLight}
+                  />
+                  <Pressable 
+                      style={styles.viewPasswordStyle} 
+                      onPress={() => setSecureTextEntry2(!secureTextEntry2)}
+                  >
+                      {secureTextEntry2 ? (<Feather name="eye" size={20} color={colors.textGray} />) : (<Feather name="eye-off" size={20} color={colors.textGray} />)}
+                  </Pressable>
+                </View>
+                <View style={styles.termsAndConditionsStyles}>
+                  <View style={styles.checkBoxContainer}>
+                    <Checkbox pressFunc={toggleCheckbox} pressed={isChecked} /> 
+                  </View>
+                  <View style={styles.policyTextContainer}>
+                    <Text style={styles.policyTextStyle}>By signing up, you agree to the </Text> 
+                    <Pressable onPress={redirectToTosPage}>
+                      <Text style={[styles.policyTextStyle, {color: colors.primary, fontWeight: 'bold'}]}>Terms of services</Text>
+                    </Pressable>
+                    <Text style={styles.policyTextStyle}> and </Text> 
+                    <Pressable onPress={redirectToPpPage}>
+                      <Text style={[styles.policyTextStyle, {color: colors.primary, fontWeight: 'bold'}]}>Privacy policy.</Text>
+                    </Pressable>
+                  </View>
+                </View>
+                <View style={styles.buttonContainer}>
+                  <Button
+                      bgColor = {colors.primary}
+                      content = {<Text style={{color: colors.textLight}}>Sign Up</Text>}
+                      func={handleSignUp}
+                      btnDisabled={!isChecked}
+                      errorMessage="Please agree to Terms of services and Privacy policy."
+                  />
+                </View>
+                <View style={styles.signInSection}>
+                  <Text style={{color: colors.textGraySecondary}}>
+                    Already have an account?
+                  </Text>
+                  <View style={{marginLeft: 5}}>
+                    <Pressable onPress={gotoSignInScreen}>
+                      <Text style={{fontWeight: 'bold', color: colors.textDark}}>Sign In</Text>
+                    </Pressable>
+                  </View>
+                </View>
               </View>
-            </View>
-            <View style={styles.buttonContainer}>
+            </>
+          ) : (
+            <View style={{paddingHorizontal: 20}}>
+              <Text style={[styles.textCenter, styles.emailVerifyHead]}>Verify Your Email</Text>
+              <Text style={[styles.textCenter, styles.subHeading, {marginBottom: 20}]}>Check your email and enter otp code here</Text>
+              <View style={styles.otpInputWrapper}>
+                <TextInput 
+                  keyboardType="numeric"
+                  placeholder="Enter OTP Here"
+                  editable={true}
+                  style={styles.otpInputTextStyles}
+                />
+              </View>
               <Button
-                  bgColor = {colors.primary}
-                  content = {<Text style={{color: colors.textLight}}>Sign Up</Text>}
-                  func={handleSignUp}
-                  btnDisabled={!isChecked}
-                  errorMessage="Please agree to Terms of services and Privacy policy."
+                bgColor = {colors.primary}
+                content = {<Text style={{color: colors.textLight}}>Verify Email</Text>}
+                func={veryfyEmail}
+                style={{ marginTop: 10, width: '100%' }}
               />
             </View>
-            <View style={styles.signInSection}>
-              <Text style={{color: colors.textGraySecondary}}>
-                Already have an account?
-              </Text>
-              <View style={{marginLeft: 5}}>
-                <Pressable onPress={gotoSignInScreen}>
-                  <Text style={{fontWeight: 'bold', color: colors.textDark}}>Sign In</Text>
-                </Pressable>
-              </View>
-            </View>
-          </View>
+          )}
           {/* alert window to show sign up alerts */}
-          <Alert type={alertType} title={alertTitle} msg={alertMessage} visible={showAlert} onClose={hideAlert} />
+          <CustomAlert type={alertType} title={alertTitle} msg={alertMessage} visible={showAlert} onClose={hideAlert} />
         </ScrollView>
       </KeyboardAvoidingView>
     )
@@ -319,5 +372,29 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap', 
     fontSize: 12, 
     color: colors.textGraySecondary,
-  }
+  },
+  otpInputWrapper: {
+    borderWidth: 1,
+    borderRadius: 10,
+    paddingVertical: 10,
+    paddingHorizontal: 10,
+    flexDirection: 'row',
+    overflow: 'scroll',
+    justifyContent: 'center',
+  },
+  otpInputTextStyles: {
+    fontSize: 14,
+    color: colors.textGraySecondary,
+    width: '100%',
+    marginHorizontal: 5,
+    textAlign: 'center'
+  },
+  emailVerifyHead: {
+    marginBottom: 5,
+    fontSize: 25,
+    color: colors.textDark,
+    fontWeight: 'bold',
+    fontFamily: 'popb-font',
+    textTransform: 'uppercase'
+  },
 })
