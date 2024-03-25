@@ -3,8 +3,10 @@ import React, { useEffect, useState } from 'react'
 import colors from '../../assets/colors/colors'
 import PackageSingle from '../app/PackageSingle'
 import Subtitle from '../app/Subtitle';
+import { useAppContext } from '../../layouts/AppContext';
 
 const PackagesSec = ({ packages = [] }) => {
+  const { isClient } = useAppContext();
   const [selectedPkg, setSelectedPkg] = useState(1);
 
   useEffect(() => {
@@ -29,6 +31,7 @@ const PackagesSec = ({ packages = [] }) => {
               pkg={val}
               selectedPkg={selectedPkg}
               handlePackageSelect={handlePackageSelect}
+              isClient={isClient}
             />
           ))}
         </ScrollView>

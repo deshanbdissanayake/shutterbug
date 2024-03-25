@@ -16,7 +16,7 @@ const Input = ({keyboardType, value, onChangeText, placeholder, secureTextEntry,
     <View 
         style={[
             styles.inputWrapper, 
-            textArea ? { height: 150, alignItems: 'flex-start' } : {alignItems:'center'},
+            textArea ? { height: 120, alignItems: 'flex-start' } : {alignItems:'center'},
             disabled && { backgroundColor: colors.disabled} ,
             {borderColor: borderColor}
         ]}
@@ -53,11 +53,12 @@ const styles = StyleSheet.create({
         paddingHorizontal: 10,
         flexDirection: 'row',
         overflow: 'scroll',
+        justifyContent: 'center',
     },
     inputTextStyles: {
         fontSize: 14,
         color: colors.textGraySecondary,
         width: '100%',
-        marginLeft: 10,
+        marginHorizontal: 5,
     },
 });
