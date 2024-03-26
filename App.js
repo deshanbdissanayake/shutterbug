@@ -62,8 +62,9 @@ const AppContent = () => {
         
         const location = await Location.getCurrentPositionAsync({ accuracy: Location.Accuracy.High });
         // save current location in async storage
-        await AsyncStorage.removeItem("currentLocation");
-        await AsyncStorage.setItem("currentLocation", JSON.stringify(location));
+        await AsyncStorage.removeItem("shutterbug-currentLocation");
+        await AsyncStorage.setItem("shutterbug-currentLocation", JSON.stringify(location));
+        console.log(await AsyncStorage.getItem("shutterbug-currentLocation"))
       } catch (error) {
         // Handle errors
         Alert.alert('Error', 'Failed to get location');
@@ -89,11 +90,11 @@ const AppContent = () => {
       }
 
       // save notification token in async storage
-      await AsyncStorage.removeItem("notifyToken");
-      await AsyncStorage.setItem("notifyToken", token);
+      await AsyncStorage.removeItem("shutterbug-notifyToken");
+      await AsyncStorage.setItem("shutterbug-notifyToken", token);
       // save device details in async storage
-      await AsyncStorage.removeItem("deviceData");
-      await AsyncStorage.setItem("deviceData", JSON.stringify(Device));
+      await AsyncStorage.removeItem("shutterbug-deviceData");
+      await AsyncStorage.setItem("shutterbug-deviceData", JSON.stringify(Device));
     }
 
     registerForPushNotificationsAndSaveDevice();

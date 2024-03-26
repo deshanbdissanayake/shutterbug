@@ -1,14 +1,66 @@
-const signUp = async (fullName, email, password, confPassword) => {
-    const data = {
-        "stt": "success",
-        "msg": [
-            "Your account has been successfully registered."
-        ],
-        "data": {}
-    };
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
-    return data;
+const signUp = async (firstName, lastName, email, password, confPassword) => {
+    try {
+        // Input validation
+        if (!firstName || !email || !password || !confPassword) {
+            throw new Error("Please fill in all fields.");
+        }
+
+        if (password !== confPassword) {
+            throw new Error("Passwords do not match.");
+        }
+
+        const currentLocation = JSON.parse(await AsyncStorage.getItem("shutterbug-currentLocation"));
+        const notifyToken = await AsyncStorage.getItem("shutterbug-notifyToken");
+        const deviceData = JSON.parse(await AsyncStorage.getItem("shutterbug-deviceData"));
+        
+        if (!currentLocation || !notifyToken || !deviceData) {
+            throw new Error("Unable to retrieve necessary data from AsyncStorage.");
+        }
+
+        const formData = new FormData();
+
+        const postData = {
+            "first_name": firstName,
+            "last_name": lastName,
+            "email": email,
+            "password": password,
+            "conf_password": confPassword,
+            "location": currentLocation,
+            "notify_token": notifyToken,
+            "device_data": deviceData,
+        }
+
+        formData.append("token", "SHUTTERBUG-USER-TOKEN-TEMPORARY");
+        formData.append("endpoint", "registerAppUser");
+        formData.append("data", JSON.stringify(postData));
+
+        const response = await fetch('https://shutterbug.introps.com/Api/get', {
+            'method': 'POST',
+            'body': formData,
+        });
+
+        if (response.ok) {
+            const responseData = await response.json();
+
+            await AsyncStorage.setItem("shutterbug-emailToVerify", email);
+            await AsyncStorage.setItem("shutterbug-temporaryPassword", password);
+            console.log(responseData)
+            return responseData;
+        } else {
+            throw new Error("Endpoint error.");
+        }
+    } catch (error) {
+        console.error("Signup Error:", error.message);
+        return {
+            "stt": "error",
+            "msg": [error.message],
+            "data": {}
+        };
+    }
 }
+
 
 const signIn = async (username, password) => {
 

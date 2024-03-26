@@ -15,7 +15,8 @@ const SignupScreen = () => {
   const navigation = useNavigation();
 
   // form states
-  const [fullName, setFullName] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confPassword, setConfPassword] = useState("");
@@ -31,7 +32,6 @@ const SignupScreen = () => {
   const [alertType, setAlertType] = useState("error");
   const [alertMessage, setAlertMessage] = useState("");
   const [alertTitle, setAlertTitle] = useState("");
-  const [signUpSuccess, setSignUpSuccess] = useState(false);
 
   //for page loading
   const [isLoading, setIsLoading] = useState(true);
@@ -42,7 +42,7 @@ const SignupScreen = () => {
 
       const backAction = () => {
         if(isVerifyingEmail){
-          Alert.alert('Hold on!', 'Are you sure you want to go back? If you do, please use the verification link to confirm and provide your credentials again.', [
+          Alert.alert('Hold on!', 'Are you sure you want to go back? If you do, you have to verify email when you log in again.', [
             {
               text: 'Cancel',
               onPress: () => null,
@@ -72,7 +72,7 @@ const SignupScreen = () => {
 
   //when click on sign up button
   const handleSignUp = () => {
-    if(password == "" || confPassword == "" || fullName == "" || email == ""){
+    if(password == "" || confPassword == "" || firstName == "" || email == ""){
       setAlertTitle("Error!!");
       setAlertMessage("Please fill all the fields in the form.");
       setShowAlert(true);
@@ -96,13 +96,9 @@ const SignupScreen = () => {
     // to enable loading
     setIsLoading(true);
 
-    signUp(fullName, email, password, confPassword).then((data) => {
+    signUp(firstName, lastName, email, password, confPassword).then((data) => {
       if(data.stt == "success"){
-        setAlertMessage(data.msg[0]);
-        setAlertTitle("Success!!");
-        setAlertType("success");
-        setSignUpSuccess(true);
-        setShowAlert(true);
+        setIsVerifyingEmail(true);
       }else{
         setAlertMessage(data.msg[0]);
         setAlertTitle("Error!!");
@@ -143,18 +139,6 @@ const SignupScreen = () => {
     setAlertMessage("");
     setAlertTitle("");
     setAlertType("error");
-    //if signup is complete
-    if(signUpSuccess === true){
-      setFullName("");
-      setEmail("");
-      setPassword("");
-      setConfPassword("");
-      setIsChecked(false);
-      setSecureTextEntry(true);
-      setSecureTextEntry2(true);
-      setSignUpSuccess(false);
-      setIsVerifyingEmail(true);
-    }
   }
 
   const veryfyEmail = async () => {
@@ -183,9 +167,20 @@ const SignupScreen = () => {
                 <View style={styles.inputs}>
                   <Input
                       keyboardType="default"
-                      value={fullName}
-                      onChangeText={(text) => setFullName(text)}
-                      placeholder="Enter Your Full Name"
+                      value={firstName}
+                      onChangeText={(text) => setFirstName(text)}
+                      placeholder="Enter Your First Name"
+                      icon={<FontAwesome5 name="user" size={20} color={colors.textGray} />}
+                      editable={true}
+                      borderColor={colors.borderGrayLight}
+                  />
+                </View>
+                <View style={styles.inputs}>
+                  <Input
+                      keyboardType="default"
+                      value={lastName}
+                      onChangeText={(text) => setLastName(text)}
+                      placeholder="Enter Your Last Name"
                       icon={<FontAwesome5 name="user" size={20} color={colors.textGray} />}
                       editable={true}
                       borderColor={colors.borderGrayLight}
