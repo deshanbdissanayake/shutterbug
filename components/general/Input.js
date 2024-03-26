@@ -53,12 +53,10 @@ const styles = StyleSheet.create({
         paddingHorizontal: 10,
         flexDirection: 'row',
         overflow: 'scroll',
-        justifyContent: 'center',
     },
     inputTextStyles: {
         fontSize: 14,
         color: colors.textGraySecondary,
-        width: '100%',
-        marginHorizontal: 5,
+        marginLeft: 10,
     },
 });

@@ -164,7 +164,7 @@ const ServiceCreateScreen = () => {
             />
 
             <ScrollView contentContainerStyle={styles.formWrapper} showsVerticalScrollIndicator={false}>
-                <Subtitle text={'Step 1'}/>
+                <Subtitle text={'Service Section'}/>
 
                 <View style={styles.formGroup}>
                     <Text style={styles.labelTextStyles}>Service Images</Text>
