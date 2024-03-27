@@ -8,6 +8,7 @@ import { useFocusEffect, useNavigation } from '@react-navigation/native'
 import { getServicesByUserId } from '../../assets/data/service'
 import LoadingScreen from '../LoadingScreen'
 import ProviderServiceItem from '../../components/app/ProviderServiceItem'
+import NoData from '../../components/app/NoData'
 
 const ServicesListScreen = () => {
   const navigation = useNavigation();
@@ -57,11 +58,15 @@ const ServicesListScreen = () => {
         } 
       />
       
-      <FlatList
-        data={services}
-        keyExtractor={(item)=> item.s_id}
-        renderItem={({item}) => <ProviderServiceItem serviceData={item} handleItemClick={handleItemClick} />}
-      />
+      {(services && services.length > 0) ? (
+        <FlatList
+          data={services}
+          keyExtractor={(item)=> item.s_id}
+          renderItem={({item}) => <ProviderServiceItem serviceData={item} handleItemClick={handleItemClick} />}
+        />
+      ) : (
+        <NoData text={'No Services Yet!'} />
+      )}
       
     </View>
   )
