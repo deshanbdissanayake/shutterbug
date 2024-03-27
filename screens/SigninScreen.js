@@ -126,7 +126,7 @@ const SigninScreen = ({ navigation }) => {
     }
 
     const handleGoogleClick = async () => {
-        
+
     }
 
     const handleRegClick = () => {
