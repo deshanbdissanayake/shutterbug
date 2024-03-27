@@ -7,12 +7,17 @@ import { Feather, FontAwesome5, Fontisto } from '@expo/vector-icons';
 import Button from '../components/general/Button';
 import Checkbox from '../components/general/Checkbox';
 import CustomAlert from '../components/general/Alert';
-import { signUp } from '../assets/data/auth';
+import { signUp, reqNewOtp, emailVerification, signIn } from '../assets/data/auth';
 import LoadingScreen from './LoadingScreen';
+import { useAppContext } from '../layouts/AppContext';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
+import moment from 'moment-timezone';
 
 const SignupScreen = () => {
 
   const navigation = useNavigation();
+  const { setIsLoggedIn } = useAppContext();
 
   // form states
   const [firstName, setFirstName] = useState("");
@@ -26,6 +31,9 @@ const SignupScreen = () => {
 
   //otp states
   const [isVerifyingEmail, setIsVerifyingEmail] = useState(false);
+  const [otpTimeRemaining, setOtpTimeRemaining] = useState("0:00");
+  const [showRequestOtp, setShowRequestOtp] = useState(false);
+  const [otpValue, setOtpValue] = useState("");
 
   // alert states
   const [showAlert, setShowAlert] = useState(false);
@@ -70,6 +78,31 @@ const SignupScreen = () => {
     return emailRegex.test(email);
   }
 
+  //for otp timer
+  const start_timer = (timeString) => {
+    const currentTime = moment().tz('Asia/Colombo');
+    const givenTime = moment.tz(timeString, 'YYYY-MM-DD HH:mm:ss', 'Asia/Colombo');
+    const difference = givenTime.diff(currentTime);
+
+    const differenceInSeconds = Math.floor(difference / 1000);
+
+    if(differenceInSeconds <= 0){
+      setOtpTimeRemaining("0:00");
+      setShowRequestOtp(true);
+      return;
+    }
+
+    const minutes = Math.floor(differenceInSeconds / 60);
+    const seconds = differenceInSeconds % 60;
+    const formattedSeconds = seconds < 10 ? '0' + seconds : seconds;
+
+    setOtpTimeRemaining(minutes + `:` + formattedSeconds);
+
+    setTimeout(() => {
+      start_timer(timeString);
+    }, 1000);
+  }
+
   //when click on sign up button
   const handleSignUp = () => {
     if(password == "" || confPassword == "" || firstName == "" || email == ""){
@@ -98,6 +131,7 @@ const SignupScreen = () => {
 
     signUp(firstName, lastName, email, password, confPassword).then((data) => {
       if(data.stt == "success"){
+        start_timer(data.data.otp_exp);
         setIsVerifyingEmail(true);
       }else{
         setAlertMessage(data.msg[0]);
@@ -141,8 +175,55 @@ const SignupScreen = () => {
     setAlertType("error");
   }
 
+  // email verification and when success directly sign in
   const veryfyEmail = async () => {
-    // for verify email
+    setIsLoading(true);
+    const em = await AsyncStorage.getItem("shutterbug-emailToVerify");
+
+    emailVerification(otpValue, em).then(async (data) => {
+      if(data.stt == "success"){
+        const un = await AsyncStorage.getItem("shutterbug-emailToVerify");
+        const pw = await AsyncStorage.getItem("shutterbug-temporaryPassword");
+
+        signIn(un, pw).then(async (data) => {
+          if(data.stt == "success"){
+            await AsyncStorage.removeItem("shutterbug-emailToVerify");
+            await AsyncStorage.removeItem("shutterbug-temporaryPassword");
+            await AsyncStorage.setItem("shutterbug-sessionData", JSON.stringify(data.data));
+            console.log(await AsyncStorage.getItem("shutterbug-sessionData"))
+            await AsyncStorage.setItem("shutterbug-app-login-token", data.data.token);
+            setIsLoggedIn(true);
+          }else{
+            setIsLoading(false);
+            setAlertMessage(data.msg[0]);
+            setAlertTitle("OTP Error!!");
+            setAlertType("error");
+            setShowAlert(true);
+          }
+        })
+      }else{
+        setIsLoading(false);
+        setAlertMessage(data.msg[0]);
+        setAlertTitle("OTP Error!!");
+        setAlertType("error");
+        setShowAlert(true);
+      }
+    })
+  }
+
+  // for requesting a new otp code after expire
+  const requestNewOtp = async () => {
+    setIsLoading(true);
+    reqNewOtp().then((data) => {
+      setIsLoading(false);
+      start_timer(data.data.otp_exp);
+      setIsVerifyingEmail(true);
+      setShowRequestOtp(false);
+      setAlertMessage(data.msg[0]);
+      setAlertTitle("Check Email");
+      setAlertType("success");
+      setShowAlert(true);
+    })
   }
 
   if(isLoading){
@@ -279,6 +360,8 @@ const SignupScreen = () => {
                   placeholder="Enter OTP Here"
                   editable={true}
                   style={styles.otpInputTextStyles}
+                  value={otpValue}
+                  onChangeText={(text) => {setOtpValue(text)}}
                 />
               </View>
               <Button
@@ -287,6 +370,16 @@ const SignupScreen = () => {
                 func={veryfyEmail}
                 style={{ marginTop: 10, width: '100%' }}
               />
+
+              <View style={{marginTop: 20}}>
+                {(showRequestOtp) ?
+                  (
+                    <Pressable onPress={requestNewOtp}><Text style={{color: colors.primaryDark, fontSize: 15, textAlign: 'center', fontWeight: 'bold'}}>Request New OTP</Text></Pressable>
+                  ) : (
+                    <Text style={{color: colors.danger, fontSize: 15, textAlign: 'center', fontWeight: 'bold'}}>{otpTimeRemaining} Time Remaining</Text>
+                  )
+                }
+              </View>
             </View>
           )}
           {/* alert window to show sign up alerts */}
