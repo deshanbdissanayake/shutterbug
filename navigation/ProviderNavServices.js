@@ -4,6 +4,7 @@ import ServiceScreenSingle from '../screens/client/ServiceScreenSingle';
 import ServicesListScreen from '../screens/provider/ServicesListScreen';
 import ServiceCreateScreen from '../screens/provider/ServiceCreateScreen';
 import ServiceCreatePackagesScreen from '../screens/provider/ServiceCreatePackagesScreen';
+import ServiceCreatePackageAddScreen from '../screens/provider/ServiceCreatePackageAddScreen';
 
 const Stack = createStackNavigator();
 
@@ -22,6 +23,7 @@ const ProviderNavSearch = ({ navigation }) => {
         <Stack.Screen name="Service Single" component={ServiceScreenSingle} options={{ headerShown: false }} />
         <Stack.Screen name="Service Create" component={ServiceCreateScreen} options={{ headerShown: false }} />
         <Stack.Screen name="Service Package Create" component={ServiceCreatePackagesScreen} options={{ headerShown: false }} />
+        <Stack.Screen name="Service Package Add" component={ServiceCreatePackageAddScreen} options={{ headerShown: false }} />
     </Stack.Navigator>
   );
 };

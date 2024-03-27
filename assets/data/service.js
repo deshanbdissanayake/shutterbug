@@ -269,5 +269,20 @@ const saveService = async (formData, s_id) => {
     return data;
 }
 
+const saveServicePackage = async (formData, s_id) => {
+    let data = {stt: 'ok', msg: 'Successful', data: 1};
+    return data;
+}
 
-export { getServices, getServiceById, getServicesByUserId, saveService };
+const deleteService = async (s_id) => {
+    let data = {stt: 'ok', msg: 'Successful', data: 1};
+    return data;
+}
+
+const deleteServicePackage = async (pkg_id) => {
+    let data = {stt: 'ok', msg: 'Successful', data: 1};
+    return data;
+}
+
+
+export { getServices, getServiceById, getServicesByUserId, saveService, saveServicePackage, deleteService,  deleteServicePackage};

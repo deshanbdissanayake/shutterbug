@@ -8,9 +8,11 @@ import Input from '../../components/general/Input'
 import Select from '../../components/general/Select'
 import { getCategories } from '../../assets/data/category'
 import LoadingScreen from '../LoadingScreen'
-import { AntDesign } from '@expo/vector-icons'
+import { AntDesign, FontAwesome } from '@expo/vector-icons'
 import Button from '../../components/general/Button'
 import Subtitle from '../../components/app/Subtitle'
+import MiniButton from '../../components/general/MiniButton'
+import * as DocumentPicker from 'expo-document-picker';
 
 const ServiceCreateScreen = () => {
     const navigation = useNavigation();
@@ -25,49 +27,48 @@ const ServiceCreateScreen = () => {
 
 
     const title = s_id ? 'Update' : 'Create New';
+    const [imgNum, setImgNum] = useState(1); //for delete images
     const [loading, setLoading] = useState(true);
-    const [service, setService] = useState(null);
     const [serviceCatOrg, setServiceCatOrg] = useState(null);
     const [serviceCat, setServiceCat] = useState(null);
-    const [formData, setFormData] = useState({
+    const [serviceData, setServiceData] = useState({
         s_id: null,
         s_type: 'photography',
         cat_id: null,
         s_name: null,
         s_desc: null,
-        s_images: [
-            {
-                si_id: 1,
-                img: 'https://shutterbug.introps.com/documents/service/test-1.jpg',
-                is_main: 1,
-            },
-            {
-                si_id: 2,
-                img: 'https://shutterbug.introps.com/documents/service/test-2.jpg',
-                is_main: 0,
-            },
-            {
-                si_id: 3,
-                img: 'https://shutterbug.introps.com/documents/service/test-3.jpg',
-                is_main: 0,
-            },
-            {
-                si_id: 4,
-                img: 'https://shutterbug.introps.com/documents/service/test-3.jpg',
-                is_main: 0,
-            },
-            {
-                si_id: 5,
-                img: 'https://shutterbug.introps.com/documents/service/test-3.jpg',
-                is_main: 0,
-            },
-        ],
+        s_images: [],
     });
 
     const serviceTypes = [
         {value: 'photography', label: 'Photography'},
         {value: 'videography', label: 'Videography'},
     ]
+
+    const getServiceCategories = async () => {
+        try {
+            let data = await getCategories();
+            setServiceCatOrg(data);
+        } catch (error) {
+            console.error('Error at service create provider service category:', error);
+        }
+    };
+
+    const getServiceData = async () => {
+        try {
+            let data = await getServiceById(s_id);
+            setServiceData({
+                s_id: data.s_id,
+                s_type: data.s_type,
+                cat_id: data.cat_id,
+                s_name: data.s_name,
+                s_desc: data.s_desc,
+                s_images: data.s_images,
+            });
+        } catch (error) {
+            console.error('Error at getting updated service:', error);
+        }
+    };
 
     useEffect(() => {
         const fetchData = async () => {
@@ -86,26 +87,17 @@ const ServiceCreateScreen = () => {
         fetchData();
     }, [s_id]);
 
-    const getServiceCategories = async () => {
-        try {
-            let data = await getCategories();
-            setServiceCatOrg(data);
-        } catch (error) {
-            console.error('Error at service create provider service category:', error);
-        }
-    };
-
     useEffect(() => {
         if (!isFirstLoad.current) {
-            setFormData(prevData => ({ ...prevData, cat_id: null }));
+            setServiceData(prevData => ({ ...prevData, cat_id: null }));
         } else {
             isFirstLoad.current = false; // Set isFirstLoad to false after initial load
         }
-    }, [formData.s_type]);
+    }, [serviceData.s_type]);
     
     useEffect(() => {
-        getServiceCategoriesByTypes(formData.s_type);
-    }, [serviceCatOrg, formData.s_type]);
+        getServiceCategoriesByTypes(serviceData.s_type);
+    }, [serviceCatOrg, serviceData.s_type]);
 
     const getServiceCategoriesByTypes = (stype) => {
         let data, scats = null;
@@ -122,22 +114,56 @@ const ServiceCreateScreen = () => {
         setServiceCat(scats);
     };
     
-    const getServiceData = async () => {
+    const handleImageSelect = async () => {
         try {
-            let data = await getServiceById(s_id);
-            setService(data);
+            const result = await DocumentPicker.getDocumentAsync({
+                type: 'image/*', // Allow any type of file to be picked
+                copyToCacheDirectory: false, // Don't copy the file to app's cache directory
+            });
+        
+            if (!result.canceled) {
+                // Handle the selected file, for example, you can log its URI
+                setServiceData(prevData => ({
+                    ...prevData,
+                    s_images: [...(prevData.s_images || []), { si_id: imgNum, img: result.assets[0].uri }]
+                }));
+                
+                setImgNum(prevData => prevData+1);                 
+            } else {
+                // User canceled the file picking
+                Alert.alert('Error', 'Please select a valid image file (jpg, jpeg, png)');
+            }
         } catch (error) {
-            console.error('Error at getting updated service:', error);
+            console.error('Error selecting file:', error);
         }
+    }
+
+    const handleRemoveImage = (del_img_id) => {
+        setServiceData(prevData => ({
+            ...prevData,
+            s_images: prevData.s_images.map((e) => 
+                e.si_id === del_img_id ? { ...e, stt: 'deleted' } : e
+            )
+        }));
     };
     
-    const handleImageSelect = () => {}
-
     const handleSubmitClick = async () => {
         let formData = new FormData();
     
         try {
+
+            if (!serviceData) {
+                throw new Error('Something went wrong!');
+            }
+            
+            const { cat_id, s_name, s_desc, s_images } = serviceData;
+    
+            if ( !cat_id || !s_name || !s_desc || !s_images ) {
+                throw new Error('All fields are required!');
+            }
+    
             let data = await saveService(formData, s_id);
+            
             if (data.stt == 'ok') {
                 Alert.alert('Successful', data.msg, [{ 
                     text: 'Next', 
@@ -151,7 +177,6 @@ const ServiceCreateScreen = () => {
         }
     };
     
-    
     if(loading){
         return <LoadingScreen/>
     }
@@ -164,7 +189,7 @@ const ServiceCreateScreen = () => {
             />
 
             <ScrollView contentContainerStyle={styles.formWrapper} showsVerticalScrollIndicator={false}>
-                <Subtitle text={'Step 1'}/>
+                <Subtitle text={'Service Section'}/>
 
                 <View style={styles.formGroup}>
                     <Text style={styles.labelTextStyles}>Service Images</Text>
@@ -172,9 +197,20 @@ const ServiceCreateScreen = () => {
                         <TouchableOpacity onPress={handleImageSelect} style={styles.addImageWrapper}>
                             <AntDesign name="plus" size={24} color={colors.primary} />
                         </TouchableOpacity>
-                        {formData.s_images && formData.s_images.length > 0 && (
-                            formData.s_images.map((imgData, index) => (
-                                <Image key={index} style={styles.imageStyles} source={{ uri: imgData.img }} />
+                        {serviceData.s_images && serviceData.s_images.length > 0 && (
+                            serviceData.s_images.map((imgData, index) => (
+                                (imgData.stt !== 'deleted') && (
+                                    <View key={index}>
+                                        <Image style={styles.imageStyles} source={{ uri: imgData.img }} />
+                                        <View style={styles.imageDelIconStyles} >
+                                            <MiniButton
+                                                func={() => handleRemoveImage(imgData.si_id)}
+                                                content={<FontAwesome name="trash" size={24} color={colors.danger}/>}
+                                                bgColor={colors.white}
+                                            />
+                                        </View>
+                                    </View>
+                                )
                             ))
                         )}
                     </ScrollView>
@@ -184,8 +220,8 @@ const ServiceCreateScreen = () => {
                 <View style={styles.formGroup}>
                     <Text style={styles.labelTextStyles}>Service Type</Text>
                     <Select
-                        value={formData.s_type}
-                        onSelect={(text) => setFormData({...formData, s_type: text})}
+                        value={serviceData.s_type}
+                        onSelect={(text) => setServiceData({...serviceData, s_type: text})}
                         placeholder={'Select Service Type'}
                         options={serviceTypes}
                     />
@@ -194,8 +230,8 @@ const ServiceCreateScreen = () => {
                 <View style={styles.formGroup}>
                     <Text style={styles.labelTextStyles}>Service Category</Text>
                     <Select
-                        value={formData.cat_id}
-                        onSelect={(text) => setFormData({...formData, cat_id: text})}
+                        value={serviceData.cat_id}
+                        onSelect={(text) => setServiceData({...serviceData, cat_id: text})}
                         placeholder={'Select Service Category'}
                         options={serviceCat}
                     />
@@ -205,8 +241,8 @@ const ServiceCreateScreen = () => {
                     <Text style={styles.labelTextStyles}>Service Name</Text>
                     <Input
                         keyboardType={'default'}
-                        value={formData.s_name}
-                        onChangeText={(text) => setFormData({...formData, s_name: text})}
+                        value={serviceData.s_name}
+                        onChangeText={(text) => setServiceData({...serviceData, s_name: text})}
                         placeholder={'Enter service name'}
                         maxLength={50}
                     />
@@ -216,8 +252,8 @@ const ServiceCreateScreen = () => {
                     <Text style={styles.labelTextStyles}>Service Description</Text>
                     <Input
                         keyboardType={'default'}
-                        value={formData.s_desc}
-                        onChangeText={(text) => setFormData({...formData, s_desc: text})}
+                        value={serviceData.s_desc}
+                        onChangeText={(text) => setServiceData({...serviceData, s_desc: text})}
                         placeholder={'Enter service description (250 characters)'}
                         maxLength={250}
                         multiline={true}
@@ -270,5 +306,10 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderColor: colors.border,
         marginRight: 10,
+    },
+    imageDelIconStyles: {
+        position: 'absolute',
+        right: 15,
+        top: 5,
     },
 })
