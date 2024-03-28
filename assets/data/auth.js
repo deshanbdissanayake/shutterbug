@@ -112,6 +112,10 @@ const reqNewOtp = async () => {
 }
 //-------------------------------------------------------------------------------------------------------------
 const signIn = async (username, password) => {
+    // Store data in AsyncStorage
+    await AsyncStorage.setItem("shutterbug-emailToVerify", username);
+    await AsyncStorage.setItem("shutterbug-temporaryPassword", password);
+
     try{
         const formData = new FormData();
 
@@ -152,15 +156,37 @@ const signIn = async (username, password) => {
 }
 //-------------------------------------------------------------------------------------------------------------
 const forgotPassword = async (email) => {
-    const data = {
-        "stt": "success",
-        "msg": [
-            "Please check your email inbox for OTP code."
-        ],
-        "data": {}
-    };
+    await AsyncStorage.setItem("shutterbug-emailToVerify", email);
 
-    return data;
+    try{
+        const formData = new FormData();
+
+        const postData = {
+            "email": email,
+        }
+
+        formData.append("token", "SHUTTERBUG-USER-TOKEN-TEMPORARY");
+        formData.append("endpoint", "forgetPassword");
+        formData.append("data", JSON.stringify(postData));
+
+        const response = await fetch('https://shutterbug.introps.com/Api/get', {
+            'method': 'POST',
+            'body': formData,
+        });
+
+        if (response.ok) {
+            const responseData = await response.json();
+            return responseData;
+        } else {
+            throw new Error("Endpoint error.");
+        }
+    }catch(error){
+        return {
+            "stt": "error",
+            "msg": [error.message],
+            "data": {}
+        };
+    }
 }
 //-------------------------------------------------------------------------------------------------------------
 const emailVerification = async (otp, email) => {
@@ -196,5 +222,42 @@ const emailVerification = async (otp, email) => {
     }
 }
 //-------------------------------------------------------------------------------------------------------------
+    const logOut = async () => {
+        const token = await AsyncStorage.getItem("shutterbug-app-login-token");
+        const sessionData = JSON.parse(await AsyncStorage.getItem("shutterbug-sessionData"));
 
-export { signUp, signIn, forgotPassword, reqNewOtp, emailVerification }
+        try{
+            const formData = new FormData();
+    
+            const postData = {
+                "user_id": sessionData.user_id,
+                "device_id": sessionData.device_id,
+            }
+    
+            formData.append("token", token);
+            formData.append("endpoint", "loggingOut");
+            formData.append("data", JSON.stringify(postData));
+    
+            const response = await fetch('https://shutterbug.introps.com/Api/get', {
+                'method': 'POST',
+                'body': formData,
+            });
+    
+            if (response.ok) {
+                const responseData = await response.json();
+                await AsyncStorage.clear();
+                return responseData;
+            } else {
+                throw new Error("Endpoint error.");
+            }
+        }catch(error){
+            return {
+                "stt": "error",
+                "msg": [error.message],
+                "data": {}
+            };
+        }
+    }
+//-------------------------------------------------------------------------------------------------------------
+
+export { signUp, signIn, forgotPassword, reqNewOtp, emailVerification, logOut }

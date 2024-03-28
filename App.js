@@ -64,7 +64,7 @@ const AppContent = () => {
         // save current location in async storage
         await AsyncStorage.removeItem("shutterbug-currentLocation");
         await AsyncStorage.setItem("shutterbug-currentLocation", JSON.stringify(location));
-        console.log(await AsyncStorage.getItem("shutterbug-currentLocation"))
+        //console.log(await AsyncStorage.getItem("shutterbug-currentLocation"))
       } catch (error) {
         // Handle errors
         Alert.alert('Error', 'Failed to get location');

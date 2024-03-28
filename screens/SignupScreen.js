@@ -11,7 +11,6 @@ import { signUp, reqNewOtp, emailVerification, signIn } from '../assets/data/aut
 import LoadingScreen from './LoadingScreen';
 import { useAppContext } from '../layouts/AppContext';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
 import moment from 'moment-timezone';
 
 const SignupScreen = () => {
@@ -190,7 +189,7 @@ const SignupScreen = () => {
             await AsyncStorage.removeItem("shutterbug-emailToVerify");
             await AsyncStorage.removeItem("shutterbug-temporaryPassword");
             await AsyncStorage.setItem("shutterbug-sessionData", JSON.stringify(data.data));
-            console.log(await AsyncStorage.getItem("shutterbug-sessionData"))
+            //console.log(await AsyncStorage.getItem("shutterbug-sessionData"))
             await AsyncStorage.setItem("shutterbug-app-login-token", data.data.token);
             setIsLoggedIn(true);
           }else{
@@ -401,7 +400,6 @@ const styles = StyleSheet.create({
   scrollViewContent: {
     flexGrow: 1,
     justifyContent: 'center',
-    alignItems: 'center',
   },
   textCenter:{
     textAlign: 'center',
