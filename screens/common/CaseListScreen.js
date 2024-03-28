@@ -38,7 +38,7 @@ const CaseListScreen = () => {
             {(casesData && casesData.length > 0) ? (
                 <FlatList
                     data={casesData}
-                    keyExtractor={(item) => item.case_id}
+                    keyExtractor={(item) => item.case_id.toString()}
                     renderItem={({item}) => <CaseItem caseData={item} />}
                 />
             ) : (

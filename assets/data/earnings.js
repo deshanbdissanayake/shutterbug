@@ -45,4 +45,69 @@ const withdrawEarnings = async () => {
     return data;
 }
 
-export { getEarnings, getWithdrawlMethodsByUserId, withdrawEarnings }
+const getTransactionsByUserId = async () => {
+    /*
+        transaction types => 
+
+        earning => payment table -> user_id = payee_id -> pay_amt => deduct rate
+        payment => payment table -> user_id = payer_id -> pay_amt (rate already added)
+        refund => refund table -> user_id = provider_id total paid amount in payment
+        withdrawal => withdrawal table -> user_id = user_id -> with_amt (rate already deducted)
+        
+    */
+    let data = [
+        { 
+            tr_id: 1,
+            tr_token: 'asdf23493',
+            tr_name: 'Desh Dissanayake',
+            tr_type: 'earning',
+            tr_amount: '1000.00',
+            tr_datetime: '2024-03-28 15:57:00',
+            tr_note: 'this is transaction note',
+            bank: 'Bank - Com Bank - 123923198',
+        },
+        { 
+            tr_id: 2,
+            tr_token: 'asdf23493',
+            tr_name: 'Nadun Tharaka',
+            tr_type: 'earning',
+            tr_amount: '500.00',
+            tr_datetime: '2024-03-28 15:57:00',
+            tr_note: 'this is transaction note',
+            bank: 'Bank - Com Bank - 123923198',
+        },
+        { 
+            tr_id: 3,
+            tr_token: 'asdf23493',
+            tr_name: 'Melani Fernando',
+            tr_type: 'payment',
+            tr_amount: '1000.00',
+            tr_datetime: '2024-03-28 15:57:00',
+            tr_note: 'this is transaction note',
+            bank: 'Stripe - Stripe - 123923198',
+        },
+        { 
+            tr_id: 4,
+            tr_token: 'asdf23493',
+            tr_name: 'Pubudu Galpatha',
+            tr_type: 'refund',
+            tr_amount: '1000.00',
+            tr_datetime: '2024-03-28 15:57:00',
+            tr_note: 'this is transaction note',
+            bank: 'Bank - Union Bank - 123923198',
+        },
+        { 
+            tr_id: 5,
+            tr_token: 'asdf23493',
+            tr_name: 'Sam Wick',
+            tr_type: 'withdrawal',
+            tr_amount: '1000.00',
+            tr_datetime: '2024-03-28 15:57:00',
+            tr_note: 'this is transaction note',
+            bank: 'Paypal - Stripe - 123923198',
+        },
+    ];
+    return data;
+}
+
+export { getEarnings, getWithdrawlMethodsByUserId, withdrawEarnings, getTransactionsByUserId }

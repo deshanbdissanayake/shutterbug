@@ -5,7 +5,7 @@ import colors from '../../assets/colors/colors';
 const CustomModal = ({
   title,
   content,
-  cancelButtonText,
+  cancelButtonText = null,
   okButtonText,
   pressCancel = '',
   pressOk,
@@ -34,7 +34,7 @@ const CustomModal = ({
                         <Text style={styles.cancelTextStyles}>{cancelButtonText}</Text>
                     </TouchableOpacity>
                 )}
-                    <TouchableOpacity onPress={pressOk} style={styles.okBtnStyles}>
+                    <TouchableOpacity onPress={pressOk} style={[styles.okBtnStyles, !cancelButtonText && {borderBottomLeftRadius: 10}]}>
                     <Text style={styles.okTextStyles}>{okButtonText}</Text>
                     </TouchableOpacity>
             </View>
@@ -61,7 +61,7 @@ const styles = StyleSheet.create({
     width: 300,
     zIndex: 2,
     alignSelf: 'center',
-    top: '40%',
+    top: '25%',
   },
   alertWrapper: {
     padding: 20,
