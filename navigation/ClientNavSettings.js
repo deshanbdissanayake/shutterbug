@@ -5,6 +5,9 @@ import JobRequestScreen from '../screens/common/JobRequestScreen';
 import JobRequestCreateScreen from '../screens/client/JobRequestCreateScreen';
 import ProfileEditScreen from '../screens/common/ProfileEditScreen';
 import JobRequestOffers from '../screens/client/JobRequestOffers';
+import CaseListScreen from '../screens/common/CaseListScreen';
+import ChatSingleScreen from '../screens/common/ChatSingleScreen';
+import CustomOfferViewScreen from '../screens/common/CustomOfferViewScreen';
 
 const Stack = createStackNavigator();
 
@@ -24,6 +27,9 @@ const ClientNavSettings = ({ navigation }) => {
         <Stack.Screen name="Job Request Create" component={JobRequestCreateScreen} options={{ headerShown: false }} />
         <Stack.Screen name="Job Request Offers" component={JobRequestOffers} options={{ headerShown: false }} />
         <Stack.Screen name="Profile Edit" component={ProfileEditScreen} options={{ headerShown: false }} />
+        <Stack.Screen name="Case List" component={CaseListScreen} options={{ headerShown: false }} />
+        <Stack.Screen name="Chat Single" component={ChatSingleScreen} options={{ headerShown: false }} />
+        <Stack.Screen name="Offer View" component={CustomOfferViewScreen} options={{ headerShown: false }} />
     </Stack.Navigator>
   );
 };

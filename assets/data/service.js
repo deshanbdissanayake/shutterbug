@@ -13,7 +13,8 @@ const getServices = async () => {
             s_desc: 'Best provider with highest ratings.',
             s_type: 'photography',
             main_pkg_price: '2000',
-            main_s_img: 'https://shutterbug.introps.com/documents/service/test-1.jpg'
+            main_s_img: 'https://shutterbug.introps.com/documents/service/test-1.jpg',
+            case: 0,
         },
         {
             s_id: 2,
@@ -28,7 +29,8 @@ const getServices = async () => {
             s_desc: 'Best provider with highest ratings.',
             s_type: 'videography',
             main_pkg_price: '1000',
-            main_s_img: 'https://shutterbug.introps.com/documents/service/test-2.jpg'
+            main_s_img: 'https://shutterbug.introps.com/documents/service/test-2.jpg',
+            case: 1,
         }
     ];
 
@@ -49,6 +51,7 @@ const getServiceById = async () => {
         s_name: 'Portrait Photography',
         s_desc: "In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document or a typeface without relying on meaningful content. Lorem ipsum may be used as a placeholder before the final copy is available. In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document or a typeface without relying on meaningful content. Lorem ipsum may be used as a placeholder before the final copy is available.",
         s_type: 'photography',
+        case: 1,
         packages: [
             {
                 pkg_id: 1,
@@ -161,6 +164,7 @@ const getServicesByUserId = async (user_id) => {
             s_type: 'photography',
             main_pkg_price: '2000',
             main_s_img: 'https://shutterbug.introps.com/documents/service/test-1.jpg',
+            case: 1,
             packages: [
                 {
                     pkg_id: 1,

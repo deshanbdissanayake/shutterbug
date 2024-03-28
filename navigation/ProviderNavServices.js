@@ -1,6 +1,6 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
-import ServiceScreenSingle from '../screens/client/ServiceScreenSingle';
+import ServiceScreenSingle from '../screens/common/ServiceScreenSingle';
 import ServicesListScreen from '../screens/provider/ServicesListScreen';
 import ServiceCreateScreen from '../screens/provider/ServiceCreateScreen';
 import ServiceCreatePackagesScreen from '../screens/provider/ServiceCreatePackagesScreen';

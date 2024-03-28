@@ -7,11 +7,14 @@ import { getJobById } from '../../assets/data/jobs'
 import LoadingScreen from '../LoadingScreen'
 import Button from '../../components/general/Button'
 import Header from '../../components/app/Header'
+import NoData from '../../components/app/NoData'
 
-const CustomOfferViewScreen = ({offer_id}) => {
+const CustomOfferViewScreen = () => {
   const navigation = useNavigation();
   const route = useRoute();
   const user_id = 1; // Assume user ID retrieval from async storage
+  
+  const { offer_id } = route.params;
 
   const handleGoBack = () => {
     navigation.goBack();
@@ -57,26 +60,30 @@ const CustomOfferViewScreen = ({offer_id}) => {
         <JobInfoSec jobData={jobData} />
       </View>
       {
-        user_id !== jobData.provider_id ? (
-          <View>
+        !jobData.case ? (
+          user_id !== jobData.provider_id ? (
+            <View>
+              <Button
+                bgColor={colors.primary}
+                content={<Text style={{color: colors.textLight}}>Accept Offer</Text>}
+                func={() => handleAccept(jobData.job_id)}
+                bdr={colors.primary}
+              />
+              <Button
+                content={<Text style={{color: colors.primary}}>Reject Offer</Text>}
+                func={() => handleReject(jobData.job_id)}
+                bdr={colors.border}
+              />
+            </View>
+          ) : (
             <Button
-              bgColor={colors.primary}
-              content={<Text style={{color: colors.textLight}}>Accept Offer</Text>}
-              func={() => handleAccept(jobData.job_id)}
-              bdr={colors.primary}
-            />
-            <Button
-              content={<Text style={{color: colors.primary}}>Reject Offer</Text>}
-              func={() => handleReject(jobData.job_id)}
+              content={<Text style={{color: colors.primary}}>Cancel Offer</Text>}
+              func={handleCancel}
               bdr={colors.border}
             />
-          </View>
+          )
         ) : (
-          <Button
-            content={<Text style={{color: colors.primary}}>Cancel Offer</Text>}
-            func={handleCancel}
-            bdr={colors.border}
-          />
+          <NoData text={'Cannot Edit. A Case is Active for this Offer!'} />
         )
       }
       

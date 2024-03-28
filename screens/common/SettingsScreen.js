@@ -2,7 +2,7 @@ import { Pressable, StyleSheet, Text, View, Linking, StatusBar } from 'react-nat
 import React, { useState } from 'react'
 import colors from '../../assets/colors/colors'
 import NavCard from '../../components/app/NavCard'
-import { FontAwesome6, FontAwesome5, FontAwesome, MaterialIcons } from '@expo/vector-icons'
+import { FontAwesome6, FontAwesome5, FontAwesome, MaterialIcons, Foundation } from '@expo/vector-icons'
 import MyProfile from '../../components/app/MyProfile'
 import { useNavigation } from '@react-navigation/native'
 import { useAppContext } from '../../layouts/AppContext'
@@ -39,6 +39,10 @@ const SettingsScreen = () => {
     navigation.navigate('Profile Edit')
   }
 
+  const handleCase = () => {
+    navigation.navigate('Case List')
+  }
+
   const handleLogout = async () => {
     setShowLogoutAlert(false);
     try {
@@ -73,6 +77,11 @@ const SettingsScreen = () => {
           func={handleProfile}
         />
         <NavCard 
+          icon={<Foundation name="alert" size={24} color={colors.textDark} />} 
+          title={'Cases'}
+          func={handleCase}
+        />
+        <NavCard 
           icon={<MaterialIcons name="logout" size={24} color={colors.textDark} />} 
           title={'Logout'}
           func={() => setShowLogoutAlert(true)}
@@ -103,6 +112,11 @@ const SettingsScreen = () => {
           icon={<FontAwesome name="user" size={24} color={colors.textDark} />} 
           title={'Profile'}
           func={handleProfile}
+        />
+        <NavCard 
+          icon={<Foundation name="alert" size={24} color={colors.textDark} />} 
+          title={'Cases'}
+          func={handleCase}
         />
         <NavCard 
           icon={<MaterialIcons name="logout" size={24} color={colors.textDark} />} 

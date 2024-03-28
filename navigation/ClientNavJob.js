@@ -4,7 +4,7 @@ import JobListScreen from '../screens/client/JobListScreen';
 import JobSingleScreen from '../screens/client/JobSingleScreen';
 import ProfileScreen from '../screens/common/ProfileScreen';
 import ChatSingleScreen from '../screens/common/ChatSingleScreen';
-import ServiceScreenSingle from '../screens/client/ServiceScreenSingle';
+import ServiceScreenSingle from '../screens/common/ServiceScreenSingle';
 import JobCaseFormScreen from '../screens/client/JobCaseFormScreen';
 import JobReviewFormScreen from '../screens/client/JobReviewFormScreen';
 

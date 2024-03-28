@@ -2,7 +2,7 @@ import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import HomeScreen from '../screens/client/HomeScreen';
 import SearchScreen from '../screens/client/SearchScreen';
-import ServiceScreenSingle from '../screens/client/ServiceScreenSingle';
+import ServiceScreenSingle from '../screens/common/ServiceScreenSingle';
 import ProfileScreen from '../screens/common/ProfileScreen';
 import ChatSingleScreen from '../screens/common/ChatSingleScreen';
 import SingleNewsScreen from '../screens/client/SingleNewsScreen';

@@ -5,7 +5,7 @@ import colors from '../../assets/colors/colors'
 
 const ChatItem = ({ chatData, handleChatClick }) => {
     return (
-        <TouchableOpacity onPress={() => handleChatClick(chatData)}>
+        <TouchableOpacity onPress={() => handleChatClick(chatData.chat_id)}>
             <View style={styles.container}>
                 <View style={styles.imageWrapper}>
                     <Image style={styles.imageStyles} source={{ uri: chatData.chat_user_img }} />

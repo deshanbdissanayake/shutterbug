@@ -1,4 +1,4 @@
-import { StyleSheet, View, ScrollView, BackHandler, Text } from 'react-native'
+import { StyleSheet, View, ScrollView, BackHandler, Text, Alert } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import colors from '../../assets/colors/colors'
 import { useNavigation, useRoute } from '@react-navigation/native'
@@ -8,10 +8,11 @@ import ProviderSec from '../../components/other/ProviderSec';
 import ServiceInfoSec from '../../components/other/ServiceInfoSec';
 import PackagesSec from '../../components/other/PackagesSec'
 import FeedbacksSec from '../../components/other/FeedbackSec';
-import { getServiceById } from '../../assets/data/service';
+import { deleteService, getServiceById } from '../../assets/data/service';
 import ChatBtnSec from '../../components/other/ChatBtnSec';
 import { useAppContext } from '../../layouts/AppContext';
 import Button from '../../components/general/Button';
+import NoData from '../../components/app/NoData';
 
 const ServiceScreenSingle = () => {
   const navigation = useNavigation();
@@ -36,6 +37,26 @@ const ServiceScreenSingle = () => {
 
   const handleEditClick = () => {
     navigation.navigate('Service Create', {s_id})
+  }
+
+  const handleDeleteClick = () => {
+    Alert.alert('Confirm', 'Are you sure you want to delete this service', [
+      {text: 'Cancel', onPress: () => null, style: 'cancel'},
+      {text: 'Confirm', onPress: () => deleteFunc}
+    ])
+  }
+
+  const deleteFunc = async () => {
+    try {
+      let res = await deleteService(s_id);
+      if(res.stt == 'ok'){
+        Alert.alert('Successful', res.msg)
+      }else{
+        Alert.alert('Failed', res.msg)
+      }
+    } catch (error) {
+      console.error('error at deleteting service: ', error)
+    }
   }
 
   return (
@@ -74,12 +95,24 @@ const ServiceScreenSingle = () => {
                 p_img={serviceData.provider_pro_pic}
               />
             ) : (
-              <Button
-                bgColor={colors.white}
-                content={<Text style={{color: colors.primary}}>Edit Service</Text>}
-                func={handleEditClick}
-                bdr={colors.primary}
-              />
+              !serviceData.case ? (
+                <>
+                  <Button
+                    bgColor={colors.white}
+                    content={<Text style={{color: colors.primary}}>Edit Service</Text>}
+                    func={handleEditClick}
+                    bdr={colors.primary}
+                  />
+                  <Button
+                    bgColor={colors.danger}
+                    content={<Text style={{color: colors.white}}>Delete Service</Text>}
+                    func={handleDeleteClick}
+                    bdr={colors.white}
+                  />
+                </>
+              ) : (
+                <NoData text={'Cannot Edit. A Case is Active for this Service!'}/>
+              )
             )}
           </View>
         </View>

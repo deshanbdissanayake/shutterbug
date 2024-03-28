@@ -88,7 +88,7 @@ const getJobById = async (type, id) => {
         jof_sdate: '2024-02-14',
         jof_edate: '2024-03-29',
         status: 'active', //active, done, closed
-        case: 0, // 1 or 0
+        case: 1, // 1 or 0
         job_date: '2024-02-14',
         provider_id: 2,
         provider_fullname: 'Nadun Tharaka',

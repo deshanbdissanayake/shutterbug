@@ -11,9 +11,10 @@ import NoData from '../../components/app/NoData';
 import * as DocumentPicker from 'expo-document-picker';
 import LoadingScreen from '../LoadingScreen';
 
-const ChatSingleScreen = ({chat_id}) => {
+const ChatSingleScreen = () => {
   const navigation = useNavigation();
   const route = useRoute();
+  const { chat_id } = route.params;
 
   const flatListRef = useRef(null);
 
