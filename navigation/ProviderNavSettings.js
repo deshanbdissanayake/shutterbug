@@ -9,6 +9,7 @@ import WithdrawScreen from '../screens/provider/WithdrawScreen';
 import CaseListScreen from '../screens/common/CaseListScreen';
 import ChatSingleScreen from '../screens/common/ChatSingleScreen';
 import CustomOfferViewScreen from '../screens/common/CustomOfferViewScreen';
+import TransactionsScreen from '../screens/common/TransactionsScreen';
 
 const Stack = createStackNavigator();
 
@@ -32,6 +33,7 @@ const ProviderNavSettings = ({ navigation }) => {
         <Stack.Screen name="Withdraw" component={WithdrawScreen} options={{ headerShown: false }} />
         <Stack.Screen name="Chat Single" component={ChatSingleScreen} options={{ headerShown: false }} />
         <Stack.Screen name="Offer View" component={CustomOfferViewScreen} options={{ headerShown: false }} />
+        <Stack.Screen name="Transactions" component={TransactionsScreen} options={{ headerShown: false }} />
 
     </Stack.Navigator>
   );

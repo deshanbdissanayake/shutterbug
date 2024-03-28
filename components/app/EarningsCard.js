@@ -34,8 +34,16 @@ const EarningsCard = () => {
     return (
         <View style={styles.container}>
             <View style={styles.tableRowStyles}>
-                <Text style={styles.tableHeaderStyles}>Personal Balance</Text>
-                <Text style={styles.tableDataStyles}>${earnData.personal_balance}</Text>
+                <Text style={styles.tableHeaderStyles}>Withdrawable Amount</Text>
+                <Text style={styles.tableDataStyles}>${earnData.withdrawable_amount}</Text>
+            </View>
+            <View style={styles.tableRowStyles}>
+                <Text style={styles.tableHeaderStyles}>Pending Clearance</Text>
+                <Text style={styles.tableDataStyles}>${earnData.pending_clearance}</Text>
+            </View>
+            <View style={styles.tableRowStyles}>
+                <Text style={styles.tableHeaderStyles}>Total Personal Balance</Text>
+                <Text style={styles.tableDataStyles}>${earnData.total_amount}</Text>
             </View>
             <View style={styles.tableRowStyles}>
                 <Text style={styles.tableHeaderStyles}>Earning in this month</Text>
@@ -44,10 +52,6 @@ const EarningsCard = () => {
             <View style={styles.tableRowStyles}>
                 <Text style={styles.tableHeaderStyles}>Avg. Job Price</Text>
                 <Text style={styles.tableDataStyles}>${earnData.avg_job_price}</Text>
-            </View>
-            <View style={styles.tableRowStyles}>
-                <Text style={styles.tableHeaderStyles}>Pending Clearance</Text>
-                <Text style={styles.tableDataStyles}>${earnData.pending_clearance}</Text>
             </View>
             <View style={styles.tableRowStyles}>
                 <Text style={styles.tableHeaderStyles}>Active Jobs</Text>

@@ -8,6 +8,7 @@ import JobRequestOffers from '../screens/client/JobRequestOffers';
 import CaseListScreen from '../screens/common/CaseListScreen';
 import ChatSingleScreen from '../screens/common/ChatSingleScreen';
 import CustomOfferViewScreen from '../screens/common/CustomOfferViewScreen';
+import TransactionsScreen from '../screens/common/TransactionsScreen';
 
 const Stack = createStackNavigator();
 

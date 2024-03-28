@@ -17,6 +17,10 @@ const EarningsScreen = () => {
         navigation.navigate('Withdraw')
     }
 
+    const handleTransactionClick = () => {
+        navigation.navigate('Transactions')
+    }
+
     return (
         <View style={styles.container}>
             <Header
@@ -24,14 +28,24 @@ const EarningsScreen = () => {
                 handleGoBack={handleGoBack}
             />
 
-            <EarningsCard />
+            <View style={styles.contentWrapper}>
+                <EarningsCard />
+                <View>
+                    <Button
+                        bgColor={colors.white}
+                        content={<Text style={{color: colors.primary}}>Transaction History</Text>}
+                        func={handleTransactionClick}
+                        bdr={colors.primary}
+                    />
+                    <Button
+                        bgColor={colors.primary}
+                        content={<Text style={{color: colors.white}}>Withdrawal Money</Text>}
+                        func={handleWithdrawClick}
+                        bdr={colors.primary}
+                    />
+                </View>
+            </View>
 
-            <Button
-                bgColor={colors.white}
-                content={<Text style={{color: colors.primary}}>Go to Withdrawals</Text>}
-                func={handleWithdrawClick}
-                bdr={colors.primary}
-            />
 
         </View>
     )
@@ -46,4 +60,8 @@ const styles = StyleSheet.create({
         paddingVertical: 15,
         paddingHorizontal: 15,
     },
+    contentWrapper: {
+        flex: 1,
+        justifyContent: 'space-between',
+    }
 })
